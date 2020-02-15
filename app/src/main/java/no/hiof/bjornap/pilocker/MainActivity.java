@@ -14,6 +14,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn;
@@ -40,14 +46,44 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CharSequence rere = "hei på deg";
-                Toast.makeText(getApplicationContext(), rere, Toast.LENGTH_SHORT).show();
+                connectToSSH();
             }
         });
 
 
 
     }
+
+    private void connectToSSH(){
+        String user = "bjornar";
+        String password = "toor";
+        String host = "192.168.10.153";
+        int port = 22;
+        Session session = null;
+
+        try {
+            JSch jsch = new JSch();
+            session = jsch.getSession(user, host, port);
+            session.setPassword(password);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.setTimeout(10000);
+            session.connect();
+            ChannelExec channel = (ChannelExec)session.openChannel("exec");
+            channel.setCommand("./lol.sh");
+            channel.connect();
+            channel.disconnect();
+        }
+        catch (JSchException ex){
+            //Show error in UI
+            String errorMessage = "No connection: " + ex.getMessage();
+            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+        }
+        finally {
+            session.disconnect();
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
