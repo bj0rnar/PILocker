@@ -11,8 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        btn = findViewById(R.id.sshbutton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence rere = "hei på deg";
+                Toast.makeText(getApplicationContext(), rere, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
 
     @Override
