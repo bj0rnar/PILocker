@@ -8,11 +8,19 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.NetworkOnMainThreadException;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,14 +48,20 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CharSequence rere = "hei på deg";
-                Toast.makeText(getApplicationContext(), rere, Toast.LENGTH_SHORT).show();
+                connectToSSH();
             }
         });
 
 
 
     }
+
+    private void connectToSSH(){
+        SSHConnector sshCon = new SSHConnector();
+        sshCon.execute();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
