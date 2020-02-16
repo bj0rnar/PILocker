@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -55,33 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private static void connectToSSH(){
-        String user = "bjornar";
-        String password = "toor";
-        String host = "192.168.10.153";
-        int port = 22;
-        Session session = null;
-
-        try {
-            JSch jsch = new JSch();
-            session = jsch.getSession(user, host, port);
-            session.setPassword(password);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.setTimeout(10000);
-            session.connect();
-            ChannelExec channel = (ChannelExec)session.openChannel("exec");
-            channel.setCommand("./lol.sh");
-            channel.connect();
-            channel.disconnect();
-        }
-        catch (JSchException ex){
-            //Show error in UI
-            String errorMessage = "No connection: " + ex.getMessage();
-            Log.d("SSH", errorMessage);
-        }
-        finally {
-            session.disconnect();
-        }
+    private void connectToSSH(){
+        SSHConnector sshCon = new SSHConnector();
+        sshCon.execute();
     }
 
 
