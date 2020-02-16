@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void connectToSSH(){
+    private static void connectToSSH(){
         String user = "bjornar";
         String password = "toor";
         String host = "192.168.10.153";
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         catch (JSchException ex){
             //Show error in UI
             String errorMessage = "No connection: " + ex.getMessage();
-            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+            Log.d("SSH", errorMessage);
         }
         finally {
             session.disconnect();
