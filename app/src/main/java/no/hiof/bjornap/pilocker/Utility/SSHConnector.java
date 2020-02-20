@@ -1,4 +1,4 @@
-package no.hiof.bjornap.pilocker;
+package no.hiof.bjornap.pilocker.Utility;
 
 import android.os.AsyncTask;
 import android.os.NetworkOnMainThreadException;

@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/connectFragment2">
+    <fragment
+        android:id="@+id/connectFragment2"
+        android:name="no.hiof.bjornap.pilocker.ConnectFragment"
+        android:label="fragment_connect"
+        tools:layout="@layout/fragment_connect" >
+        <action
+            android:id="@+id/action_connectFragment2_to_unlockFragment2"
+            app:destination="@id/unlockFragment2"
+            app:popUpTo="@+id/connectFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/unlockFragment2"
+        android:name="no.hiof.bjornap.pilocker.UnlockFragment"
+        android:label="fragment_unlock"
+        tools:layout="@layout/fragment_unlock" >
+        <action
+            android:id="@+id/action_unlockFragment2_to_connectFragment2"
+            app:destination="@id/connectFragment2"
+            app:popUpTo="@+id/connectFragment2" />
+    </fragment>
 </navigation>
