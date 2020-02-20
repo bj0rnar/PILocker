@@ -13,6 +13,9 @@
             android:id="@+id/action_connectFragment2_to_unlockFragment2"
             app:destination="@id/unlockFragment2"
             app:popUpTo="@+id/connectFragment2" />
+        <action
+            android:id="@+id/action_connectFragment2_to_installFragment"
+            app:destination="@id/installFragment" />
     </fragment>
     <fragment
         android:id="@+id/unlockFragment2"
@@ -24,4 +27,9 @@
             app:destination="@id/connectFragment2"
             app:popUpTo="@+id/connectFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/installFragment"
+        android:name="no.hiof.bjornap.pilocker.InstallFragment"
+        android:label="fragment_install"
+        tools:layout="@layout/fragment_install" />
 </navigation>

@@ -14,6 +14,10 @@ public class SSHCommand extends AsyncTask<String, Void, Boolean> {
     private PageViewModel pvm = new PageViewModel();
     private Session session;
 
+    /**
+     * FELT UNRELIABLE, MIGHT DELETE LATER
+     */
+
 
     @Override
     protected Boolean doInBackground(String... strings) {

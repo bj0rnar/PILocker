@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InstallFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="154dp"
+            android:text="Connect"
+            android:layout_marginBottom="343dp" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:autofillHints="127.0.0.1"
+            android:layout_marginStart="101dp"
+            android:layout_marginEnd="96dp"
+            android:layout_marginBottom="506dp"
+            android:ems="10"
+            android:inputType="number|numberDecimal"
+            android:digits="0123456789."/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_above="@+id/editText2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="159dp"
+            android:layout_marginTop="111dp"
+            android:layout_marginEnd="132dp"
+            android:layout_marginBottom="48dp"
+            android:text="Enter IP adress" />
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>
