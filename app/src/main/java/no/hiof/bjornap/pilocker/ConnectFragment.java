@@ -57,7 +57,7 @@ public class ConnectFragment extends Fragment {
          */
 
 
-        int key = 3;
+        int key = 1;
 
         //Basically slekk en ska ha dæ.
         if (key == 0){

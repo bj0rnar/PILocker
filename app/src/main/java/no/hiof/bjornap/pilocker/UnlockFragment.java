@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.Utility.SSHCommand;
+import no.hiof.bjornap.pilocker.Utility.SSHConnector;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class UnlockFragment extends Fragment {
 
     private PageViewModel pvm;
     private SSHCommand cmd = new SSHCommand();
+    private SSHConnector sshConnector = new SSHConnector();
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -50,7 +52,11 @@ public class UnlockFragment extends Fragment {
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmd.execute("./lol.sh");
+                //Connect and disconnect in one move
+                sshConnector.execute();
+
+                //This would be better
+                //cmd.execute("./lol.sh");
             }
         });
 

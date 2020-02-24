@@ -31,5 +31,9 @@
         android:id="@+id/installFragment"
         android:name="no.hiof.bjornap.pilocker.InstallFragment"
         android:label="fragment_install"
-        tools:layout="@layout/fragment_install" />
+        tools:layout="@layout/fragment_install" >
+        <action
+            android:id="@+id/action_installFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+    </fragment>
 </navigation>

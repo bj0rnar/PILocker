@@ -8,6 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 public class PageViewModel extends ViewModel {
 
+    /**
+     * Under construction, currently not working.
+     */
+
     private Session currentSession;
 
     public Session getCurrentSession() {
