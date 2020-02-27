@@ -140,6 +140,6 @@ public class InstallFragment extends Fragment implements AsyncEthernetResponse {
 
     @Override
     public void onComplete(String ipAddress) {
-        Log.i("WAT", "Fra AsyncEthernetREsponse: " + ipAddress);
+        Log.i("getIp", "Fra AsyncEthernetREsponse: " + ipAddress);
     }
 }

@@ -14,11 +14,10 @@ import java.io.ByteArrayOutputStream;
 import no.hiof.bjornap.pilocker.PageViewModel;
 
 public class SSHReader extends AsyncTask<String, Void, String>  {
+
     public AsyncEthernetResponse response = null;
 
     String a = "a";
-
-    private PageViewModel pvm = new PageViewModel();
 
     /**
      * Connect => Run Command => Disconnect
@@ -55,27 +54,26 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
                 Thread.sleep(500);
             }
             catch (Exception e){
-                Log.w("thread", e.getMessage());
+                Log.w("getIp", "thread sleep failed " + e.getMessage());
             }
 
             channel.disconnect();
-            a = output.toString("UTF-8");
-            Log.i("WAT", "OUTPUT TOSTRINGA?!: " + output.toString());
-            Log.i("WAT", "a: " + a);
+            a = output.toString();
+            Log.i("getIp", "OUTPUT TOSTRINGA?!: " + output.toString());
             return output.toString();
         }
         catch (JSchException ex){
             //Show error in UI
             String errorMessage = "JSCH exception: " + ex.getMessage();
-            Log.d("SSH", errorMessage);
+            Log.d("getIp", errorMessage);
         }
         catch (Exception ex){
             //anycatcher
             String errorMessage = "any other: " + ex.getMessage();
-            Log.d("SSH", errorMessage);
+            Log.d("getIp", errorMessage);
         }
         finally {
-            Log.i("WAT", "Finally: " + a);
+            Log.i("getIp", "Finally: " + a);
             session.disconnect();
 
         }
@@ -86,14 +84,9 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //Not working?!
-        Log.i("WAT", "onPostExecute: " + s);
+        Log.i("getIp", "onPostExecute: " + s);
         response.onComplete(s);
 
     }
-
-    public interface OutputMessage {
-        void returnMessage(String message);
-    }
-
 
 }
