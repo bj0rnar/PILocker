@@ -11,14 +11,10 @@ import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
 
-import no.hiof.bjornap.pilocker.PageViewModel;
+public class SSHGetIP extends AsyncTask<String, Void, String> {
 
-public class SSHReader extends AsyncTask<String, Void, String>  {
-    public AsyncEthernetResponse response = null;
-
-    String a = "a";
-
-    private PageViewModel pvm = new PageViewModel();
+    String returnAddress;
+    EthernetIP ethernetIP;
 
     /**
      * Connect => Run Command => Disconnect
@@ -26,15 +22,15 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
      */
 
     //Pew pew
-    public SSHReader() {
-
+    public SSHGetIP(EthernetIP ethernetIP) {
+        this.ethernetIP = ethernetIP;
     }
 
     @Override
     protected String doInBackground(String... strings) {
-        String user = "bjornar";
-        String password = "toor";
-        String host = "192.168.10.153";
+        String user = "ubuntu";
+        String password = "gruppe6";
+        String host = "10.0.60.1";
         int port = 22;
         Session session = null;
 
@@ -46,23 +42,12 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             session.setTimeout(10000);
             session.connect();
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
-            channel.setCommand("./readtest.sh");
+            channel.setCommand("./getIp.sh");
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
             channel.setOutputStream(output);
             channel.connect();
-
-            try {
-                Thread.sleep(500);
-            }
-            catch (Exception e){
-                Log.w("thread", e.getMessage());
-            }
-
             channel.disconnect();
-            a = output.toString("UTF-8");
-            Log.i("WAT", "OUTPUT TOSTRINGA?!: " + output.toString());
-            Log.i("WAT", "a: " + a);
-            return output.toString();
+            returnAddress += output.toString();
         }
         catch (JSchException ex){
             //Show error in UI
@@ -75,25 +60,21 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             Log.d("SSH", errorMessage);
         }
         finally {
-            Log.i("WAT", "Finally: " + a);
             session.disconnect();
-
         }
-        return null;
+        return returnAddress;
     }
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        //Not working?!
-        Log.i("WAT", "onPostExecute: " + s);
-        response.onComplete(s);
+        if (ethernetIP != null){
+            ethernetIP.address(s);
+        }
+
 
     }
 
-    public interface OutputMessage {
-        void returnMessage(String message);
+    public interface EthernetIP {
+        void address(String address);
     }
-
-
 }

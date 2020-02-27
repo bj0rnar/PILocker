@@ -18,7 +18,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.Model.Door;
+import no.hiof.bjornap.pilocker.Utility.AsyncEthernetResponse;
+import no.hiof.bjornap.pilocker.Utility.SSHGetIP;
 import no.hiof.bjornap.pilocker.Utility.SSHReader;
 import no.hiof.bjornap.pilocker.Utility.WiFiConnection;
 
@@ -42,14 +46,17 @@ import static android.content.Context.WIFI_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InstallFragment extends Fragment {
+public class InstallFragment extends Fragment implements AsyncEthernetResponse {
 
     //private String responseMessage;
     private static String TAG = "INSTALLWIFI";
     public static boolean connection = false;
+    public String storedIP = "";
+
+    private SSHReader reader = new SSHReader();
 
     //private PageViewModel pvm = new PageViewModel();
-    WiFiConnection wiFiConnection;
+
 
     public InstallFragment() {
         // Required empty public constructor
@@ -60,6 +67,9 @@ public class InstallFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        reader.response = this;
+
         return inflater.inflate(R.layout.fragment_install, container, false);
     }
 
@@ -67,22 +77,42 @@ public class InstallFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final NavController navController = Navigation.findNavController(view);
 
         Button installBtn = view.findViewById(R.id.install_button);
         installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                reader.execute();
+
+                /* For Faktisk RPI
+                SSHGetIP.EthernetIP ip = new SSHGetIP.EthernetIP() {
+                    @Override
+                    public void address(String address) {
+                        storedIP = address;
+                    }
+                };
+
+                new SSHGetIP(ip).execute();
+
+                Log.i("JAUDA", storedIP);
+                */
+
+                /*
                 String x = getIPAddress();
                 Log.i("INSTALLGETIP", "Metode 1: " + x);
 
                 String y = getIPAddressTwo();
                 Log.i("INSTALLGETIP", "Metode 2: " + y);
+                */
+
 
             }
         });
     }
 
+    //Check for static IP address when finding correct SSID?
     public String getIPAddressTwo() {
         final WifiManager manager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         final DhcpInfo dhcp = manager.getDhcpInfo();
@@ -106,5 +136,10 @@ public class InstallFragment extends Fragment {
             Log.e("Wifi Class", "Error getting Hotspot IP address ", e);
         }
         return "null";
+    }
+
+    @Override
+    public void onComplete(String ipAddress) {
+        Log.i("WAT", "Fra AsyncEthernetREsponse: " + ipAddress);
     }
 }
