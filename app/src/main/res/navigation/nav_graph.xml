@@ -33,7 +33,20 @@
         android:label="fragment_install"
         tools:layout="@layout/fragment_install" >
         <action
-            android:id="@+id/action_installFragment_to_unlockFragment2"
+            android:id="@+id/action_installFragment_to_progressFragment"
+            app:destination="@id/progressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="no.hiof.bjornap.pilocker.ProgressFragment"
+        android:label="fragment_progress"
+        tools:layout="@layout/fragment_progress" >
+        <action
+            android:id="@+id/action_progressFragment_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
+        <argument
+            android:name="ethernetIp"
+            app:argType="string"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.Utility.SSHConnector;
+import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.Button;
 public class UnlockFragment extends Fragment {
 
     private SSHConnector sshConnector = new SSHConnector();
+    private SSHExecuter sshExecuter = new SSHExecuter();
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -40,17 +43,27 @@ public class UnlockFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (getArguments() != null){
+            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS IP: " + getArguments().getString("ip"));
+            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS RSA: " + getArguments().getString("rsa"));
+        }
+
         final NavController navController = Navigation.findNavController(view);
 
         Button unlockBtn = view.findViewById(R.id.unlockBtn);
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Connect and disconnect in one move
-                sshConnector.execute();
+                String usr = "bjornar";
+                String host = "192.168.10.153";
+                String cmd = "./lol.sh";
 
-                //This would be better
-                //cmd.execute("./lol.sh");
+                sshExecuter.execute(usr, host, cmd, getArguments().getString("rsa"));
+
+                //Connect and disconnect in one move
+                //sshConnector.execute();
+
+
             }
         });
 

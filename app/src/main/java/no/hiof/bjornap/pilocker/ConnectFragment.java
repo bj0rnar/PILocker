@@ -43,10 +43,12 @@ public class ConnectFragment extends Fragment {
         final NavController navController = Navigation.findNavController(view);
 
         /**
+         * TODO: Store key + ip to EncryptedSharedPreferences
          * TODO: Check if encrypted SharedPreferences has a key
          * TODO: If key exists, connect to SSH via JSCH library, if NO KEY => InstallFragment
-         * TODO: Create SERVICE to keep SESSION alive, or create new SESSION for each ACTION?
-         * NOTE: ViewModel can't keep session alive, network stuff on UI thread == epic failure
+         * TODO: Validate IP address
+         * TODO: Use jsch.addIdentity for SSH keybased authentication
+         * TODO: Use jsch.addIdentity for SSH keybased authentication
          */
 
         pvm.setTest("Fra connect");
