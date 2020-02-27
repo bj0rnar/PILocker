@@ -12,6 +12,17 @@ public class PageViewModel extends ViewModel {
      * Under construction, currently not working.
      */
 
+    private String test;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
+
+
     private Session currentSession;
 
     public Session getCurrentSession() {
@@ -21,6 +32,8 @@ public class PageViewModel extends ViewModel {
     public void setCurrentSession(Session currentSession) {
         this.currentSession = currentSession;
     }
+
+
 }
 
     /* GRAVEYAAAAAAAAARD.

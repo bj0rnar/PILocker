@@ -1,32 +1,25 @@
 package no.hiof.bjornap.pilocker;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import no.hiof.bjornap.pilocker.Utility.SSHLogin;
 
-import android.se.omapi.Session;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 
 
 public class ConnectFragment extends Fragment {
 
     private Button connectBtn;
     private PageViewModel pvm = new PageViewModel();
-    private SSHLogin login = new SSHLogin();
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -56,6 +49,7 @@ public class ConnectFragment extends Fragment {
          * NOTE: ViewModel can't keep session alive, network stuff on UI thread == epic failure
          */
 
+        pvm.setTest("Fra connect");
 
         int key = 1;
 
@@ -66,20 +60,5 @@ public class ConnectFragment extends Fragment {
         else if (key == 1){
             navController.navigate(R.id.action_connectFragment2_to_installFragment);
         }
-
-
-        /*
-        connectBtn = view.findViewById(R.id.connectButton);
-        connectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login.execute();
-
-                navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
-
-            }
-        });
-
-         */
     }
 }

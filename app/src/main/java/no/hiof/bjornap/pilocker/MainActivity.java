@@ -1,6 +1,11 @@
 package no.hiof.bjornap.pilocker;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,7 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 import no.hiof.bjornap.pilocker.Utility.SSHConnector;
+import no.hiof.bjornap.pilocker.Utility.WiFiConnection;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +26,8 @@ import android.widget.Button;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void connectToSSH(){
-        SSHConnector sshCon = new SSHConnector();
-        sshCon.execute();
-    }
 
 
 

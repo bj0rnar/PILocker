@@ -5,4 +5,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connecting">Connecting…</string>
+    <string name="install_guide">No device found. Connect the lock to a power supply before pressing install</string>
 </resources>

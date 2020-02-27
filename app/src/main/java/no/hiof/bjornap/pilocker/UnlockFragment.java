@@ -6,17 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import no.hiof.bjornap.pilocker.Utility.SSHCommand;
 import no.hiof.bjornap.pilocker.Utility.SSHConnector;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 
 /**
@@ -24,8 +21,6 @@ import android.widget.TextView;
  */
 public class UnlockFragment extends Fragment {
 
-    private PageViewModel pvm;
-    private SSHCommand cmd = new SSHCommand();
     private SSHConnector sshConnector = new SSHConnector();
 
     public UnlockFragment() {
@@ -37,7 +32,6 @@ public class UnlockFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        pvm = new ViewModelProvider(this).get(PageViewModel.class);
 
         return inflater.inflate(R.layout.fragment_unlock, container, false);
     }
