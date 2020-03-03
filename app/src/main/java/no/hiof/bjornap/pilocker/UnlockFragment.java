@@ -82,27 +82,9 @@ public class UnlockFragment extends Fragment {
                 SSHExecuter executor = new SSHExecuter();
 
                 executor.execute(usr, prefHost, cmd, "lol");
-                /*
-                if (sshExecuter.getStatus() != AsyncTask.Status.RUNNING) {
-                    sshExecuter.execute(usr, hardcodedHost, cmd, "lol");
-                }
-                else {
-                    Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
-                }
-                */
-                //Connect and disconnect in one move
-                //sshConnector.execute();
-
             }
         });
 
-        Button logoutBtn = view.findViewById(R.id.logoutButton);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_unlockFragment2_to_connectFragment2);
-            }
-        });
     }
 
 

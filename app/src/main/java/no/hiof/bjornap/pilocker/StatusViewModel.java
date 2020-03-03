@@ -6,37 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PageViewModel extends ViewModel {
+public class StatusViewModel extends ViewModel {
 
     /**
      * Under construction, currently not working.
+     * Use this for updating status in unlockfragment
      */
-
-    private String test;
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
-    }
-
-
-    private Session currentSession;
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-
-}
-
-    /* GRAVEYAAAAAAAAARD.
 
     private MutableLiveData<String> names = new MutableLiveData<>();
 
@@ -48,4 +23,6 @@ public class PageViewModel extends ViewModel {
         this.names = names;
     }
 
-     */
+
+}
+
