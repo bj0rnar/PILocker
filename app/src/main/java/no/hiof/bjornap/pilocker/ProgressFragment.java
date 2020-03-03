@@ -1,6 +1,7 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -35,7 +37,12 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
 
+    private String actualUser = "ubuntu";
+    private String actualPass = "gruppe6";
+
     private NavController navController;
+
+    private Button btn;
 
 
     @Override
@@ -44,6 +51,9 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         // Inflate the layout for this fragment
 
         reader.response = this;
+
+        //keyReader.response = this;
+
 
         return inflater.inflate(R.layout.fragment_progress, container, false);
     }
@@ -54,15 +64,44 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
         navController = Navigation.findNavController(view);
 
+
         if (getArguments() != null) {
             ethernetIP = getArguments().getString("ip");
             Log.i("SSHREADER", "Progressfragment: " + ethernetIP);
 
+
+
+
             String testIp = "192.168.10.153";
             String cmd = "./fakersa.sh";
 
-            reader.execute(defaultuser, defaultpass,testIp, cmd);
+            //for prototyping: burde stå ./getRsa.sh
+            //reader.execute(actualUser, actualPass, ethernetIP, "ls -l");
+
+            //reader.execute(defaultuser, defaultpass,testIp, cmd);
         }
+
+        Button btn = view.findViewById(R.id.progress_button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //reader.execute(actualUser, actualPass, ethernetIP, "ifconfig");
+
+                reader.execute(actualUser, actualPass, ethernetIP, "ls -l");
+               /*
+                if (reader.getStatus() != AsyncTask.Status.RUNNING) {
+                    keyReader.execute(actualUser, actualPass, ethernetIP, "ls -l");
+                }
+                else {
+                    Log.i("SSHREADER", "PROGRESSFRAGMENT, READER: " + reader.getStatus().toString());
+                }
+
+                */
+            }
+        });
+
+
 
     }
 

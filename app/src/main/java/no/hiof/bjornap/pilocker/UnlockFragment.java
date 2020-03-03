@@ -1,6 +1,8 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,26 +45,53 @@ public class UnlockFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*
         if (getArguments() != null){
             Log.i("SSHREADER", "UNLOCKFRAGMENT HAS IP: " + getArguments().getString("ip"));
             Log.i("SSHREADER", "UNLOCKFRAGMENT HAS RSA: " + getArguments().getString("rsa"));
         }
 
+         */
+
+
+
+
         final NavController navController = Navigation.findNavController(view);
 
-        Button unlockBtn = view.findViewById(R.id.unlockBtn);
+        final Button unlockBtn = view.findViewById(R.id.unlockBtn);
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String usr = "bjornar";
-                String host = "192.168.10.153";
-                String cmd = "./lol.sh";
+                //String usr = "bjornar";
+                //String host = "192.168.10.153";
+                //String cmd = "./lol.sh";
 
-                sshExecuter.execute(usr, host, cmd, getArguments().getString("rsa"));
+                SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+                String prefHost = pref.getString("key_ip", null);
 
+                Log.i("SSHREADER", "Fra UnlockFragment: " + prefHost);
+
+                String usr = "ubuntu";
+                //String host = getArguments().getString("ip");
+                String hardcodedHost = "158.39.162.152";
+                String cmd = "./lockTest.sh";
+
+                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
+                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.isCancelled());
+
+                SSHExecuter executor = new SSHExecuter();
+
+                executor.execute(usr, prefHost, cmd, "lol");
+                /*
+                if (sshExecuter.getStatus() != AsyncTask.Status.RUNNING) {
+                    sshExecuter.execute(usr, hardcodedHost, cmd, "lol");
+                }
+                else {
+                    Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
+                }
+                */
                 //Connect and disconnect in one move
                 //sshConnector.execute();
-
 
             }
         });

@@ -30,7 +30,7 @@ public class SSHExecuter extends AsyncTask<String, Void, Void> {
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
             session = jsch.getSession(user, host, port);
-            session.setPassword("toor");
+            session.setPassword("gruppe6");
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();

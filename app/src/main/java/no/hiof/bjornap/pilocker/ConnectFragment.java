@@ -1,6 +1,7 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class ConnectFragment extends Fragment {
         /**
          * TODO: Store key + ip to EncryptedSharedPreferences
          * TODO: Check if encrypted SharedPreferences has a key
+         * TODO: Scan for SSID.
          * TODO: If key exists, connect to SSH via JSCH library, if NO KEY => InstallFragment
          * TODO: Validate IP address
          * TODO: Use jsch.addIdentity for SSH keybased authentication
@@ -53,7 +55,14 @@ public class ConnectFragment extends Fragment {
 
         pvm.setTest("Fra connect");
 
+        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+
         int key = 1;
+
+        if (pref.getString("key_ip", null) != null){
+            key = 0;
+        }
+
 
         //Basically slekk en ska ha dæ.
         if (key == 0){

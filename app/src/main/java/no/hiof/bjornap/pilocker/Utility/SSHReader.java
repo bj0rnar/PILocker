@@ -14,7 +14,8 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
 
     public AsyncResponseInterface response = null;
 
-    String a = "a";
+    private String a = "a";
+    private Session session;
 
     /**
      * Connect => Run Command => Disconnect
@@ -31,8 +32,9 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         String user = strings[0];
         String password = strings[1];
         String host = strings[2];
+        String manualHost = "10.0.60.1";
         int port = 22;
-        Session session = null;
+        session = null;
 
         Log.i("SSHREADER", "strings[0] = " + strings[0]);
         Log.i("SSHREADER", "strings[1] = " + strings[1]);
@@ -52,12 +54,17 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             channel.setOutputStream(output);
             channel.connect();
 
+            Thread.sleep(5000);
+
+            /*
             try {
-                Thread.sleep(500);
+                Thread.sleep(10000);
             }
             catch (Exception e){
                 Log.w("SSHREADER", "thread sleep failed " + e.getMessage());
             }
+
+             */
 
             channel.disconnect();
             a = output.toString();
@@ -76,7 +83,14 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         }
         finally {
             Log.i("SSHREADER", "Finally: " + a);
-            session.disconnect();
+            if (session != null) {
+                session.disconnect();
+                Log.i("SSHREADER", "session isConnected in finally clause " + session.isConnected());
+            }
+            else {
+                Log.i("SSHREADER", "session == null, wtf");
+            }
+            Log.i("SSHREADER", "session isConnected: " + session.isConnected());
 
         }
         return null;
@@ -87,6 +101,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         super.onPostExecute(s);
         //Not working?!
         Log.i("SSHREADER", "onPostExecute: " + s);
+        Log.i("SSHREADER", "onPostExecute session isConnected status:" + session.isConnected());
         response.onComplete(s);
 
     }
