@@ -1,6 +1,7 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.content.SharedPreferences;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -43,6 +44,9 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
 
+    private String actualUser = "ubuntu";
+    private String actualPass = "gruppe6";
+
 
     public InstallFragment() {
         // Required empty public constructor
@@ -67,20 +71,30 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
         navController = Navigation.findNavController(view);
 
-        Button installBtn = view.findViewById(R.id.install_button);
+        final Button installBtn = view.findViewById(R.id.install_button);
+
+
         installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //String wlanIp = getIPAddressTwo();
-                String testIp = "192.168.10.153";
-                String cmd = "./readtest.sh";
-                reader.execute(defaultuser, defaultpass, testIp, cmd);
+                String wlanIp = getIPAddressTwo();
+                //String testIp = "192.168.10.153";
+                //String cmd = "./readtest.sh";
+                //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
+                String cmd = "./getIp.sh";
+
+                String forceIp = "10.0.60.1";
+                //for prototyping:
+                //reader.response = getContext().getApplicationContext();
+                reader.execute(actualUser, actualPass, wlanIp, cmd);
+
+                //reader.execute(defaultuser, defaultpass, testIp, cmd);
 
             }
         });
     }
 
-    //Check for static IP address when finding correct SSID?
+    //Use this is progressfragment, check if getIp matches ethernetIp.
     public String getIPAddressTwo() {
         final WifiManager manager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         final DhcpInfo dhcp = manager.getDhcpInfo();
@@ -108,7 +122,12 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
     @Override
     public void onComplete(String result) {
+        result = result.substring(0, result.length()-1);
         Log.i("SSHREADER", "Fra AsyncEthernetREsponse: " + result);
+        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("key_ip", result);
+        edit.apply();
         Bundle bundle = new Bundle();
         bundle.putString("ip", result);
         navController.navigate(R.id.action_installFragment_to_progressFragment, bundle);

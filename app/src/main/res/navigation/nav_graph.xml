@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_installFragment_to_progressFragment"
             app:destination="@id/progressFragment" />
+        <action
+            android:id="@+id/action_installFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
     </fragment>
     <fragment
         android:id="@+id/progressFragment"
