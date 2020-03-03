@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8EAF6"
+    android:background="#C5CAE9"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UnlockFragment">
 
@@ -14,6 +14,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="340sp"
             android:layout_height="300sp"
+            app:cardCornerRadius="8sp"
             android:layout_gravity="center|top"
             android:layout_marginTop="100sp">
 
@@ -54,24 +55,24 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/unlockBtn"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
+            android:id="@+id/lockBtn"
+            android:layout_width="300sp"
+            android:layout_height="60sp"
             style="@style/LockingButton"
-            android:layout_gravity="bottom|start"
-            android:shadowRadius="4sp"
+            android:layout_gravity="bottom|center"
+            android:textColor="@color/colorPrimaryDark"
             android:elevation="10sp"
-            android:layout_marginStart="50sp"
-            android:layout_marginBottom="140sp"
+            android:layout_marginBottom="100sp"
             android:text="LOCK" />
 
         <Button
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="50sp"
+            android:id="@+id/unlockBtn"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="300sp"
+            android:layout_height="60sp"
+            android:layout_gravity="bottom|center"
             android:elevation="10sp"
-            android:layout_marginBottom="140sp"
+            android:layout_marginBottom="200sp"
             style="@style/LockingButton"
             android:text="UNLOCK"
             />
