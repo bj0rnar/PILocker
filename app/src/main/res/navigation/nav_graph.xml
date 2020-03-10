@@ -14,19 +14,14 @@
             app:destination="@id/unlockFragment2"
             app:popUpTo="@+id/connectFragment2" />
         <action
-            android:id="@+id/action_connectFragment2_to_installFragment"
-            app:destination="@id/installFragment" />
+            android:id="@+id/action_connectFragment2_to_installNamingFragment"
+            app:destination="@id/installNamingFragment" />
     </fragment>
     <fragment
         android:id="@+id/unlockFragment2"
         android:name="no.hiof.bjornap.pilocker.UnlockFragment"
         android:label="fragment_unlock"
-        tools:layout="@layout/fragment_unlock" >
-        <action
-            android:id="@+id/action_unlockFragment2_to_connectFragment2"
-            app:destination="@id/connectFragment2"
-            app:popUpTo="@+id/connectFragment2" />
-    </fragment>
+        tools:layout="@layout/fragment_unlock" />
     <fragment
         android:id="@+id/installFragment"
         android:name="no.hiof.bjornap.pilocker.InstallFragment"
@@ -51,5 +46,23 @@
             android:name="ethernetIp"
             app:argType="string"
             android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/installNamingFragment"
+        android:name="no.hiof.bjornap.pilocker.InstallNamingFragment"
+        android:label="fragment_install_naming"
+        tools:layout="@layout/fragment_install_naming" >
+        <action
+            android:id="@+id/action_installNamingFragment_to_installHandleSide2"
+            app:destination="@id/installHandleSide2" />
+    </fragment>
+    <fragment
+        android:id="@+id/installHandleSide2"
+        android:name="no.hiof.bjornap.pilocker.InstallHandleSide"
+        android:label="fragment_install_handle_side"
+        tools:layout="@layout/fragment_install_handle_side" >
+        <action
+            android:id="@+id/action_installHandleSide2_to_installFragment"
+            app:destination="@id/installFragment" />
     </fragment>
 </navigation>
