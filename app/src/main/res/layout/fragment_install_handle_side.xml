@@ -51,14 +51,76 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_height="150sp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="60sp">
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/installation_side_leftDoorConstraintLayout"
+                    android:layout_width="100sp"
+                    android:layout_marginStart="40sp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start">
+
+                    <!-- OBS! Picture from imageSRC are different sizes, that's why they are uneven -->
+                    <ImageView
+                        android:id="@+id/installation_side_leftImage"
+                        android:layout_width="50sp"
+                        android:layout_height="100sp"
+                        android:layout_gravity="start|top"
+                        android:contentDescription="LEFT"
+                        android:src="@drawable/doorhandleleft"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LEFT"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/installation_side_leftImage" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/installation_side_rightDoorConstraintLayout"
+                android:layout_width="100sp"
+                android:layout_marginEnd="40sp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end">
+
+                <ImageView
+                    android:id="@+id/installation_side_rightImage"
+                    android:layout_width="50sp"
+                    android:layout_height="100sp"
+                    android:layout_gravity="start|top"
+                    android:contentDescription="LEFT"
+                    android:src="@drawable/doorhandleright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RIGHT"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/installation_side_rightImage" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
     </androidx.cardview.widget.CardView>
 
@@ -88,6 +150,8 @@
             android:layout_gravity="end"
             android:elevation="10sp"
             android:text="NEXT" />
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
