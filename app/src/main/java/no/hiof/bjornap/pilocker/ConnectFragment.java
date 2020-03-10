@@ -20,7 +20,7 @@ import android.widget.Button;
 public class ConnectFragment extends Fragment {
 
     private Button connectBtn;
-    private PageViewModel pvm = new PageViewModel();
+    private StatusViewModel pvm = new StatusViewModel();
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -31,7 +31,7 @@ public class ConnectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        pvm = new ViewModelProvider(this).get(PageViewModel.class);
+        pvm = new ViewModelProvider(this).get(StatusViewModel.class);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connect, container, false);
@@ -53,16 +53,15 @@ public class ConnectFragment extends Fragment {
          * TODO: Use jsch.addIdentity for SSH keybased authentication
          */
 
-        pvm.setTest("Fra connect");
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        //SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 1;
-
+        int key = 0;
+        /*
         if (pref.getString("key_ip", null) != null){
             key = 0;
         }
-
+        */
 
         //Basically slekk en ska ha dæ.
         if (key == 0){

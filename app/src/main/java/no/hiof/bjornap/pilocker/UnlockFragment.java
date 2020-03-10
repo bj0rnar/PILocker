@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -27,6 +28,7 @@ public class UnlockFragment extends Fragment {
 
     private SSHConnector sshConnector = new SSHConnector();
     private SSHExecuter sshExecuter = new SSHExecuter();
+    private TextView statusText;
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -53,19 +55,31 @@ public class UnlockFragment extends Fragment {
 
          */
 
-
+        statusText = view.findViewById(R.id.unlock_status_status_textView);
 
 
         final NavController navController = Navigation.findNavController(view);
+
+        final Button lockBtn = view.findViewById(R.id.lockBtn);
+        lockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                statusText.setText("LOCKED");
+
+            }
+        });
 
         final Button unlockBtn = view.findViewById(R.id.unlockBtn);
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                statusText.setText("UNLOCKED");
+
                 //String usr = "bjornar";
                 //String host = "192.168.10.153";
                 //String cmd = "./lol.sh";
 
+                /*
                 SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
                 String prefHost = pref.getString("key_ip", null);
 
@@ -82,27 +96,11 @@ public class UnlockFragment extends Fragment {
                 SSHExecuter executor = new SSHExecuter();
 
                 executor.execute(usr, prefHost, cmd, "lol");
-                /*
-                if (sshExecuter.getStatus() != AsyncTask.Status.RUNNING) {
-                    sshExecuter.execute(usr, hardcodedHost, cmd, "lol");
-                }
-                else {
-                    Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
-                }
-                */
-                //Connect and disconnect in one move
-                //sshConnector.execute();
 
+                 */
             }
         });
 
-        Button logoutBtn = view.findViewById(R.id.logoutButton);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_unlockFragment2_to_connectFragment2);
-            }
-        });
     }
 
 
