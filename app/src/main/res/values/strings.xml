@@ -7,4 +7,5 @@
     <string name="connecting">Connecting…</string>
     <string name="install_guide">No device found. Connect the lock to a power supply before pressing install</string>
     <string name="progress_loading_text">Installing..</string>
+    <string name="installation_name_edittext_hint">Office door</string>
 </resources>
