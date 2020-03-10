@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="50sp"
+            android:layout_marginBottom="80sp"
             android:text="Enter the door display name:"
             android:textSize="20sp" />
 
