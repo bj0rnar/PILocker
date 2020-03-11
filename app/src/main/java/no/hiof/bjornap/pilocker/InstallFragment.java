@@ -128,6 +128,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 else {
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
                     statusTxt.setText("ERROR");
+                    //Do this in the IF clause. Just keeping it here for testing purposes
                     installBtn.getBackground().setColorFilter(null);
                     installBtn.setEnabled(true);
                 }
