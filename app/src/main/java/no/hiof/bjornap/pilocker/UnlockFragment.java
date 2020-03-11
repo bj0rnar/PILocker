@@ -29,6 +29,7 @@ public class UnlockFragment extends Fragment {
     private SSHConnector sshConnector = new SSHConnector();
     private SSHExecuter sshExecuter = new SSHExecuter();
     private TextView statusText;
+    private TextView doorNameTxt;
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -47,15 +48,26 @@ public class UnlockFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        //Check bundle
         if (getArguments() != null){
-            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS IP: " + getArguments().getString("ip"));
+            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEEVES IP: " + getArguments().getString("ip"));
+            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES DOORNAME: " + getArguments().getString("doorName"));
+            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES SIDE: " + getArguments().getString("side"));
         }
 
+        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        String prefHost = pref.getString("key_ip", null);
+        String prefName = pref.getString("doorName", null);
+        String prefSide = pref.getString("side", null);
 
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
+
+        doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
+        doorNameTxt.setText(prefName);
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
-
 
         final NavController navController = Navigation.findNavController(view);
 

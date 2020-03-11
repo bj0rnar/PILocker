@@ -1,6 +1,7 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -135,7 +136,20 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
          * EncryptedSharedPreference
          */
 
+
+        //Save to sharedpreferences, switch to encryptedsharedpreferences later.
+        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("side", side);
+        edit.putString("doorName", doorName);
+        edit.putString("key_ip", result);
+        edit.apply();
+
+
+        //Also send in bundle, remove once method is confirmed.
         Bundle b = new Bundle();
+        b.putString("side", side);
+        b.putString("doorName", doorName);
         b.putString("ip", result);
         navController.navigate(R.id.action_progressFragment_to_unlockFragment2, b);
     }
