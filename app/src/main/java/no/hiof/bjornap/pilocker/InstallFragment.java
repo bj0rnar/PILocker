@@ -116,14 +116,18 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     //String testIp = "192.168.10.153";
                     //String cmd = "./readtest.sh";
                     //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
-                    String cmd = "./getIp.sh";
+                    //String cmd = "./getIp.sh";
 
-                    String forceIp = "10.0.60.1";
+                    //String forceIp = "10.0.60.1";
                     //for prototyping:
                     //reader.response = getContext().getApplicationContext();
-                    reader.execute(actualUser, actualPass, wlanIp, cmd);
+                    //reader.execute(actualUser, actualPass, wlanIp, cmd);
 
                     //reader.execute(defaultuser, defaultpass, testIp, cmd);
+                    statusTxt.setText("OK");
+
+                    installBtn.getBackground().setColorFilter(null);
+                    installBtn.setEnabled(true);
                 }
                 else {
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
@@ -139,7 +143,10 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_installFragment_to_progressFragment);
+                Bundle b = new Bundle();
+                b.putString("side", side);
+                b.putString("doorName", doorName);
+                navController.navigate(R.id.action_installFragment_to_progressFragment, b);
             }
         });
     }

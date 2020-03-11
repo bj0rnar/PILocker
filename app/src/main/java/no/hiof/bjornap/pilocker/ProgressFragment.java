@@ -39,8 +39,12 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     private String actualUser = "ubuntu";
     private String actualPass = "gruppe6";
+    private String wlanIP = "10.0.60.1";
+    private String cmd = "./getIp.sh";
 
     private NavController navController;
+    private String doorName = "";
+    private String side = "";
 
     private Button btn;
 
@@ -65,6 +69,18 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         navController = Navigation.findNavController(view);
         
         //SPIN THE WHEEL FOR NOW, MIGRATE INSTALLFRAGMENT LOGIC TO THIS CLASS.
+
+        if (getArguments() != null){
+            doorName = getArguments().getString("doorName");
+            side = getArguments().getString("side");
+            Log.i("BUNDLE PROGRESS", doorName);
+            Log.i("BUNDLE PROGRESS", side);
+
+            //Run reader method
+            reader.execute(actualUser, actualPass, wlanIP, cmd);
+
+
+        }
 
 
         /*
@@ -111,6 +127,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     @Override
     public void onComplete(String result) {
+        result = result.substring(0, result.length()-1);
         Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
 
         /**
@@ -119,8 +136,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
          */
 
         Bundle b = new Bundle();
-        b.putString("rsa", result);
-        b.putString("ip", ethernetIP);
+        b.putString("ip", result);
         navController.navigate(R.id.action_progressFragment_to_unlockFragment2, b);
     }
 }

@@ -47,13 +47,12 @@ public class UnlockFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
+
         if (getArguments() != null){
             Log.i("SSHREADER", "UNLOCKFRAGMENT HAS IP: " + getArguments().getString("ip"));
-            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS RSA: " + getArguments().getString("rsa"));
         }
 
-         */
+
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
 
