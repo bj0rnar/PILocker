@@ -2,6 +2,8 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -50,8 +52,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     private String actualPass = "gruppe6";
 
 
+    private Button testApBtn;
     private Button installBtn;
-    private Button nextBtn;
 
     private TextView statusTxt;
 
@@ -93,14 +95,17 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
          * TODO: SLEEP
          */
 
+        //Initialize
         navController = Navigation.findNavController(view);
-
-        installBtn = view.findViewById(R.id.install_button);
-        nextBtn = view.findViewById(R.id.installation_ap_nextBtn);
-
+        testApBtn = view.findViewById(R.id.installation_ap_testApBtn);
+        installBtn = view.findViewById(R.id.installation_ap_installBtn);
         statusTxt = view.findViewById(R.id.installation_ap_status_textView);
 
-        installBtn.setOnClickListener(new View.OnClickListener() {
+        //Grey out install button until status is checked OK
+        installBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        installBtn.setEnabled(false);
+
+        testApBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -123,12 +128,14 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 else {
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
                     statusTxt.setText("ERROR");
+                    installBtn.getBackground().setColorFilter(null);
+                    installBtn.setEnabled(true);
                 }
 
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_installFragment_to_progressFragment);
