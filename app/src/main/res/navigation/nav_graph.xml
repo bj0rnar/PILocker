@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/connectFragment2">
+    <fragment
+        android:id="@+id/connectFragment2"
+        android:name="no.hiof.bjornap.pilocker.ConnectFragment"
+        android:label="fragment_connect"
+        tools:layout="@layout/fragment_connect" >
+        <action
+            android:id="@+id/action_connectFragment2_to_unlockFragment2"
+            app:destination="@id/unlockFragment2"
+            app:popUpTo="@+id/connectFragment2" />
+        <action
+            android:id="@+id/action_connectFragment2_to_installNamingFragment"
+            app:destination="@id/installNamingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/unlockFragment2"
+        android:name="no.hiof.bjornap.pilocker.UnlockFragment"
+        android:label="fragment_unlock"
+        tools:layout="@layout/fragment_unlock" />
+    <fragment
+        android:id="@+id/installFragment"
+        android:name="no.hiof.bjornap.pilocker.InstallFragment"
+        android:label="fragment_install"
+        tools:layout="@layout/fragment_install" >
+        <action
+            android:id="@+id/action_installFragment_to_progressFragment"
+            app:destination="@id/progressFragment" />
+        <action
+            android:id="@+id/action_installFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+        <action
+            android:id="@+id/action_installFragment_to_installHandleSide2"
+            app:destination="@id/installHandleSide2" />
+    </fragment>
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="no.hiof.bjornap.pilocker.ProgressFragment"
+        android:label="fragment_progress"
+        tools:layout="@layout/fragment_progress" >
+        <action
+            android:id="@+id/action_progressFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+        <argument
+            android:name="ethernetIp"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/installNamingFragment"
+        android:name="no.hiof.bjornap.pilocker.InstallNamingFragment"
+        android:label="fragment_install_naming"
+        tools:layout="@layout/fragment_install_naming" >
+        <action
+            android:id="@+id/action_installNamingFragment_to_installHandleSide2"
+            app:destination="@id/installHandleSide2" />
+    </fragment>
+    <fragment
+        android:id="@+id/installHandleSide2"
+        android:name="no.hiof.bjornap.pilocker.InstallHandleSide"
+        android:label="fragment_install_handle_side"
+        tools:layout="@layout/fragment_install_handle_side" >
+        <action
+            android:id="@+id/action_installHandleSide2_to_installFragment"
+            app:destination="@id/installFragment" />
+        <action
+            android:id="@+id/action_installHandleSide2_to_installNamingFragment"
+            app:destination="@id/installNamingFragment" />
+    </fragment>
+</navigation>

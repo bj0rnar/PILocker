@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">PILocker</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connecting">Connecting…</string>
+    <string name="installing">Installing…</string>
+    <string name="install_guide">No device found. Connect the lock to a power supply before pressing install</string>
+    <string name="progress_loading_text">Installing..</string>
+    <string name="installation_name_edittext_hint">Office door</string>
 </resources>
