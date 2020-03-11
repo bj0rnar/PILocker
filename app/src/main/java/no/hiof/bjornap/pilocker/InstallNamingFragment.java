@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -22,6 +24,7 @@ public class InstallNamingFragment extends Fragment {
 
     private Button nextBtn;
     private NavController navController;
+    private EditText nameTxt;
 
 
     public InstallNamingFragment() {
@@ -42,12 +45,24 @@ public class InstallNamingFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
+        nameTxt = view.findViewById(R.id.installation_name_doorName_editText);
 
         nextBtn = view.findViewById(R.id.installation_name_nextBtn);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_installNamingFragment_to_installHandleSide2);
+
+                String sNameTxt = nameTxt.getText().toString();
+
+                //Include some form of input validation, create static class to check input.
+                if (!sNameTxt.equals("")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("doorName", sNameTxt);
+                    navController.navigate(R.id.action_installNamingFragment_to_installHandleSide2, bundle);
+                }
+                else {
+                    Toast.makeText(getContext().getApplicationContext(), "Missing door name", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
