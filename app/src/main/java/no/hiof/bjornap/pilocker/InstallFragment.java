@@ -55,6 +55,9 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
     private TextView statusTxt;
 
+    private String doorName;
+    private String side;
+
     public InstallFragment() {
         // Required empty public constructor
     }
@@ -75,6 +78,19 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getArguments() != null){
+            doorName = getArguments().getString("doorName");
+            side = getArguments().getString("side");
+            Log.i("BUNDLE FINAL INSTALL", doorName);
+            Log.i("BUNDLE FINAL INSTALL", side);
+        }
+
+        /**
+         * TODO: Build a DOOR object with recieved IP from logic and arguments from getArguments.
+         * TODO: Move "reader.execute" logic from this fragment to progress fragment, handle everything there!
+         * TODO: SLEEP
+         */
 
         navController = Navigation.findNavController(view);
 
