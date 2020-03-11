@@ -89,6 +89,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         /**
          * TODO: Build a DOOR object with recieved IP from logic and arguments from getArguments.
          * TODO: Move "reader.execute" logic from this fragment to progress fragment, handle everything there!
+         * TODO: ONLY check for Correct IP
          * TODO: SLEEP
          */
 

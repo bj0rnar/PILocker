@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:elevation="10sp"
-            android:text="DONE" />
+            android:text="INSTALL" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
