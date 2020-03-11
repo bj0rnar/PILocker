@@ -2,6 +2,8 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.Utility.SSHConnector;
 import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
 
@@ -19,17 +22,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UnlockFragment extends Fragment {
+public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private SSHConnector sshConnector = new SSHConnector();
-    private SSHExecuter sshExecuter = new SSHExecuter();
+
+    private AsyncResponseInterface thisInterface = this;
+
+    //private SSHExecuter executer = new SSHExecuter();
     private TextView statusText;
     private TextView doorNameTxt;
+
+    private String prefHost;
+    private String prefSide;
+    private String prefName;
+
+    private SharedPreferences pref;
+
+    private Button unlockBtn;
+    private Button lockBtn;
+
+    private String hostName = "ubuntu";
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -40,6 +58,11 @@ public class UnlockFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        //executer.response = this;
+
+
+        //Initializing interface for dependency injection
 
         return inflater.inflate(R.layout.fragment_unlock, container, false);
     }
@@ -55,10 +78,11 @@ public class UnlockFragment extends Fragment {
             Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES SIDE: " + getArguments().getString("side"));
         }
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        String prefHost = pref.getString("key_ip", null);
-        String prefName = pref.getString("doorName", null);
-        String prefSide = pref.getString("side", null);
+        //Initialize sharedpreferences
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        prefHost = pref.getString("key_ip", null);
+        prefName = pref.getString("doorName", null);
+        prefSide = pref.getString("side", null);
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
@@ -69,50 +93,107 @@ public class UnlockFragment extends Fragment {
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
 
-        final NavController navController = Navigation.findNavController(view);
+        statusText.setText("UNKNOWN");
+        lockBtn = view.findViewById(R.id.lockBtn);
+        unlockBtn = view.findViewById(R.id.unlockBtn);
 
-        final Button lockBtn = view.findViewById(R.id.lockBtn);
         lockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 statusText.setText("LOCKED");
 
+                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockBtn.setEnabled(false);
+                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockBtn.setEnabled(false);
+
+                String command = "";
+
+                if (prefSide == "right"){
+                    command = "./turnCounterClockwise.sh; echo $?";
+                }
+                else {
+                    command = "./turnClockwise.sh; echo $?";
+                }
+
+                //USE prefHost FOR ACCEPTANCETEST
+                //String manualHost = "158.39.162.128";
+
+                SSHExecuter executer = new SSHExecuter();
+                executer.response = thisInterface;
+                try {
+                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                }
+                catch (Exception e){
+                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockBtn.setEnabled(true);
+                    lockBtn.getBackground().setColorFilter(null);
+                    lockBtn.setEnabled(true);
+                }
             }
         });
 
-        final Button unlockBtn = view.findViewById(R.id.unlockBtn);
+
+
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 statusText.setText("UNLOCKED");
 
-                //String usr = "bjornar";
-                //String host = "192.168.10.153";
-                //String cmd = "./lol.sh";
+                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockBtn.setEnabled(false);
+                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockBtn.setEnabled(false);
 
-                /*
-                SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-                String prefHost = pref.getString("key_ip", null);
 
-                Log.i("SSHREADER", "Fra UnlockFragment: " + prefHost);
+                String command = "";
 
-                String usr = "ubuntu";
-                //String host = getArguments().getString("ip");
-                String hardcodedHost = "158.39.162.152";
-                String cmd = "./lockTest.sh";
+                if (prefSide == "left"){
+                    command = "./turnClockwise.sh; echo $?";
+                }
+                else {
+                    command = "./turnCounterClockwise.sh; echo $?";
+                }
 
-                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
-                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.isCancelled());
+                //USE prefHost FOR ACCEPTANCETEST
+                //String manualHost = "158.39.162.128";
 
-                SSHExecuter executor = new SSHExecuter();
+                SSHExecuter executer = new SSHExecuter();
+                executer.response = thisInterface;
+                try {
+                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                }
+                catch (Exception e){
+                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockBtn.setEnabled(true);
+                    lockBtn.getBackground().setColorFilter(null);
+                    lockBtn.setEnabled(true);
+                }
 
-                executor.execute(usr, prefHost, cmd, "lol");
-
-                 */
             }
         });
 
     }
 
 
+    @Override
+    public void onComplete(String result) {
+        Log.i("FINALSTAGE", "ONCOMPLETE FRA ASYNC MOTTAR: " + result);
+        //UNLOCK BUTTONS ONLY ON RESPONSE
+        unlockBtn.getBackground().setColorFilter(null);
+        unlockBtn.setEnabled(true);
+        lockBtn.getBackground().setColorFilter(null);
+        lockBtn.setEnabled(true);
+
+        if (result != null) {
+            if (!result.equals("0")) {
+                Log.i("FINALSTAGE", "echo $? gives no output");
+            }
+        }
+        else {
+            Toast.makeText(getContext().getApplicationContext(), "Error, are you connected to eduroam?", Toast.LENGTH_SHORT).show();
+            statusText.setText("Unknown");
+        }
+
+    }
 }

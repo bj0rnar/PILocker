@@ -8,9 +8,14 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-public class SSHExecuter extends AsyncTask<String, Void, Void> {
+import java.io.ByteArrayOutputStream;
+
+public class SSHExecuter extends AsyncTask<String, Void, String> {
+
+    public AsyncResponseInterface response = null;
+
     @Override
-    protected Void doInBackground(String... strings) {
+    protected String doInBackground(String... strings) {
         String user = strings[0];
         String host = strings[1];
         String script = strings[2];
@@ -30,14 +35,23 @@ public class SSHExecuter extends AsyncTask<String, Void, Void> {
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
             session = jsch.getSession(user, host, port);
+            //Add identity here instead of actual password..
             session.setPassword("gruppe6");
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
+            final ByteArrayOutputStream output = new ByteArrayOutputStream();
+            channel.setOutputStream(output);
             channel.setCommand(script);
             channel.connect();
+
+            //Sleep it for a bit..
+            Thread.sleep(3000);
+
+
             channel.disconnect();
+            return output.toString();
         }
         catch (JSchException ex){
             //Show error in UI
@@ -54,5 +68,15 @@ public class SSHExecuter extends AsyncTask<String, Void, Void> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+        Log.i("FINALSTAGE", "SSHEXECUTER POSTEXECUTE: " + s);
+
+        response.onComplete(s);
+
     }
 }
