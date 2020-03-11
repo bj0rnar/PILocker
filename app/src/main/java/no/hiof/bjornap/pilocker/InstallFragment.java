@@ -103,23 +103,6 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         return address;
     }
 
-    private String getIPAddress() {
-        final WifiManager manager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
-        final DhcpInfo dhcp = manager.getDhcpInfo();
-        int ipAddress = dhcp.gateway;
-        ipAddress = (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) ?
-                Integer.reverseBytes(ipAddress) : ipAddress;
-        byte[] ipAddressByte = BigInteger.valueOf(ipAddress).toByteArray();
-        try {
-            InetAddress myAddr = InetAddress.getByAddress(ipAddressByte);
-            return myAddr.getHostAddress();
-        } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
-            Log.e("Wifi Class", "Error getting Hotspot IP address ", e);
-        }
-        return "null";
-    }
-
     @Override
     public void onComplete(String result) {
         result = result.substring(0, result.length()-1);

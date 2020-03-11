@@ -7,10 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -22,6 +25,8 @@ public class InstallHandleSide extends Fragment {
     //Door selection
     private ConstraintLayout rightDoorLayout;
     private ConstraintLayout leftDoorLayout;
+    private Button nextBtn;
+    private NavController navController;
 
 
     public InstallHandleSide() {
@@ -44,6 +49,8 @@ public class InstallHandleSide extends Fragment {
         rightDoorLayout = view.findViewById(R.id.installation_side_rightDoorConstraintLayout);
         leftDoorLayout = view.findViewById(R.id.installation_side_leftDoorConstraintLayout);
 
+        navController = Navigation.findNavController(view);
+
         rightDoorLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +65,13 @@ public class InstallHandleSide extends Fragment {
             }
         });
 
+        nextBtn = view.findViewById(R.id.installation_side_nextBtn);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_installHandleSide2_to_installFragment);
+            }
+        });
 
     }
 }
