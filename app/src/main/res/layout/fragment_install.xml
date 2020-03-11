@@ -77,12 +77,12 @@
             android:textSize="22sp" />
 
         <TextView
+            android:id="@+id/installation_ap_status_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="30sp"
             android:layout_marginStart="80sp"
-            android:text="OK"
             android:textSize="22sp" />
 
         <Button

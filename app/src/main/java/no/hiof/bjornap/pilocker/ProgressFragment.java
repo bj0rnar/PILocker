@@ -63,8 +63,11 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
+        
+        //SPIN THE WHEEL FOR NOW, MIGRATE INSTALLFRAGMENT LOGIC TO THIS CLASS.
 
 
+        /*
         if (getArguments() != null) {
             ethernetIP = getArguments().getString("ip");
             Log.i("SSHREADER", "Progressfragment: " + ethernetIP);
@@ -98,9 +101,10 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
                 }
 
                 */
+        /*
             }
         });
-
+        */
 
 
     }

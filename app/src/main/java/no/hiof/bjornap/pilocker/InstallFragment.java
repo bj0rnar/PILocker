@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -48,6 +50,11 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     private String actualPass = "gruppe6";
 
 
+    private Button installBtn;
+    private Button nextBtn;
+
+    private TextView statusTxt;
+
     public InstallFragment() {
         // Required empty public constructor
     }
@@ -71,25 +78,43 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
         navController = Navigation.findNavController(view);
 
-        final Button installBtn = view.findViewById(R.id.install_button);
+        installBtn = view.findViewById(R.id.install_button);
+        nextBtn = view.findViewById(R.id.installation_ap_nextBtn);
 
+        statusTxt = view.findViewById(R.id.installation_ap_status_textView);
 
         installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String wlanIp = getIPAddressTwo();
-                //String testIp = "192.168.10.153";
-                //String cmd = "./readtest.sh";
-                //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
-                String cmd = "./getIp.sh";
 
-                String forceIp = "10.0.60.1";
-                //for prototyping:
-                //reader.response = getContext().getApplicationContext();
-                reader.execute(actualUser, actualPass, wlanIp, cmd);
+                if (wlanIp.equals("10.0.60.1")) {
 
-                //reader.execute(defaultuser, defaultpass, testIp, cmd);
+                    //String testIp = "192.168.10.153";
+                    //String cmd = "./readtest.sh";
+                    //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
+                    String cmd = "./getIp.sh";
 
+                    String forceIp = "10.0.60.1";
+                    //for prototyping:
+                    //reader.response = getContext().getApplicationContext();
+                    reader.execute(actualUser, actualPass, wlanIp, cmd);
+
+                    //reader.execute(defaultuser, defaultpass, testIp, cmd);
+                }
+                else {
+                    Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
+                    statusTxt.setText("ERROR");
+                }
+
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_installFragment_to_progressFragment);
             }
         });
     }

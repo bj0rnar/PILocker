@@ -5,31 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".ProgressFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="169dp"
-            android:layout_marginBottom="442dp"
-            android:text="Koble til eduroam" />
-
-        <Button
-        android:id="@+id/progress_button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="167dp"
-        android:layout_marginBottom="345dp"
-        android:text="Install" />
+        android:text="@string/installing"
+        style="@style/DefaultText"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100sp" />
 
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/indeterminateBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
 
     <!--<TextView
         android:layout_width="wrap_content"
