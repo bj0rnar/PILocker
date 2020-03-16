@@ -128,8 +128,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     @Override
     public void onComplete(String result) {
-        result = result.substring(0, result.length()-1);
-        Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
+        //result = result.substring(0, result.length()-1);
+        //Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
 
         /**
          * At this point, don't send it via bundle. The key and the IP belongs in
@@ -142,7 +142,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("side", side);
         edit.putString("doorName", doorName);
-        edit.putString("key_ip", result);
+        edit.putString("key_ip", "ayyy");
         edit.apply();
 
 
@@ -150,7 +150,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         Bundle b = new Bundle();
         b.putString("side", side);
         b.putString("doorName", doorName);
-        b.putString("ip", result);
+        b.putString("ip", "ayyy");
         navController.navigate(R.id.action_progressFragment_to_unlockFragment2, b);
     }
 }

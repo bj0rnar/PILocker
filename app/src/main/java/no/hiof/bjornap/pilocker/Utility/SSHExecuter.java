@@ -32,6 +32,7 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
 
 
         try {
+            /*
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
             session = jsch.getSession(user, host, port);
@@ -45,18 +46,13 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
             channel.setOutputStream(output);
             channel.setCommand(script);
             channel.connect();
-
+            */
             //Sleep it for a bit..
             Thread.sleep(3000);
 
 
-            channel.disconnect();
-            return output.toString();
-        }
-        catch (JSchException ex){
-            //Show error in UI
-            String errorMessage = "JSCH exception: " + ex.getMessage();
-            Log.d("SSH", errorMessage);
+            //channel.disconnect();
+            return "test";
         }
         catch (Exception ex){
             //anycatcher
@@ -64,7 +60,7 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
             Log.d("SSH", errorMessage);
         }
         finally {
-            session.disconnect();
+            //session.disconnect();
         }
 
         return null;

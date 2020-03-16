@@ -111,6 +111,14 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
                 String wlanIp = getIPAddressTwo();
 
+                installBtn.getBackground().setColorFilter(null);
+                installBtn.setEnabled(true);
+
+                statusTxt.setText("OK");
+
+                /*
+
+
                 if (wlanIp.equals("10.0.60.1")) {
 
                     //String testIp = "192.168.10.153";
@@ -136,6 +144,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     installBtn.getBackground().setColorFilter(null);
                     installBtn.setEnabled(true);
                 }
+
+                 */
 
             }
         });
