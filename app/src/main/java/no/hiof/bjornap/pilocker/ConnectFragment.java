@@ -56,12 +56,12 @@ public class ConnectFragment extends Fragment {
 
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 1;
-
+        int key = 0;
+        /*
         if (pref.getString("key_ip", null) != null){
             key = 0;
         }
-
+        */
 
         //Basically slekk en ska ha dæ.
         if (key == 0){

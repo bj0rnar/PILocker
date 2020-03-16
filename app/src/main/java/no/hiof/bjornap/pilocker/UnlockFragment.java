@@ -4,14 +4,13 @@ package no.hiof.bjornap.pilocker;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.Utility.SSHConnector;
 import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
@@ -23,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.Executor;
 
 
 /**
@@ -49,6 +50,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private String hostName = "ubuntu";
 
+    private Executor exec;
+    private BiometricPrompt bioPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
+
     public UnlockFragment() {
         // Required empty public constructor
     }
@@ -60,6 +65,39 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         // Inflate the layout for this fragment
 
         //executer.response = this;
+        exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
+        bioPrompt = new BiometricPrompt(UnlockFragment.this, exec, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getActivity().getApplicationContext(), "Authentication failed",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+        bioPrompt.authenticate(promptInfo);
 
 
         //Initializing interface for dependency injection
@@ -195,5 +233,17 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             statusText.setText("Unknown");
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+        bioPrompt.authenticate(promptInfo);
     }
 }
