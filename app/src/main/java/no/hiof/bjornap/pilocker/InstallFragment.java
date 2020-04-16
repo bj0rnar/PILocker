@@ -164,7 +164,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     public void onComplete(String result) {
         result = result.substring(0, result.length()-1);
         Log.i("SSHREADER", "Fra AsyncEthernetREsponse: " + result);
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("secret_shared_prefs", 0);
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("key_ip", result);
         edit.apply();
