@@ -18,6 +18,8 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
      * This works as intended, but reconnecting is required for each action
      */
 
+    public AsyncResponseInterface response = null;
+
     //Pew pew
     public SSHConnector() {
 
@@ -30,7 +32,7 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
         String host = "192.168.10.153";
         int port = 22;
         Session session = null;
-
+        //C:\Users\bj0rn\AppData\Local\Android\Sdk
         try {
             JSch jsch = new JSch();
             session = jsch.getSession(user, host, port);
@@ -39,7 +41,7 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
             session.setTimeout(10000);
             session.connect();
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
-            channel.setCommand("./lol.sh");
+            channel.setCommand("./input_test.sh heiframeg");
             channel.connect();
             channel.disconnect();
             returnMessage += "Success!";
@@ -58,5 +60,15 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
             session.disconnect();
         }
         return returnMessage;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+        Log.i("FINALSTAGE", "SSHEXECUTER POSTEXECUTE: " + s);
+
+        response.onComplete(s);
+
     }
 }

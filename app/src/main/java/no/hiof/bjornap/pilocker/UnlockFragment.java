@@ -144,7 +144,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 lockBtn.setEnabled(false);
                 unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 unlockBtn.setEnabled(false);
-
+                /*
                 String command = "";
 
                 if (prefSide == "right"){
@@ -157,6 +157,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 //USE prefHost FOR ACCEPTANCETEST
                 //String manualHost = "158.39.162.128";
 
+
+
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 try {
@@ -168,6 +170,13 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
+                 */
+
+                SSHConnector rere = new SSHConnector();
+                rere.response = thisInterface;
+
+                rere.execute();
+
             }
         });
 
@@ -183,7 +192,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 unlockBtn.setEnabled(false);
 
-
+                /*
                 String command = "";
 
                 if (prefSide == "left"){
@@ -207,6 +216,12 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
+                */
+
+                SSHConnector rere = new SSHConnector();
+                rere.response = thisInterface;
+
+                rere.execute();
 
             }
         });
@@ -222,7 +237,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         unlockBtn.setEnabled(true);
         lockBtn.getBackground().setColorFilter(null);
         lockBtn.setEnabled(true);
-
+        /*
         if (result != null) {
             if (!result.equals("0")) {
                 Log.i("FINALSTAGE", "echo $? gives no output");
@@ -232,6 +247,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             Toast.makeText(getContext().getApplicationContext(), "Error, are you connected to eduroam?", Toast.LENGTH_SHORT).show();
             statusText.setText("Unknown");
         }
+         */
 
     }
     

@@ -54,6 +54,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
     private Button testApBtn;
     private Button installBtn;
+    private Button backBtn;
 
     private TextView statusTxt;
 
@@ -100,6 +101,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         testApBtn = view.findViewById(R.id.installation_ap_testApBtn);
         installBtn = view.findViewById(R.id.installation_ap_installBtn);
         statusTxt = view.findViewById(R.id.installation_ap_status_textView);
+        backBtn = view.findViewById(R.id.installation_ap_backBtn);
 
         //Grey out install button until status is checked OK
         installBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
@@ -133,8 +135,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
                     statusTxt.setText("ERROR");
                     //Do this in the IF clause. Just keeping it here for testing purposes
-                    installBtn.getBackground().setColorFilter(null);
-                    installBtn.setEnabled(true);
+                    //installBtn.getBackground().setColorFilter(null);
+                    //installBtn.setEnabled(true);
                 }
 
             }
@@ -147,6 +149,13 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 b.putString("side", side);
                 b.putString("doorName", doorName);
                 navController.navigate(R.id.action_installFragment_to_progressFragment, b);
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_installFragment_to_installHandleSide2);
             }
         });
     }

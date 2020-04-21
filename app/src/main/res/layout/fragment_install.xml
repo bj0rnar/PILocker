@@ -116,6 +116,15 @@
             android:elevation="10sp"
             android:text="INSTALL" />
 
+        <Button
+            android:id="@+id/installation_ap_backBtn"
+            style="@style/InstallationButton"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:elevation="10sp"
+            android:text="BACK" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
