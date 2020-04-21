@@ -41,7 +41,7 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
             session.setTimeout(10000);
             session.connect();
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
-            channel.setCommand("./input_test.sh heiframeg");
+            channel.setCommand("./counter.sh");
             channel.connect();
             channel.disconnect();
             returnMessage += "Success!";

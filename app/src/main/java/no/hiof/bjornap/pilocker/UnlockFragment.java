@@ -171,11 +171,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     lockBtn.setEnabled(true);
                 }
                  */
-
-                SSHConnector rere = new SSHConnector();
-                rere.response = thisInterface;
-
-                rere.execute();
+                for(int i = 0; i < 1000; i++) {
+                    SSHConnector rere = new SSHConnector();
+                    rere.response = thisInterface;
+                    rere.execute();
+                }
 
             }
         });
