@@ -102,8 +102,15 @@ public class ExampleUnitTest {
             channel.disconnect();
             session.disconnect();
         }
-        catch (JSchException | InterruptedException | SftpException | FileNotFoundException e){
+        catch (JSchException e){
             System.out.println(e.getMessage());
+        }
+        catch (SftpException e) {
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
