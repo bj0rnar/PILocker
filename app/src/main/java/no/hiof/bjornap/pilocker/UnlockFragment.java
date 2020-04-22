@@ -222,7 +222,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     lockBtn.setEnabled(true);
                 }
                 */
-                /*
+
                 WheresMyTuples myTuples = generateRSAPairs();
                 String priv = (String)myTuples.priv;
                 String pub = (String)myTuples.pub;
@@ -246,8 +246,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         "    jwVH3uEoiTGyj6ZTfQJAR16G2eIzE/XtIJQJl36kMuE+Pxdna163DUwAC6puBh4p\n" +
                         "    beoN+jXIqrGGRGEjjXTsWSkgLMgfL6UswdZTRINGvg==\n" +
                         "    -----END RSA PRIVATE KEY-----";
-                */
+
                 //Log.i("RSATEST", lagraNokkel);
+
                 SSHConnector rere = new SSHConnector();
                 rere.response = thisInterface;
 
