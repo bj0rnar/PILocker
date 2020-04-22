@@ -80,38 +80,34 @@ public class ExampleUnitTest {
             session.connect();
 
             Channel channel = session.openChannel("sftp");
-            final ByteArrayOutputStream output = new ByteArrayOutputStream();
             channel.connect();
-            channel.setOutputStream(output);
 
-            String test = "HALLO";
+            String test = "HALLO DIN NEGER";
 
-            //InputStream stream = new ByteArrayInputStream(test.getBytes(StandardCharsets.UTF_8));
-            File f = new File(test);
+            InputStream stream = new ByteArrayInputStream(test.getBytes(StandardCharsets.UTF_8));
+            //File f = new File(test);
 
             ChannelSftp sftp = (ChannelSftp) channel;
-            sftp.cd("home/bjornar/");
-            sftp.put(new FileInputStream(f), "uploadhere");
+            //sftp.cd("/home/bjornar/");
+            sftp.put(stream, "/home/bjornar/uploadhere.txt", ChannelSftp.OVERWRITE);
 
             sftp.exit();
 
-            sftp.disconnect();
-
-            Thread.sleep(3000);
+            //sftp.disconnect();
 
             channel.disconnect();
+
             session.disconnect();
         }
-        catch (JSchException e){
+        catch (JSchException | SftpException e){
             System.out.println(e.getMessage());
         }
-        catch (SftpException e) {
-            System.out.println(e.getMessage());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        /*
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+         */
 
     }
 }
