@@ -230,7 +230,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 Log.i("RSATEST", priv);
                 Log.i("RSATEST", pub);
 
-
                 SSHConnector rere = new SSHConnector();
                 rere.response = thisInterface;
 
