@@ -230,29 +230,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 Log.i("RSATEST", priv);
                 Log.i("RSATEST", pub);
 
-                //Log.i("RSATEST", priv);
-                String lagraNokkel = "-----BEGIN RSA PRIVATE KEY-----\n" +
-                        "    MIICWwIBAAKBgQCo9T/fle6SbffDus12zj+vJaY+lrWoPRdKFhHSQRA2gB6YpLoQ\n" +
-                        "    njY+0YR/zvB+idwCm3XssfzkQNHgWaNpUtLUdhyMfDgUJXB0odw/S5HVP29L1zk9\n" +
-                        "    nWOZBHZl/RMlSfZhqoC+mMZecyjdA3Ml0Mv8mEeezcNrIM7xfl6hJ74PBwIDAQAB\n" +
-                        "    AoGAZj2SW1A1P/K/nXeq4ZvJOcmEohc88gOV1kUon5yznOdGnIQB/BBhLv5GObkW\n" +
-                        "    Gtx9gC5m28aRC+aVmjdkBVYTMXX+/pPyRBXcBWvCsgaUkj8/ENnzWf4VWHa8+KzG\n" +
-                        "    I4QMGpRsh5FpSm24jbhOZAL4VwlfZvUiTIw3rro2UzVPycECQQDbaprkQMhWpu+p\n" +
-                        "    PLff9C3L1obg+CKtbgc/qaZK8B0mXeYZoQj5w5kSXLzfPNDN15e78wnqI4eia+BX\n" +
-                        "    7sdWzooRAkEAxSDq7QBR/bPszEMoFPUd2pZawSpe0uOsDcKQ+Y1E/AcbkuTFN55y\n" +
-                        "    CPl/CkZJidBzkUQ/cdzxo+CTXW2o6fmvlwJAVz+Qz+qivzIqYpVuWHN0MnXftF13\n" +
-                        "    DJeP8lS3d1z7emIkOVS7iPWqTI7r26kHLpLoFyiRbLUsHf3fe5fLVE1UwQJAE54V\n" +
-                        "    AwT3I+JV/HXqdTt3fxtbaMHIsgAKTUxBlTQj21jxu4qcvc481vvNUr5v7xEZjylV\n" +
-                        "    jwVH3uEoiTGyj6ZTfQJAR16G2eIzE/XtIJQJl36kMuE+Pxdna163DUwAC6puBh4p\n" +
-                        "    beoN+jXIqrGGRGEjjXTsWSkgLMgfL6UswdZTRINGvg==\n" +
-                        "    -----END RSA PRIVATE KEY-----";
-
-                //Log.i("RSATEST", lagraNokkel);
 
                 SSHConnector rere = new SSHConnector();
                 rere.response = thisInterface;
 
-                rere.execute();
+                rere.execute(pub);
 
             }
         });

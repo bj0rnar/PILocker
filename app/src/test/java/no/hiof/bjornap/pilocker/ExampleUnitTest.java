@@ -82,20 +82,29 @@ public class ExampleUnitTest {
             Channel channel = session.openChannel("sftp");
             channel.connect();
 
-            String test = "HALLO DIN NEGER";
+            String test = "ITS SO BIG";
 
             InputStream stream = new ByteArrayInputStream(test.getBytes(StandardCharsets.UTF_8));
             //File f = new File(test);
 
             ChannelSftp sftp = (ChannelSftp) channel;
             //sftp.cd("/home/bjornar/");
-            sftp.put(stream, "/home/bjornar/uploadhere.txt", ChannelSftp.OVERWRITE);
+            sftp.put(stream, "/home/bjornar/myPENIS.txt", ChannelSftp.OVERWRITE);
 
             sftp.exit();
 
             //sftp.disconnect();
 
             channel.disconnect();
+
+
+            ChannelExec channel2 = (ChannelExec)session.openChannel("exec");
+            final ByteArrayOutputStream output = new ByteArrayOutputStream();
+            channel2.setOutputStream(output);
+            channel2.setCommand("./counter.sh");
+            channel2.connect();
+            channel2.disconnect();
+
 
             session.disconnect();
         }

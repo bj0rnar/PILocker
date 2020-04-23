@@ -9,10 +9,14 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.KeyPair;
 import com.jcraft.jsch.Session;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class SSHConnector extends AsyncTask<String, Void, String> {
 
@@ -47,24 +51,23 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
             session.setTimeout(10000);
             session.connect();
 
-            String remoteDir = "/home/bjornar/testfolder";
+            InputStream RSApubinputStream = new ByteArrayInputStream(strings[0].getBytes(StandardCharsets.UTF_8));
 
             Channel channel3 = session.openChannel("sftp");
-            final ByteArrayOutputStream output = new ByteArrayOutputStream();
             channel3.connect();
-            channel3.setOutputStream(output);
 
             ChannelSftp sftp = (ChannelSftp) channel3;
-            sftp.put("src/main/java/no/hiof/bjornap/pilocker/Model/test.txt", remoteDir + "jschFile.txt");
+            sftp.put(RSApubinputStream, "/home/bjornar/id_rsa.pub", sftp.OVERWRITE);
 
             sftp.exit();
 
             channel3.disconnect();
-            /*
+
+
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
             channel.setOutputStream(output);
-            channel.setCommand("ssh-copy-id -i " + strings[0] +  " bjornar@192.168.10.153");
+            channel.setCommand("ssh-copy-id -f -i /home/bjornar/id_rsa.pub bjornar@192.168.10.153");
             channel.connect();
 
 
@@ -73,17 +76,8 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
             channel.disconnect();
 
 
-
-            ChannelExec channel2 = (ChannelExec)session.openChannel("exec");
-            channel2.setCommand(password);
-            channel2.connect();
-            channel2.disconnect();
-
-
             return output.toString();
 
-             */
-            return output.toString();
         }
         catch (JSchException ex){
             //Show error in UI
