@@ -20,6 +20,10 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
         String host = strings[1];
         String script = strings[2];
         String privatekey = strings[3];
+        String publickey = strings[4];
+
+        byte[] privArray = privatekey.getBytes();
+        byte[] pubArray = publickey.getBytes();
 
         Log.i("SSHREADER", "SSHEXECTURE: strings[0] = " + strings[0]);
         Log.i("SSHREADER", "SSHEXECTURE: strings[1] = " + strings[1]);
@@ -33,10 +37,9 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
 
         try {
             JSch jsch = new JSch();
-            //jsch.addIdentity(privatekey);
+            jsch.addIdentity(user, privArray, pubArray, null);
             session = jsch.getSession(user, host, port);
             //Add identity here instead of actual password..
-            session.setPassword("gruppe6");
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();

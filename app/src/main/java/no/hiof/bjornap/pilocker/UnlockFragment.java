@@ -152,10 +152,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "right"){
-                    command = "./turnCounterClockwise.sh; echo $?";
+                    command = "./turnCounterClockwise.sh;";
                 }
                 else {
-                    command = "./turnClockwise.sh; echo $?";
+                    command = "./turnClockwise.sh;";
                 }
 
                 //USE prefHost FOR ACCEPTANCETEST
@@ -164,7 +164,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 try {
-                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
                     unlockBtn.getBackground().setColorFilter(null);
@@ -191,10 +191,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "left"){
-                    command = "./turnClockwise.sh; echo $?";
+                    command = "./turnClockwise.sh;";
                 }
                 else {
-                    command = "./turnCounterClockwise.sh; echo $?";
+                    command = "./turnCounterClockwise.sh;";
                 }
 
                 //USE prefHost FOR ACCEPTANCETEST
@@ -203,7 +203,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 try {
-                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
                     unlockBtn.getBackground().setColorFilter(null);
