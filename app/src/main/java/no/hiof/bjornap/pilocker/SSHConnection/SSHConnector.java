@@ -1,7 +1,6 @@
-package no.hiof.bjornap.pilocker.Utility;
+package no.hiof.bjornap.pilocker.SSHConnection;
 
 import android.os.AsyncTask;
-import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
 import com.jcraft.jsch.ChannelExec;

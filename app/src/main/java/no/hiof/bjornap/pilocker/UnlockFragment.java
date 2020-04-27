@@ -11,9 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
-import no.hiof.bjornap.pilocker.Utility.SSHConnector;
-import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
+import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHConnector;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
 import android.view.LayoutInflater;

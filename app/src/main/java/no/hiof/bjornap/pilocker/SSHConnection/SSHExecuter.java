@@ -1,4 +1,4 @@
-package no.hiof.bjornap.pilocker.Utility;
+package no.hiof.bjornap.pilocker.SSHConnection;
 
 import android.os.AsyncTask;
 import android.util.Log;
