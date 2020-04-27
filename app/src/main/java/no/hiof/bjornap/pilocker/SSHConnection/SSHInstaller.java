@@ -21,11 +21,13 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        String user = strings[0];
-        String host = strings[1];
-        String password = "gruppe6";
-        String script = strings[2];
-        String privatekey = strings[3];
+        String pub = strings[0];
+        String user = strings[1];
+        String host = strings[2];
+        String password = strings[3];
+
+        //String script = strings[2];
+        //String privatekey = strings[3];
 
         int port = 22;
         Session session = null;
@@ -63,7 +65,6 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             channel6.connect();
             Thread.sleep(3000);
             channel2.disconnect();
-
 
 
             return null;

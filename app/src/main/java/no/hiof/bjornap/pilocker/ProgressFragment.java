@@ -10,13 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHInstaller;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
+import no.hiof.bjornap.pilocker.Utility.Tuples;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import static no.hiof.bjornap.pilocker.Utility.RSAGenerator.generateRSAPairs;
 
 
 /**
@@ -30,7 +34,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         // Required empty public constructor
     }
 
-    private SSHReader reader = new SSHReader();
+    public SSHInstaller sshInstaller;
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -43,8 +47,10 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private NavController navController;
     private String doorName = "";
     private String side = "";
+    private String ip = "";
 
-    private Button btn;
+    private String pub;
+    private String priv;
 
 
     @Override
@@ -52,7 +58,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        reader.response = this;
+
 
         //keyReader.response = this;
 
@@ -66,16 +72,30 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
         navController = Navigation.findNavController(view);
         
-        //SPIN THE WHEEL FOR NOW, MIGRATE INSTALLFRAGMENT LOGIC TO THIS CLASS.
+        //SPIN THE WHEEL FOR NOW
 
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
+            ip = getArguments().getString("ip");
+
             Log.i("BUNDLE PROGRESS", doorName);
             Log.i("BUNDLE PROGRESS", side);
+            Log.i("BUNDLE PROGRESS", ip);
 
             //Run reader method
-            reader.execute(actualUser, actualPass, wlanIP, cmd);
+            //reader.execute(actualUser, actualPass, wlanIP, cmd);
+
+            Tuples tuples = generateRSAPairs();
+            priv = (String)tuples.priv;
+            pub = (String)tuples.pub;
+
+            Log.i("RSATEST", priv);
+            Log.i("RSATEST", pub);
+
+
+            sshInstaller = new SSHInstaller();
+            sshInstaller.execute(pub, actualUser, ip, actualPass);
 
 
         }
@@ -140,6 +160,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         edit.putString("side", side);
         edit.putString("doorName", doorName);
         edit.putString("key_ip", result);
+        edit.putString("rsapub", pub);
+        edit.putString("rsapriv", priv);
         edit.apply();
 
 

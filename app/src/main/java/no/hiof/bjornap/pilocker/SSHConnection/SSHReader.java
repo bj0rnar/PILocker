@@ -56,16 +56,6 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
 
             Thread.sleep(5000);
 
-            /*
-            try {
-                Thread.sleep(10000);
-            }
-            catch (Exception e){
-                Log.w("SSHREADER", "thread sleep failed " + e.getMessage());
-            }
-
-             */
-
             channel.disconnect();
             a = output.toString();
             Log.i("SSHREADER", "OUTPUT TOSTRINGA?!: " + output.toString());

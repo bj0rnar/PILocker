@@ -42,6 +42,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private String prefHost;
     private String prefSide;
     private String prefName;
+    private String prefPub;
+    private String prefPriv;
 
     private SharedPreferences pref;
 
@@ -121,6 +123,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         prefHost = pref.getString("key_ip", null);
         prefName = pref.getString("doorName", null);
         prefSide = pref.getString("side", null);
+        prefPriv = pref.getString("rsapriv", null);
+        prefPub = pref.getString("rsapub", null);
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
