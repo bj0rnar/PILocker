@@ -21,7 +21,10 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
+import no.hiof.bjornap.pilocker.Utility.WheresMyTuples;
+
 import static android.content.Context.MODE_PRIVATE;
+import static no.hiof.bjornap.pilocker.Utility.RSAGenerator.generateRSAPairs;
 import static org.junit.Assert.*;
 
 /**
@@ -98,7 +101,7 @@ public class ExampleUnitTest {
             JSch jsch = new JSch();
             Session session = null;
             jsch.addIdentity("bjornar", privArray, pubArray, null);
-            session = jsch.getSession("bjornar", "192.168.10.153", 22);
+            session = jsch.getSession("bjornar", "192.168.10.185", 22);
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();
@@ -124,11 +127,32 @@ public class ExampleUnitTest {
         try {
             JSch jsch = new JSch();
             Session session = null;
-            session = jsch.getSession("bjornar", "192.168.10.153", 22);
-            session.setPassword("toor");
+            session = jsch.getSession("ubuntu", "192.168.10.185", 22);
+            session.setPassword("gruppe6");
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();
+
+
+            WheresMyTuples myTuples = generateRSAPairs();
+            String priv = (String)myTuples.priv;
+            String pub = (String)myTuples.pub;
+
+
+            InputStream RSApubinputStream = new ByteArrayInputStream(pub.getBytes(StandardCharsets.UTF_8));
+
+            Channel channel3 = session.openChannel("sftp");
+            channel3.connect();
+
+            ChannelSftp sftp = (ChannelSftp) channel3;
+            sftp.put(RSApubinputStream, "/home/ubuntu/id_rsa.pub", sftp.OVERWRITE);
+
+            sftp.exit();
+
+            Thread.sleep(1000);
+
+            channel3.disconnect();
+
             /*
             Channel channel = session.openChannel("sftp");
             channel.connect();
@@ -147,7 +171,7 @@ public class ExampleUnitTest {
             //sftp.disconnect();
 
             channel.disconnect();
-            */
+
 
             ChannelExec channel2 = (ChannelExec)session.openChannel("exec");
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -158,12 +182,11 @@ public class ExampleUnitTest {
             Thread.sleep(3000);
 
             channel2.disconnect();
-
+            */
 
             session.disconnect();
-            System.out.println(output.toString());
         }
-        catch (JSchException | InterruptedException e){
+        catch (JSchException | InterruptedException | SftpException e){
             System.out.println(e.getMessage());
         }
         /*
