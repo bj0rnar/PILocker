@@ -92,7 +92,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         .show();
             }
         });
-
+        /*
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -101,7 +101,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         bioPrompt.authenticate(promptInfo);
 
-
+        */
         //Initializing interface for dependency injection
 
         return inflater.inflate(R.layout.fragment_unlock, container, false);
@@ -243,6 +243,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onStart() {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
+        /*
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -250,5 +251,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 .build();
 
         bioPrompt.authenticate(promptInfo);
+
+         */
     }
 }

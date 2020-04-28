@@ -67,7 +67,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             channel2.disconnect();
 
 
-            return null;
+            return "ok";
         }
         catch (JSchException ex){
             //Show error in UI

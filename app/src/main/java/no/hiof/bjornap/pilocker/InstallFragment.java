@@ -146,7 +146,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 Bundle b = new Bundle();
                 b.putString("side", side);
                 b.putString("doorName", doorName);
-                b.putString("ip", "10.0.0.116");
+                //b.putString("ip", "10.0.0.116");
+                b.putString("ip", "192.168.10.185");
                 navController.navigate(R.id.action_installFragment_to_progressFragment, b);
             }
         });

@@ -34,7 +34,9 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         // Required empty public constructor
     }
 
-    public SSHInstaller sshInstaller;
+    //public SSHInstaller sshInstaller;
+
+    public AsyncResponseInterface thisInterface = this;
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -61,6 +63,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
 
         //keyReader.response = this;
+        //sshInstaller.response = this;
 
 
         return inflater.inflate(R.layout.fragment_progress, container, false);
@@ -94,7 +97,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
             Log.i("RSATEST", pub);
 
 
-            sshInstaller = new SSHInstaller();
+            SSHInstaller sshInstaller = new SSHInstaller();
+            sshInstaller.response = thisInterface;
             sshInstaller.execute(pub, actualUser, ip, actualPass);
 
 
@@ -145,8 +149,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     @Override
     public void onComplete(String result) {
-        result = result.substring(0, result.length()-1);
-        Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
+        //result = result.substring(0, result.length()-1);
+        //Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
 
         /**
          * At this point, don't send it via bundle. The key and the IP belongs in
@@ -159,7 +163,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("side", side);
         edit.putString("doorName", doorName);
-        edit.putString("key_ip", result);
+        edit.putString("key_ip", ip);
         edit.putString("rsapub", pub);
         edit.putString("rsapriv", priv);
         edit.apply();
