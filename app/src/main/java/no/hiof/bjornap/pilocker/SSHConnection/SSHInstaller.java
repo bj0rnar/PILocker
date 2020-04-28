@@ -36,12 +36,13 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         try {
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
-            session = jsch.getSession(user, host, port);
+            session = jsch.getSession(user, host, 22);
             //Add identity here instead of actual password..
             session.setPassword("gruppe6");
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();
+
 
             //UPLOAD RSA
             InputStream RSApubinputStream = new ByteArrayInputStream(pub.getBytes(StandardCharsets.UTF_8));
@@ -50,6 +51,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             ChannelSftp sftp = (ChannelSftp) channel3;
             sftp.put(RSApubinputStream, "/home/ubuntu/id_rsa.pub", sftp.OVERWRITE);
             sftp.exit();
+            Thread.sleep(2000);
             channel3.disconnect();
 
             //INSTALL PUBLIC KEY
@@ -59,12 +61,14 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             Thread.sleep(3000);
             channel2.disconnect();
 
+
+
             //DISABLE PASSWORD, ONLY KEY FROM HERE ON
             ChannelExec channel6 = (ChannelExec)session.openChannel("exec");
-            channel6.setCommand("./disablePass.sh");
+            channel6.setCommand("./counter.sh");
             channel6.connect();
-            Thread.sleep(3000);
-            channel2.disconnect();
+            Thread.sleep(20000);
+            channel6.disconnect();
 
 
             return "ok";

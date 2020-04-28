@@ -191,7 +191,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "left"){
-                    command = "./turnClockwise.sh;";
+                    command = "./counter.sh;";
                 }
                 else {
                     command = "./turnCounterClockwise.sh;";
