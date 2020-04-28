@@ -48,7 +48,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             Channel channel3 = session.openChannel("sftp");
             channel3.connect();
             ChannelSftp sftp = (ChannelSftp) channel3;
-            sftp.put(RSApubinputStream, "/home/bjornar/id_rsa.pub", sftp.OVERWRITE);
+            sftp.put(RSApubinputStream, "/home/ubuntu/id_rsa.pub", sftp.OVERWRITE);
             sftp.exit();
             channel3.disconnect();
 

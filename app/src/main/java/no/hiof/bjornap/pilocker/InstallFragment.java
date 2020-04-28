@@ -35,10 +35,12 @@ import static android.content.Context.WIFI_SERVICE;
 public class InstallFragment extends Fragment implements AsyncResponseInterface {
 
 
+    public AsyncResponseInterface thisInterface = this;
 
     private SSHReader reader = new SSHReader();
 
     private NavController navController;
+
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -67,7 +69,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
 
 
-        reader.response = this;
+        //reader.response = this;
 
         return inflater.inflate(R.layout.fragment_install, container, false);
     }
@@ -112,12 +114,14 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     //String testIp = "192.168.10.153";
                     //String cmd = "./readtest.sh";
                     //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
-                    String cmd = "./getIp.sh";
+                    //String cmd = "./getIp.sh";
 
                     //String forceIp = "10.0.60.1";
                     //for prototyping:
                     //reader.response = getContext().getApplicationContext();
-                    reader.execute(actualUser, actualPass, wlanIp, cmd);
+                    //SSHReader sshReader = new SSHReader();
+                    //sshReader.response = thisInterface;
+                    //sshReader.execute(actualUser, actualPass, wlanIp, cmd);
 
                     //reader.execute(defaultuser, defaultpass, testIp, cmd);
                     //statusTxt.setText("OK");
@@ -129,8 +133,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
                     statusTxt.setText("ERROR");
                     //Do this in the IF clause. Just keeping it here for testing purposes
-                    //installBtn.getBackground().setColorFilter(null);
-                    //installBtn.setEnabled(true);
+                    installBtn.getBackground().setColorFilter(null);
+                    installBtn.setEnabled(true);
                 }
 
             }
@@ -142,6 +146,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 Bundle b = new Bundle();
                 b.putString("side", side);
                 b.putString("doorName", doorName);
+                b.putString("ip", "10.0.0.116");
                 navController.navigate(R.id.action_installFragment_to_progressFragment, b);
             }
         });
