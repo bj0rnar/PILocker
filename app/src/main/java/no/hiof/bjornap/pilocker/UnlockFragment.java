@@ -111,12 +111,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Check bundle
-        if (getArguments() != null){
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEEVES IP: " + getArguments().getString("ip"));
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES DOORNAME: " + getArguments().getString("doorName"));
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES SIDE: " + getArguments().getString("side"));
-        }
 
         //Initialize sharedpreferences
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
@@ -243,7 +237,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onStart() {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
-        /*
+
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -252,6 +246,5 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         bioPrompt.authenticate(promptInfo);
 
-         */
     }
 }
