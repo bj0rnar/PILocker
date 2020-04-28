@@ -44,7 +44,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             session.connect();
 
             //UPLOAD RSA
-            InputStream RSApubinputStream = new ByteArrayInputStream(strings[0].getBytes(StandardCharsets.UTF_8));
+            InputStream RSApubinputStream = new ByteArrayInputStream(pub.getBytes(StandardCharsets.UTF_8));
             Channel channel3 = session.openChannel("sftp");
             channel3.connect();
             ChannelSftp sftp = (ChannelSftp) channel3;
