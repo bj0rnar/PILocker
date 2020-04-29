@@ -56,7 +56,7 @@ public class ConnectFragment extends Fragment {
 
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 0;
+        int key = 1;
         /*
         if (pref.getString("key_ip", null) != null){
             key = 0;

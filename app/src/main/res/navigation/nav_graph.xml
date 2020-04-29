@@ -28,14 +28,11 @@
         android:label="fragment_install"
         tools:layout="@layout/fragment_install" >
         <action
-            android:id="@+id/action_installFragment_to_progressFragment"
-            app:destination="@id/progressFragment" />
-        <action
-            android:id="@+id/action_installFragment_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
-        <action
             android:id="@+id/action_installFragment_to_installHandleSide2"
             app:destination="@id/installHandleSide2" />
+        <action
+            android:id="@+id/action_installFragment_to_IPExtractionFragment"
+            app:destination="@id/IPExtractionFragment" />
     </fragment>
     <fragment
         android:id="@+id/progressFragment"
@@ -70,5 +67,14 @@
         <action
             android:id="@+id/action_installHandleSide2_to_installNamingFragment"
             app:destination="@id/installNamingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IPExtractionFragment"
+        android:name="no.hiof.bjornap.pilocker.IPExtractionFragment"
+        android:label="fragment_ipextraction"
+        tools:layout="@layout/fragment_ipextraction" >
+        <action
+            android:id="@+id/action_IPExtractionFragment_to_progressFragment"
+            app:destination="@id/progressFragment" />
     </fragment>
 </navigation>

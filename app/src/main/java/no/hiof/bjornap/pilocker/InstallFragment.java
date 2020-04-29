@@ -32,13 +32,15 @@ import static android.content.Context.WIFI_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InstallFragment extends Fragment implements AsyncResponseInterface {
+public class InstallFragment extends Fragment{
 
 
+    //public AsyncResponseInterface thisInterface = this;
 
     private SSHReader reader = new SSHReader();
 
     private NavController navController;
+
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -55,6 +57,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     private String doorName;
     private String side;
 
+    private String wlanIp;
+
     public InstallFragment() {
         // Required empty public constructor
     }
@@ -67,7 +71,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
 
 
-        reader.response = this;
+        //reader.response = this;
 
         return inflater.inflate(R.layout.fragment_install, container, false);
     }
@@ -105,25 +109,27 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
             @Override
             public void onClick(View view) {
 
-                String wlanIp = getIPAddressTwo();
+                wlanIp = getIPAddressTwo();
 
                 if (wlanIp.equals("10.0.60.1")) {
 
                     //String testIp = "192.168.10.153";
                     //String cmd = "./readtest.sh";
                     //String cmd = "ip a | grep 'eth0' | grep 'inet' | awk '{ print $2}' | grep -E -o \"([0-9]{1,3}[.]){3}[0-9]{1,3}";
-                    String cmd = "./getIp.sh";
+                    //String cmd = "./getIp.sh";
 
                     //String forceIp = "10.0.60.1";
                     //for prototyping:
                     //reader.response = getContext().getApplicationContext();
-                    reader.execute(actualUser, actualPass, wlanIp, cmd);
+                    //SSHReader sshReader = new SSHReader();
+                    //sshReader.response = thisInterface;
+                    //sshReader.execute(actualUser, actualPass, wlanIp, cmd);
 
                     //reader.execute(defaultuser, defaultpass, testIp, cmd);
-                    //statusTxt.setText("OK");
+                    statusTxt.setText("OK");
 
-                    //installBtn.getBackground().setColorFilter(null);
-                    //installBtn.setEnabled(true);
+                    installBtn.getBackground().setColorFilter(null);
+                    installBtn.setEnabled(true);
                 }
                 else {
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
@@ -142,7 +148,10 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 Bundle b = new Bundle();
                 b.putString("side", side);
                 b.putString("doorName", doorName);
-                navController.navigate(R.id.action_installFragment_to_progressFragment, b);
+                //b.putString("ip", "10.0.0.116");
+                //b.putString("ip", "192.168.10.185");
+                b.putString("wlanIp", wlanIp);
+                navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
             }
         });
     }
@@ -155,7 +164,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
         return address;
     }
-
+    /*
     @Override
     public void onComplete(String result) {
         result = result.substring(0, result.length()-1);
@@ -166,7 +175,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         edit.putString("key_ip", result);
         edit.apply();
 
-         */
+
         //Enable button
         statusTxt.setText("OK");
         installBtn.getBackground().setColorFilter(null);
@@ -176,4 +185,5 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         bundle.putString("ip", result);
         navController.navigate(R.id.action_installFragment_to_progressFragment, bundle);
     }
+    */
 }
