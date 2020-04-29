@@ -43,7 +43,6 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             session.setTimeout(10000);
             session.connect();
 
-
             //UPLOAD RSA
             InputStream RSApubinputStream = new ByteArrayInputStream(pub.getBytes(StandardCharsets.UTF_8));
             Channel channel3 = session.openChannel("sftp");
@@ -62,14 +61,14 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             channel2.disconnect();
 
 
-
+            /*
             //DISABLE PASSWORD, ONLY KEY FROM HERE ON
             ChannelExec channel6 = (ChannelExec)session.openChannel("exec");
             channel6.setCommand("./counter.sh");
             channel6.connect();
-            Thread.sleep(20000);
+            Thread.sleep(2000);
             channel6.disconnect();
-
+            */
 
             return "ok";
         }

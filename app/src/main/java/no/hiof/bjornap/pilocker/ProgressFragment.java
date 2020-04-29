@@ -82,7 +82,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
-        
+        Log.i("SSHREADER", "PROGRESSFRAGMENT STARTED");
+
         //SPIN THE WHEEL FOR NOW
 
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
@@ -94,13 +95,13 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         priv = (String)tuples.priv;
         pub = (String)tuples.pub;
 
-        Log.i("RSATEST", priv);
-        Log.i("RSATEST", pub);
+        Log.i("SSHREADER", "priv key" + priv);
+        Log.i("SSREADER", "pub key " + pub);
 
 
         SSHInstaller sshInstaller = new SSHInstaller();
         sshInstaller.response = thisInterface;
-        sshInstaller.execute(pub, actualUser, ip, actualPass);
+        sshInstaller.execute(pub, actualUser, prefHost, actualPass);
 
         /*
         if (getArguments() != null){
@@ -179,6 +180,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
          * At this point, don't send it via bundle. The key and the IP belongs in
          * EncryptedSharedPreference
          */
+
+        Log.i("SSHREADER", "onComplete i progressfragment?!");
 
         //Save to sharedpreferences, switch to encryptedsharedpreferences later.
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);

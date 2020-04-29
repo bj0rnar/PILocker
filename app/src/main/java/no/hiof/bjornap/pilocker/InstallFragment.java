@@ -150,7 +150,7 @@ public class InstallFragment extends Fragment{
                 b.putString("doorName", doorName);
                 //b.putString("ip", "10.0.0.116");
                 //b.putString("ip", "192.168.10.185");
-                b.putString("wlanIP", wlanIp);
+                b.putString("wlanIp", wlanIp);
                 navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
             }
         });

@@ -28,7 +28,6 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     private String side = "";
     private String wlanIp = "";
 
-    private SSHReader sshReader;
 
     private String actualUser = "ubuntu";
     private String actualPass = "gruppe6";
@@ -36,6 +35,8 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     private NavController navController;
 
     private Button nextBtn;
+
+    public AsyncResponseInterface thisInterface = this;
 
     public IPExtractionFragment() {
         // Required empty public constructor
@@ -46,7 +47,6 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        sshReader.response = this;
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ipextraction, container, false);
@@ -68,11 +68,11 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             side = getArguments().getString("side");
             wlanIp = getArguments().getString("wlanIp");
 
-            Log.i("BUNDLE PROGRESS", doorName);
-            Log.i("BUNDLE PROGRESS", side);
-            Log.i("BUNDLE PROGRESS", wlanIp);
+
 
             //Run reader method
+            SSHReader sshReader = new SSHReader();
+            sshReader.response = thisInterface;
             sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh");
         }
 
