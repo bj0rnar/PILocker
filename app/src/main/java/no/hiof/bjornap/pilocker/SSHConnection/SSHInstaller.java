@@ -43,6 +43,8 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             session.setTimeout(10000);
             session.connect();
 
+            Thread.sleep(2000);
+
             //UPLOAD RSA
             InputStream RSApubinputStream = new ByteArrayInputStream(pub.getBytes(StandardCharsets.UTF_8));
             Channel channel3 = session.openChannel("sftp");
@@ -50,7 +52,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             ChannelSftp sftp = (ChannelSftp) channel3;
             sftp.put(RSApubinputStream, "/home/ubuntu/id_rsa.pub", sftp.OVERWRITE);
             sftp.exit();
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             channel3.disconnect();
 
             //INSTALL PUBLIC KEY
