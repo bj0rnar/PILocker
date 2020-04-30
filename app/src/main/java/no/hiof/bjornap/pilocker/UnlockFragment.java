@@ -2,16 +2,17 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import no.hiof.bjornap.pilocker.Utility.SSHConnector;
-import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
+import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,16 +20,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.concurrent.Executor;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UnlockFragment extends Fragment {
+public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
-    private SSHConnector sshConnector = new SSHConnector();
-    private SSHExecuter sshExecuter = new SSHExecuter();
+    private AsyncResponseInterface thisInterface = this;
+
+    //private SSHExecuter executer = new SSHExecuter();
     private TextView statusText;
+    private TextView doorNameTxt;
+
+    private String prefHost;
+    private String prefSide;
+    private String prefName;
+    private String prefPub;
+    private String prefPriv;
+
+    private SharedPreferences pref;
+
+    private Button unlockBtn;
+    private Button lockBtn;
+
+    private String hostName = "ubuntu";
+
+    private Executor exec;
+    private BiometricPrompt bioPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -40,6 +63,44 @@ public class UnlockFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        //executer.response = this;
+        exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
+        bioPrompt = new BiometricPrompt(UnlockFragment.this, exec, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getActivity().getApplicationContext(), "Authentication failed",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+        /*
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+        bioPrompt.authenticate(promptInfo);
+
+        */
+        //Initializing interface for dependency injection
+
         return inflater.inflate(R.layout.fragment_unlock, container, false);
     }
 
@@ -47,61 +108,140 @@ public class UnlockFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
-        if (getArguments() != null){
-            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS IP: " + getArguments().getString("ip"));
-            Log.i("SSHREADER", "UNLOCKFRAGMENT HAS RSA: " + getArguments().getString("rsa"));
-        }
 
-         */
+        //Initialize sharedpreferences
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        prefHost = pref.getString("key_ip", null);
+        prefName = pref.getString("doorName", null);
+        prefSide = pref.getString("side", null);
+        prefPriv = pref.getString("rsapriv", null);
+        prefPub = pref.getString("rsapub", null);
+
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
+
+        doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
+        doorNameTxt.setText(prefName);
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
 
+        statusText.setText("UNKNOWN");
+        lockBtn = view.findViewById(R.id.lockBtn);
+        unlockBtn = view.findViewById(R.id.unlockBtn);
 
-        final NavController navController = Navigation.findNavController(view);
-
-        final Button lockBtn = view.findViewById(R.id.lockBtn);
         lockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 statusText.setText("LOCKED");
 
+                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockBtn.setEnabled(false);
+                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockBtn.setEnabled(false);
+
+                String command = "";
+
+                if (prefSide == "right"){
+                    command = "./turnCounterClockwise.sh;";
+                }
+                else {
+                    command = "./turnClockwise.sh;";
+                }
+
+                //USE prefHost FOR ACCEPTANCETEST
+                //String manualHost = "158.39.162.128";
+
+                SSHExecuter executer = new SSHExecuter();
+                executer.response = thisInterface;
+                try {
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
+                }
+                catch (Exception e){
+                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockBtn.setEnabled(true);
+                    lockBtn.getBackground().setColorFilter(null);
+                    lockBtn.setEnabled(true);
+                }
             }
         });
 
-        final Button unlockBtn = view.findViewById(R.id.unlockBtn);
+
+
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 statusText.setText("UNLOCKED");
 
-                //String usr = "bjornar";
-                //String host = "192.168.10.153";
-                //String cmd = "./lol.sh";
+                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockBtn.setEnabled(false);
+                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockBtn.setEnabled(false);
 
-                /*
-                SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-                String prefHost = pref.getString("key_ip", null);
 
-                Log.i("SSHREADER", "Fra UnlockFragment: " + prefHost);
+                String command = "";
 
-                String usr = "ubuntu";
-                //String host = getArguments().getString("ip");
-                String hardcodedHost = "158.39.162.152";
-                String cmd = "./lockTest.sh";
+                if (prefSide == "left"){
+                    command = "./counter.sh;";
+                }
+                else {
+                    command = "./turnCounterClockwise.sh;";
+                }
 
-                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.getStatus().toString());
-                //Log.i("SSHREADER", "EXECUTOR STATUS: " + sshExecuter.isCancelled());
+                //USE prefHost FOR ACCEPTANCETEST
+                //String manualHost = "158.39.162.128";
 
-                SSHExecuter executor = new SSHExecuter();
+                SSHExecuter executer = new SSHExecuter();
+                executer.response = thisInterface;
+                try {
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
+                }
+                catch (Exception e){
+                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockBtn.setEnabled(true);
+                    lockBtn.getBackground().setColorFilter(null);
+                    lockBtn.setEnabled(true);
+                }
 
-                executor.execute(usr, prefHost, cmd, "lol");
-
-                 */
             }
         });
 
     }
 
 
+    @Override
+    public void onComplete(String result) {
+        Log.i("FINALSTAGE", "ONCOMPLETE FRA ASYNC MOTTAR: " + result);
+        //UNLOCK BUTTONS ONLY ON RESPONSE
+        unlockBtn.getBackground().setColorFilter(null);
+        unlockBtn.setEnabled(true);
+        lockBtn.getBackground().setColorFilter(null);
+        lockBtn.setEnabled(true);
+
+        if (result != null) {
+            if (!result.equals("0")) {
+                Log.i("FINALSTAGE", "echo $? gives no output");
+            }
+        }
+        else {
+            Toast.makeText(getContext().getApplicationContext(), "Error, are you connected to eduroam?", Toast.LENGTH_SHORT).show();
+            statusText.setText("Unknown");
+        }
+
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("BIOMETRIC", "onStart called");
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+        bioPrompt.authenticate(promptInfo);
+
+    }
 }

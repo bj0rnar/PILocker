@@ -2,6 +2,7 @@ package no.hiof.bjornap.pilocker;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.hardware.biometrics.BiometricManager;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -9,25 +10,26 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKeys;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
+import java.util.concurrent.Executor;
 
 
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +40,17 @@ public class MainActivity extends AppCompatActivity {
          * Encrypted Shared Preferences
          */
 
-        try {
-            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+        /**
+         * Biometric PROMPT
+         */
 
-            sharedPreferences = EncryptedSharedPreferences.create(
-                    "secret_shared_prefs",
-                    masterKeyAlias,
-                    getApplicationContext(),
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
-        }
-        catch (IOException | GeneralSecurityException a){
-            System.out.println("plz no");
-        }
 
 
     }
 
+    private String checkIfBiometricEnabled(){
+        return "";
+    }
 
 
     @Override

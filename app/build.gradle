@@ -38,8 +38,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    //EncryptedSharedPreferences
-    def security_version = "1.0.0-alpha02"
-    implementation "androidx.security:security-crypto:$security_version"
+    //Biometric
+    dependencies {
+        implementation "androidx.biometric:biometric:1.0.1"
+    }
+
 
 }
