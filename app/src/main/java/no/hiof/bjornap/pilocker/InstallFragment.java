@@ -59,6 +59,9 @@ public class InstallFragment extends Fragment{
 
     private String wlanIp;
 
+    private Boolean firstTime;
+    private String password;
+
     public InstallFragment() {
         // Required empty public constructor
     }
@@ -83,8 +86,13 @@ public class InstallFragment extends Fragment{
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
+            firstTime = getArguments().getBoolean("firstTime");
+            password = getArguments().getString("password");
+
             Log.i("BUNDLE FINAL INSTALL", doorName);
             Log.i("BUNDLE FINAL INSTALL", side);
+            Log.i("BUNDLE FINAL INSTALL", "is it the first time?" + firstTime.toString());
+            Log.i("BUNDLE FINAL INSTALL", password);
         }
 
         /**
@@ -148,6 +156,8 @@ public class InstallFragment extends Fragment{
                 Bundle b = new Bundle();
                 b.putString("side", side);
                 b.putString("doorName", doorName);
+                b.putString("password", password);
+                b.putBoolean("firstTime", firstTime);
                 //b.putString("ip", "10.0.0.116");
                 //b.putString("ip", "192.168.10.185");
                 b.putString("wlanIp", wlanIp);

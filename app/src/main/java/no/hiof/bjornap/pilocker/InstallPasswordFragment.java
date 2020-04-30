@@ -1,6 +1,7 @@
 package no.hiof.bjornap.pilocker;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -56,8 +57,6 @@ public class InstallPasswordFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
-
-
         if (getArguments() != null) {
             firstTime = getArguments().getBoolean("firstTime");
 
@@ -70,20 +69,20 @@ public class InstallPasswordFragment extends Fragment {
                 password_editText.setHint(R.string.installation_password_nthtime_edittext_hint);
             }
 
-
         }
 
         password_nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (firstTime) {
-                    //SSHExecutur.execute(newPassword, bruk standard passord)
-                    //SharedPref pref = bla bla, save newPassord
-                    navController.navigate(R.id.action_installPasswordFragment_to_installNamingFragment);
-                }
-                else {
-                    //SharedPref pref = overwrite Passord
-                    navController.navigate(R.id.action_installPasswordFragment_to_installNamingFragment);
+
+                if (!password_editText.equals("")) {
+
+                    String nPassword = password_editText.getText().toString();
+
+                    Bundle b = new Bundle();
+                    b.putString("password", nPassword);
+                    b.putBoolean("firstTime", firstTime);
+                    navController.navigate(R.id.action_installPasswordFragment_to_installNamingFragment, b);
                 }
             }
         });

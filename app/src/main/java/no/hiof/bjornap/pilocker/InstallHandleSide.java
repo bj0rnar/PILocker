@@ -33,6 +33,9 @@ public class InstallHandleSide extends Fragment {
     private String doorName;
     private String selectedDoor;
 
+    private String password;
+    private Boolean firstTime;
+
 
     public InstallHandleSide() {
         // Required empty public constructor
@@ -53,6 +56,9 @@ public class InstallHandleSide extends Fragment {
         //Check that passed data is received from previous fragment
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
+            firstTime = getArguments().getBoolean("firstTime");
+            password = getArguments().getString("password");
+
             Log.i("BUNDLE", doorName);
         }
 
@@ -91,6 +97,8 @@ public class InstallHandleSide extends Fragment {
                     Bundle b = new Bundle();
                     b.putString("side", selectedDoor);
                     b.putString("doorName", doorName);
+                    b.putString("password", password);
+                    b.putBoolean("firstTime", firstTime);
                     navController.navigate(R.id.action_installHandleSide2_to_installFragment, b);
                 }
                 else {

@@ -32,6 +32,9 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     private String actualUser = "ubuntu";
     private String actualPass = "gruppe6";
 
+    private Boolean firstTime;
+    private String password;
+
     private NavController navController;
 
     private Button nextBtn;
@@ -67,13 +70,23 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
             wlanIp = getArguments().getString("wlanIp");
+            password = getArguments().getString("password");
+            firstTime = getArguments().getBoolean("firstTime");
 
+            //if strings[4] != null;
+            //then set password
 
-
-            //Run reader method
-            SSHReader sshReader = new SSHReader();
-            sshReader.response = thisInterface;
-            sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh");
+            if (firstTime) {
+                //Run reader method
+                SSHReader sshReader = new SSHReader();
+                sshReader.response = thisInterface;
+                sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.exp " + password);
+            }
+            else {
+                SSHReader sshReader2 = new SSHReader();
+                sshReader2.response = thisInterface;
+                sshReader2.execute(actualUser, password, wlanIp, "./getIp.sh", null);
+            }
         }
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +107,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
         edit.putString("side", side);
         edit.putString("doorName", doorName);
         edit.putString("key_ip", result);
+        edit.putString("password", password);
         edit.apply();
 
         nextBtn.setVisibility(View.VISIBLE);

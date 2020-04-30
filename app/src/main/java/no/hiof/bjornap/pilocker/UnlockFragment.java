@@ -12,7 +12,6 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
-import no.hiof.bjornap.pilocker.SSHConnection.SSHConnector;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
@@ -30,8 +29,6 @@ import java.util.concurrent.Executor;
  * A simple {@link Fragment} subclass.
  */
 public class UnlockFragment extends Fragment implements AsyncResponseInterface {
-
-    private SSHConnector sshConnector = new SSHConnector();
 
     private AsyncResponseInterface thisInterface = this;
 

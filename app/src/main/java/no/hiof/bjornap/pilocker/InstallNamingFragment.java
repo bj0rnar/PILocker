@@ -26,11 +26,12 @@ public class InstallNamingFragment extends Fragment {
     private NavController navController;
     private EditText nameTxt;
 
+    private Boolean firstTime;
+    private String password;
 
     public InstallNamingFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +46,11 @@ public class InstallNamingFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
+        if (getArguments() != null) {
+            firstTime = getArguments().getBoolean("firstTime");
+            password = getArguments().getString("password");
+
+        }
         nameTxt = view.findViewById(R.id.installation_name_doorName_editText);
 
         nextBtn = view.findViewById(R.id.installation_name_nextBtn);
@@ -57,6 +63,8 @@ public class InstallNamingFragment extends Fragment {
                 //Include some form of input validation, create static class to check input.
                 if (!sNameTxt.equals("")) {
                     Bundle bundle = new Bundle();
+                    bundle.putString("password", password);
+                    bundle.putBoolean("firstTime", firstTime);
                     bundle.putString("doorName", sNameTxt);
                     navController.navigate(R.id.action_installNamingFragment_to_installHandleSide2, bundle);
                 }

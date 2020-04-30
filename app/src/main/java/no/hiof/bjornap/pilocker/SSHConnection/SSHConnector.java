@@ -13,8 +13,8 @@ public class SSHConnector extends AsyncTask<String, Void, String> {
     String returnMessage = "";
 
     /**
-     * Connect => Run Command => Disconnect
-     * This works as intended, but reconnecting is required for each action
+     * Async class used for SSH Connection.
+     * Expecting no output from operations.
      */
 
     //Pew pew

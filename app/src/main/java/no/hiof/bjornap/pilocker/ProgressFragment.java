@@ -61,7 +61,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private String prefName;
     private String prefPub;
     private String prefPriv;
-
+    private String prefPass;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,6 +90,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         prefHost = pref.getString("key_ip", null);
         prefName = pref.getString("doorName", null);
         prefSide = pref.getString("side", null);
+        prefPass = pref.getString("password", null);
+
 
         Tuples tuples = generateRSAPairs();
         priv = (String)tuples.priv;
@@ -97,11 +99,12 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
         Log.i("SSHREADER", "priv key" + priv);
         Log.i("SSREADER", "pub key " + pub);
+        Log.i("PASSWORD", prefPass);
 
 
         SSHInstaller sshInstaller = new SSHInstaller();
         sshInstaller.response = thisInterface;
-        sshInstaller.execute(pub, actualUser, prefHost, actualPass);
+        sshInstaller.execute(pub, actualUser, prefHost, prefPass);
 
         /*
         if (getArguments() != null){
