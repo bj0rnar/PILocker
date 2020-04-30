@@ -56,19 +56,20 @@ public class ConnectFragment extends Fragment {
 
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 0;
+        int key = 1;
         /*
         if (pref.getString("key_ip", null) != null){
             key = 0;
         }
         */
+        
 
         //Basically slekk en ska ha dæ.
         if (key == 0){
             navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
         }
         else if (key == 1){
-            navController.navigate(R.id.action_connectFragment2_to_installNamingFragment);
+            navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
         }
     }
 }

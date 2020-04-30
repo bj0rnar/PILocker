@@ -13,8 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
-import no.hiof.bjornap.pilocker.Utility.SSHReader;
+import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
 
 
 import android.text.format.Formatter;
@@ -26,24 +26,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.ByteOrder;
-
 import static android.content.Context.WIFI_SERVICE;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InstallFragment extends Fragment implements AsyncResponseInterface {
+public class InstallFragment extends Fragment{
 
 
+    //public AsyncResponseInterface thisInterface = this;
 
     private SSHReader reader = new SSHReader();
 
     private NavController navController;
+
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -60,6 +57,11 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
     private String doorName;
     private String side;
 
+    private String wlanIp;
+
+    private Boolean firstTime;
+    private String password;
+
     public InstallFragment() {
         // Required empty public constructor
     }
@@ -72,7 +74,7 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
 
 
-        reader.response = this;
+        //reader.response = this;
 
         return inflater.inflate(R.layout.fragment_install, container, false);
     }
@@ -84,8 +86,13 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
+            firstTime = getArguments().getBoolean("firstTime");
+            password = getArguments().getString("password");
+
             Log.i("BUNDLE FINAL INSTALL", doorName);
             Log.i("BUNDLE FINAL INSTALL", side);
+            Log.i("BUNDLE FINAL INSTALL", "is it the first time?" + firstTime.toString());
+            Log.i("BUNDLE FINAL INSTALL", password);
         }
 
         /**
@@ -105,11 +112,12 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
         installBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
         installBtn.setEnabled(false);
 
+        //Now gets ethernet IP from raspberry pi
         testApBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String wlanIp = getIPAddressTwo();
+                wlanIp = getIPAddressTwo();
 
                 if (wlanIp.equals("10.0.60.1")) {
 
@@ -121,7 +129,9 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     //String forceIp = "10.0.60.1";
                     //for prototyping:
                     //reader.response = getContext().getApplicationContext();
-                    //reader.execute(actualUser, actualPass, wlanIp, cmd);
+                    //SSHReader sshReader = new SSHReader();
+                    //sshReader.response = thisInterface;
+                    //sshReader.execute(actualUser, actualPass, wlanIp, cmd);
 
                     //reader.execute(defaultuser, defaultpass, testIp, cmd);
                     statusTxt.setText("OK");
@@ -133,8 +143,8 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                     Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
                     statusTxt.setText("ERROR");
                     //Do this in the IF clause. Just keeping it here for testing purposes
-                    installBtn.getBackground().setColorFilter(null);
-                    installBtn.setEnabled(true);
+                    //installBtn.getBackground().setColorFilter(null);
+                    //installBtn.setEnabled(true);
                 }
 
             }
@@ -146,7 +156,12 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
                 Bundle b = new Bundle();
                 b.putString("side", side);
                 b.putString("doorName", doorName);
-                navController.navigate(R.id.action_installFragment_to_progressFragment, b);
+                b.putString("password", password);
+                b.putBoolean("firstTime", firstTime);
+                //b.putString("ip", "10.0.0.116");
+                //b.putString("ip", "192.168.10.185");
+                b.putString("wlanIp", wlanIp);
+                navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
             }
         });
     }
@@ -159,17 +174,26 @@ public class InstallFragment extends Fragment implements AsyncResponseInterface 
 
         return address;
     }
-
+    /*
     @Override
     public void onComplete(String result) {
         result = result.substring(0, result.length()-1);
         Log.i("SSHREADER", "Fra AsyncEthernetREsponse: " + result);
+        /* Old, no preferences here.
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("key_ip", result);
         edit.apply();
+
+
+        //Enable button
+        statusTxt.setText("OK");
+        installBtn.getBackground().setColorFilter(null);
+        installBtn.setEnabled(true);
+        //Send as bundle
         Bundle bundle = new Bundle();
         bundle.putString("ip", result);
         navController.navigate(R.id.action_installFragment_to_progressFragment, bundle);
     }
+    */
 }

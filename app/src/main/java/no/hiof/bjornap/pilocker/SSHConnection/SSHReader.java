@@ -1,4 +1,4 @@
-package no.hiof.bjornap.pilocker.Utility;
+package no.hiof.bjornap.pilocker.SSHConnection;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -32,14 +32,13 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         String user = strings[0];
         String password = strings[1];
         String host = strings[2];
-        String manualHost = "10.0.60.1";
+
         int port = 22;
         session = null;
 
         Log.i("SSHREADER", "strings[0] = " + strings[0]);
         Log.i("SSHREADER", "strings[1] = " + strings[1]);
         Log.i("SSHREADER", "strings[2] = " + strings[2]);
-        Log.i("SSHREADER", "strings[3] = " + strings[3]);
 
         try {
             JSch jsch = new JSch();
@@ -48,6 +47,17 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();
+
+            if (strings[4] != null) {
+                String newPassord = strings[4];
+                ChannelExec channelExec = (ChannelExec)session.openChannel("exec");
+                channelExec.setCommand(newPassord);
+                channelExec.connect();
+                Thread.sleep(1000);
+                channelExec.disconnect();
+            }
+
+
             ChannelExec channel = (ChannelExec)session.openChannel("exec");
             channel.setCommand(strings[3]);
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -55,16 +65,6 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             channel.connect();
 
             Thread.sleep(5000);
-
-            /*
-            try {
-                Thread.sleep(10000);
-            }
-            catch (Exception e){
-                Log.w("SSHREADER", "thread sleep failed " + e.getMessage());
-            }
-
-             */
 
             channel.disconnect();
             a = output.toString();
@@ -74,12 +74,12 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         catch (JSchException ex){
             //Show error in UI
             String errorMessage = "JSCH exception: " + ex.getMessage();
-            Log.d("SSHREADER", errorMessage);
+            Log.i("SSHREADER", errorMessage);
         }
         catch (Exception ex){
             //anycatcher
             String errorMessage = "any other: " + ex.getMessage();
-            Log.d("SSHREADER", errorMessage);
+            Log.i("SSHREADER", errorMessage);
         }
         finally {
             Log.i("SSHREADER", "Finally: " + a);

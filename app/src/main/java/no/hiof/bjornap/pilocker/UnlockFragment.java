@@ -11,9 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
-import no.hiof.bjornap.pilocker.Utility.SSHConnector;
-import no.hiof.bjornap.pilocker.Utility.SSHExecuter;
+import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +30,6 @@ import java.util.concurrent.Executor;
  */
 public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
-    private SSHConnector sshConnector = new SSHConnector();
-
     private AsyncResponseInterface thisInterface = this;
 
     //private SSHExecuter executer = new SSHExecuter();
@@ -42,6 +39,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private String prefHost;
     private String prefSide;
     private String prefName;
+    private String prefPub;
+    private String prefPriv;
 
     private SharedPreferences pref;
 
@@ -90,7 +89,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         .show();
             }
         });
-
+        /*
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -99,7 +98,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         bioPrompt.authenticate(promptInfo);
 
-
+        */
         //Initializing interface for dependency injection
 
         return inflater.inflate(R.layout.fragment_unlock, container, false);
@@ -109,18 +108,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Check bundle
-        if (getArguments() != null){
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEEVES IP: " + getArguments().getString("ip"));
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES DOORNAME: " + getArguments().getString("doorName"));
-            Log.i("FINALSTAGE", "UNLOCKFRAGMENT RECEIVES SIDE: " + getArguments().getString("side"));
-        }
 
         //Initialize sharedpreferences
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
         prefName = pref.getString("doorName", null);
         prefSide = pref.getString("side", null);
+        prefPriv = pref.getString("rsapriv", null);
+        prefPub = pref.getString("rsapub", null);
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
@@ -148,10 +143,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "right"){
-                    command = "./turnCounterClockwise.sh; echo $?";
+                    command = "./turnCounterClockwise.sh;";
                 }
                 else {
-                    command = "./turnClockwise.sh; echo $?";
+                    command = "./turnClockwise.sh;";
                 }
 
                 //USE prefHost FOR ACCEPTANCETEST
@@ -160,7 +155,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 try {
-                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
                     unlockBtn.getBackground().setColorFilter(null);
@@ -187,10 +182,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "left"){
-                    command = "./turnClockwise.sh; echo $?";
+                    command = "./counter.sh;";
                 }
                 else {
-                    command = "./turnCounterClockwise.sh; echo $?";
+                    command = "./turnCounterClockwise.sh;";
                 }
 
                 //USE prefHost FOR ACCEPTANCETEST
@@ -199,7 +194,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 try {
-                    executer.execute(hostName, prefHost, command, "rsaplaceholder");
+                    executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
                     unlockBtn.getBackground().setColorFilter(null);
@@ -239,6 +234,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onStart() {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
+
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -246,5 +242,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 .build();
 
         bioPrompt.authenticate(promptInfo);
+
     }
 }

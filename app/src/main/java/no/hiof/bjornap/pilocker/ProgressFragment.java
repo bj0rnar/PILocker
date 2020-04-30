@@ -2,7 +2,6 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,16 +9,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import no.hiof.bjornap.pilocker.Model.Door;
-import no.hiof.bjornap.pilocker.Utility.AsyncResponseInterface;
-import no.hiof.bjornap.pilocker.Utility.SSHReader;
+import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHInstaller;
+import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
+import no.hiof.bjornap.pilocker.Utility.Tuples;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+
+import static no.hiof.bjornap.pilocker.Utility.RSAGenerator.generateRSAPairs;
 
 
 /**
@@ -33,7 +34,9 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         // Required empty public constructor
     }
 
-    private SSHReader reader = new SSHReader();
+    //public SSHInstaller sshInstaller;
+
+    public AsyncResponseInterface thisInterface = this;
 
     private String defaultuser = "bjornar";
     private String defaultpass = "toor";
@@ -46,18 +49,29 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private NavController navController;
     private String doorName = "";
     private String side = "";
+    private String ip = "";
 
-    private Button btn;
+    private String pub;
+    private String priv;
 
+    private SharedPreferences pref;
+
+    private String prefHost;
+    private String prefSide;
+    private String prefName;
+    private String prefPub;
+    private String prefPriv;
+    private String prefPass;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        reader.response = this;
+
 
         //keyReader.response = this;
+        //sshInstaller.response = this;
 
 
         return inflater.inflate(R.layout.fragment_progress, container, false);
@@ -68,21 +82,58 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
-        
-        //SPIN THE WHEEL FOR NOW, MIGRATE INSTALLFRAGMENT LOGIC TO THIS CLASS.
+        Log.i("SSHREADER", "PROGRESSFRAGMENT STARTED");
 
+        //SPIN THE WHEEL FOR NOW
+
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        prefHost = pref.getString("key_ip", null);
+        prefName = pref.getString("doorName", null);
+        prefSide = pref.getString("side", null);
+        prefPass = pref.getString("password", null);
+
+
+        Tuples tuples = generateRSAPairs();
+        priv = (String)tuples.priv;
+        pub = (String)tuples.pub;
+
+        Log.i("SSHREADER", "priv key" + priv);
+        Log.i("SSREADER", "pub key " + pub);
+        Log.i("PASSWORD", prefPass);
+
+
+        SSHInstaller sshInstaller = new SSHInstaller();
+        sshInstaller.response = thisInterface;
+        sshInstaller.execute(pub, actualUser, prefHost, prefPass);
+
+        /*
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
+            ip = getArguments().getString("ip");
+
             Log.i("BUNDLE PROGRESS", doorName);
             Log.i("BUNDLE PROGRESS", side);
+            Log.i("BUNDLE PROGRESS", ip);
 
             //Run reader method
-            reader.execute(actualUser, actualPass, wlanIP, cmd);
+            //reader.execute(actualUser, actualPass, wlanIP, cmd);
+
+            Tuples tuples = generateRSAPairs();
+            priv = (String)tuples.priv;
+            pub = (String)tuples.pub;
+
+            Log.i("RSATEST", priv);
+            Log.i("RSATEST", pub);
+
+
+            SSHInstaller sshInstaller = new SSHInstaller();
+            sshInstaller.response = thisInterface;
+            sshInstaller.execute(pub, actualUser, ip, actualPass);
 
 
         }
-
+        */
 
         /*
         if (getArguments() != null) {
@@ -123,34 +174,26 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         });
         */
 
-
     }
 
     @Override
     public void onComplete(String result) {
-        result = result.substring(0, result.length()-1);
-        Log.i("SSHREADER", "Progressfragment FAKERSA: " + result);
 
         /**
          * At this point, don't send it via bundle. The key and the IP belongs in
          * EncryptedSharedPreference
          */
 
+        Log.i("SSHREADER", "onComplete i progressfragment?!");
 
         //Save to sharedpreferences, switch to encryptedsharedpreferences later.
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         SharedPreferences.Editor edit = pref.edit();
-        edit.putString("side", side);
-        edit.putString("doorName", doorName);
-        edit.putString("key_ip", result);
+        edit.putString("rsapub", pub);
+        edit.putString("rsapriv", priv);
         edit.apply();
 
 
-        //Also send in bundle, remove once method is confirmed.
-        Bundle b = new Bundle();
-        b.putString("side", side);
-        b.putString("doorName", doorName);
-        b.putString("ip", result);
-        navController.navigate(R.id.action_progressFragment_to_unlockFragment2, b);
+        navController.navigate(R.id.action_progressFragment_to_unlockFragment2);
     }
 }
