@@ -69,7 +69,7 @@ public class ConnectFragment extends Fragment {
             navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
         }
         else if (key == 1){
-            navController.navigate(R.id.action_connectFragment2_to_installNamingFragment);
+            navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
         }
     }
 }
