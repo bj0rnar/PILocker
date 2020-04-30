@@ -62,7 +62,6 @@ public class ConnectFragment extends Fragment {
             key = 0;
         }
         */
-        
 
         //Basically slekk en ska ha dæ.
         if (key == 0){
