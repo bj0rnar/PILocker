@@ -8,19 +8,27 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.concurrent.Executor;
 
@@ -53,9 +61,13 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private BiometricPrompt bioPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
+    private NavController navController;
+
     public UnlockFragment() {
         // Required empty public constructor
     }
+
+
 
 
     @Override
@@ -63,6 +75,16 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        View view = inflater.inflate(R.layout.fragment_unlock, container, false);
+
+        /*
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        prefHost = pref.getString("key_ip", null);
+        prefName = pref.getString("doorName", null);
+        prefSide = pref.getString("side", null);
+        prefPriv = pref.getString("rsapriv", null);
+        prefPub = pref.getString("rsapub", null);
+        */
         //executer.response = this;
         exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
         bioPrompt = new BiometricPrompt(UnlockFragment.this, exec, new BiometricPrompt.AuthenticationCallback() {
@@ -99,10 +121,21 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         bioPrompt.authenticate(promptInfo);
 
         */
-        //Initializing interface for dependency injection
+        //Initialize toolbar and set Menu.
+        setHasOptionsMenu(true);
 
-        return inflater.inflate(R.layout.fragment_unlock, container, false);
+        /*
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(prefName);
+        toolbar.setOnMenuItemClickListener(this);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //*/
+        return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -110,12 +143,42 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
 
         //Initialize sharedpreferences
+
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
         prefName = pref.getString("doorName", null);
         prefSide = pref.getString("side", null);
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
+
+        navController = Navigation.findNavController(view);
+
+        //Initialize toolbar only for this fragment.
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(prefName);
+        toolbar.inflateMenu(R.menu.unlockmenu);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_unlock_email_settings:
+                        Log.i("MENUTEST", "Email knappen");
+                        //Can navigate using this.
+                        navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
+                        return true;
+                    case R.id.menu_unlock_second:
+                        Log.i("MENUTEST", "Andre knappen");
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
@@ -244,4 +307,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         bioPrompt.authenticate(promptInfo);
         */
     }
+
+
+
 }

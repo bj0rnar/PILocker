@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C5CAE9"
+    tools:context=".UnlockFragment">
+
+
+    <Button
+        android:id="@+id/email_fragment_resendEmailBtn"
+        style="@style/LockingButton"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_gravity="top|center"
+        android:elevation="10sp"
+        android:text="resend email"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <Button
+        android:id="@+id/changeEmailButton"
+        style="@style/LockingButton"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="56dp"
+        android:elevation="10sp"
+        android:text="change email"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/deleteEmailBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_fragment_resendEmailBtn"
+        app:layout_constraintVertical_bias="0.457" />
+
+    <Button
+        android:id="@+id/deleteEmailBtn"
+        style="@style/LockingButton"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_gravity="bottom|center"
+        android:elevation="10sp"
+        android:text="delete email"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

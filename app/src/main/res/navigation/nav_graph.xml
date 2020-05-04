@@ -21,7 +21,11 @@
         android:id="@+id/unlockFragment2"
         android:name="no.hiof.bjornap.pilocker.UnlockFragment"
         android:label="fragment_unlock"
-        tools:layout="@layout/fragment_unlock" />
+        tools:layout="@layout/fragment_unlock" >
+        <action
+            android:id="@+id/action_unlockFragment2_to_emailSettingsFragment"
+            app:destination="@id/emailSettingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/installFragment"
         android:name="no.hiof.bjornap.pilocker.InstallFragment"
@@ -92,5 +96,13 @@
         <action
             android:id="@+id/action_installPasswordFragment_to_installNamingFragment"
             app:destination="@id/installNamingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailSettingsFragment"
+        android:name="no.hiof.bjornap.pilocker.EmailSettingsFragment"
+        android:label="EmailSettingsFragment" >
+        <action
+            android:id="@+id/action_emailSettingsFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
     </fragment>
 </navigation>
