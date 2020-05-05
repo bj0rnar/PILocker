@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Installation: -1 of 3"
+            android:text="Installation: 4 of 4"
             android:textSize="25sp" />
 
     </androidx.cardview.widget.CardView>
@@ -46,8 +46,8 @@
             android:layout_gravity="center|start"
             android:layout_marginStart="20sp"
             android:layout_marginBottom="100sp"
-            android:textSize="16sp"
-            android:text="Do you want to enable logging from RPI?  This requires a valid gmail account"
+            android:textSize="14sp"
+            android:text="Do you want to enable logging from RPI?  \nThis requires a valid gmail account with app password"
             />
 
 
@@ -79,6 +79,17 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="Insert gmail address here" />
+
+        <EditText
+            android:id="@+id/installation_logging_editText_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="80sp"
+            android:layout_gravity="center|start"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="Insert app password" />
 
 
     </androidx.cardview.widget.CardView>

@@ -44,8 +44,6 @@ public class InputValidator {
     }
 
 
-
-
     public static Pair<Boolean, String> isPasswordGood(String password){
 
         //  Rules for password:

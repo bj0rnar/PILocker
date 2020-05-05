@@ -18,7 +18,7 @@
     <string name="installation_password_write_in_password">Write in password for Service mode</string>
     <string name="installation_password_firsttime_edittext_hint">Set a new password..</string>
     <string name="installation_password_nthtime_edittext_hint">Write in password..</string>
-    <string name="menu_unlock_email_settings">Email settings</string>
+    <string name="menu_unlock_logging_settings">Logging settings</string>
     <string name="menu_unlock_delete">Data storage management</string>
     <string name="menu_unlock_shutdown">Shutdown RPI</string>
 </resources>

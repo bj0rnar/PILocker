@@ -168,7 +168,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         return true;
                     case R.id.menu_unlock_second:
                         Log.i("MENUTEST", "Andre knappen");
-                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup);
+                        navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
                         return true;
                 }
 

@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Installation: 3 of 3"
+            android:text="Installation: 3 of 4"
             android:textSize="25sp" />
 
     </androidx.cardview.widget.CardView>

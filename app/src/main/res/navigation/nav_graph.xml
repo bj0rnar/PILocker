@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_unlockFragment2_to_emailSettingsFragment"
             app:destination="@id/emailSettingsFragment" />
+        <action
+            android:id="@+id/action_unlockFragment2_to_installLoggingSetup2"
+            app:destination="@id/installLoggingSetup" />
     </fragment>
     <fragment
         android:id="@+id/installFragment"
