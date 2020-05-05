@@ -68,8 +68,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     }
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +83,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
         */
+
         //executer.response = this;
         exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
         bioPrompt = new BiometricPrompt(UnlockFragment.this, exec, new BiometricPrompt.AuthenticationCallback() {
@@ -169,6 +168,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         return true;
                     case R.id.menu_unlock_second:
                         Log.i("MENUTEST", "Andre knappen");
+                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup);
                         return true;
                 }
 
@@ -245,7 +245,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "left"){
-                    command = "./counter.sh;";
+                    command = "./turnClockwise.sh;";
                 }
                 else {
                     command = "./turnCounterClockwise.sh;";

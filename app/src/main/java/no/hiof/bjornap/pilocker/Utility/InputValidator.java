@@ -85,6 +85,10 @@ public class InputValidator {
         //      result.getKey(); <-- Gets true/false
         //      result.getValue(); <-- Gets the message
 
+        if (!mail.contains("@")){
+            return new Pair<>(false, "not in the correct format");
+        }
+
         //Separating what's before and after @
         String[] mailParts = mail.split("@");
         //Adding @ to start of the last piece

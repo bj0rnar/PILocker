@@ -194,6 +194,6 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         edit.apply();
 
 
-        navController.navigate(R.id.action_progressFragment_to_unlockFragment2);
+        navController.navigate(R.id.action_progressFragment_to_installLoggingSetup);
     }
 }
