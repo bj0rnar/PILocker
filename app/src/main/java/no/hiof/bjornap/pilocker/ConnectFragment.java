@@ -58,12 +58,12 @@ public class ConnectFragment extends Fragment {
 
         int key = 1;
 
-        /*
+
         if (pref.getString("key_ip", null) != null){
             key = 0;
 
         }
-        */
+
 
 
         

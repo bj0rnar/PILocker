@@ -49,6 +49,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private String prefName;
     private String prefPub;
     private String prefPriv;
+    private Boolean prefEmailLoggedIn;
 
     private SharedPreferences pref;
 
@@ -149,6 +150,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         prefSide = pref.getString("side", null);
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
+        prefEmailLoggedIn = pref.getBoolean("isLoggingEnabled", false);
 
         navController = Navigation.findNavController(view);
 
@@ -164,11 +166,16 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     case R.id.menu_unlock_email_settings:
                         Log.i("MENUTEST", "Email knappen");
                         //Can navigate using this.
-                        navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
+                        if (prefEmailLoggedIn) {
+                            navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
+                        }
+                        else {
+                            navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        }
                         return true;
                     case R.id.menu_unlock_second:
                         Log.i("MENUTEST", "Andre knappen");
-                        navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
                         return true;
                 }
 
@@ -189,7 +196,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
 
-        statusText.setText("UNKNOWN");
+        statusText.setText("Waiting for command");
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
 

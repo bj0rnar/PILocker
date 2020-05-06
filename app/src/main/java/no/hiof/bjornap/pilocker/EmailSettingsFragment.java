@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,12 +31,17 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
 
     private NavController navController;
     private Button sendBtn;
+    private Button deleteEmailBtn;
+
 
     private SharedPreferences pref;
 
     private String prefHost;
     private String prefPub;
     private String prefPriv;
+    private String prefMail;
+    private Boolean prefLog;
+    private TextView emailTextView;
 
     public EmailSettingsFragment() {
         // Required empty public constructor
@@ -54,13 +60,19 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
         super.onViewCreated(view, savedInstanceState);
 
         sendBtn = view.findViewById(R.id.email_fragment_resendEmailBtn);
+        deleteEmailBtn = view.findViewById(R.id.email_fragment_deleteEmailBtn);
         navController = Navigation.findNavController(view);
+        emailTextView = view.findViewById(R.id.fragment_logging_mail_textView);
 
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
+        prefMail = pref.getString("email", null);
 
+        if (prefMail != null) {
+            emailTextView.setText(prefMail);
+        }
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +83,24 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 executer.execute("ubuntu", prefHost, "./sendMail.sh", prefPriv, prefPub);
+            }
+        });
+
+        deleteEmailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                deleteEmailBtn.setEnabled(false);
+                deleteEmailBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
+                SSHExecuter executer = new SSHExecuter();
+                executer.response = thisInterface;
+                executer.execute("ubuntu", prefHost, "./deleteMail.sh", prefPriv, prefPub);
+                pref.edit().remove("email").apply();
+                pref.edit().putBoolean("isLoggingEnabled", false).apply();
+
+                Toast.makeText(getContext().getApplicationContext(), "Email successfully deleted", Toast.LENGTH_LONG).show();
+                navController.navigate(R.id.action_emailSettingsFragment_to_unlockFragment2);
             }
         });
 
@@ -100,6 +130,8 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
         sendBtn.setEnabled(true);
         sendBtn.getBackground().setColorFilter(null);
 
-        Toast.makeText(getContext().getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        deleteEmailBtn.setEnabled(true);
+        deleteEmailBtn.getBackground().setColorFilter(null);
+
     }
 }
