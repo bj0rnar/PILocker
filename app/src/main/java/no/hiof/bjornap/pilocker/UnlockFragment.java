@@ -281,8 +281,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     command = "./turnCounterClockwise.sh;";
                 }
 
-                //USE prefHost FOR ACCEPTANCETEST
-                //String manualHost = "158.39.162.128";
 
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;

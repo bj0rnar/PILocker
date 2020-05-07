@@ -127,5 +127,8 @@
         <action
             android:id="@+id/action_RPISettingsFragment_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
+        <action
+            android:id="@+id/action_RPISettingsFragment_to_installWelcomeFragment"
+            app:destination="@id/installWelcomeFragment" />
     </fragment>
 </navigation>

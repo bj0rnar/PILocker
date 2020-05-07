@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
 
 
 import android.view.Menu;
@@ -46,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
-
-    private String checkIfBiometricEnabled(){
-        return "";
     }
 
 

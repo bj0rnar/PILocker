@@ -1,6 +1,8 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,12 +16,18 @@ import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -34,11 +42,13 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
     private String prefHost;
     private String prefPub;
     private String prefPriv;
+    private String prefPass;
 
     private Button shutdownBtn;
     private Button factoryResetBtn;
 
     private Boolean settingUpdateTime = true;
+    private Boolean factoryReset = false;
 
     private NavController navController;
 
@@ -89,6 +99,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         prefHost = pref.getString("key_ip", null);
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
+        prefPass = pref.getString("password", null);
 
 
         SSHExecuter executer = new SSHExecuter();
@@ -111,9 +122,8 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         factoryResetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Prompt passord.
-
-
+                //Prompt password.
+                buildAlertDialog();
             }
         });
 
@@ -134,6 +144,59 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
 
     }
 
+    private void buildAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Factory reset");
+        alertDialog.setMessage("Enter password to permanently reset RPI and application");
+
+        final EditText input = new EditText(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        //Transformation not as good as XML inputtype, consider changing this.
+        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        alertDialog.setView(input);
+
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (input.getText().toString().equals(prefPass)){
+                    wipeAndReturnToStart();
+                }
+                else {
+                    Toast.makeText(getContext().getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
+                    dialogInterface.cancel();
+                }
+            }
+        });
+
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+
+            }
+        });
+
+        alertDialog.show();
+
+    }
+
+    private void wipeAndReturnToStart() {
+        //factoryReset = true;
+
+        //Wipe all RPI data
+        //SSHExecuter executer = new SSHExecuter();
+        //executer.response = thisInterface;
+        //executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
+
+        //Wipe SharedPreferences.
+        //pref.edit().clear().apply();
+        navController.navigate(R.id.action_RPISettingsFragment_to_installWelcomeFragment);
+
+    }
+
     @Override
     public void onComplete(String result) {
         if(settingUpdateTime){
@@ -148,7 +211,12 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
             settingUpdateTime = false;
         }
         else {
-            navController.navigate(R.id.action_RPISettingsFragment_to_unlockFragment2);
+            if (!factoryReset) {
+                navController.navigate(R.id.action_RPISettingsFragment_to_unlockFragment2);
+            }
+            else {
+                navController.navigate(R.id.action_RPISettingsFragment_to_installWelcomeFragment);
+            }
         }
 
     }
