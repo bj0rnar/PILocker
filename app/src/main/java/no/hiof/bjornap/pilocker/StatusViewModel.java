@@ -2,6 +2,8 @@ package no.hiof.bjornap.pilocker;
 
 import com.jcraft.jsch.Session;
 
+import java.util.Date;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,16 +15,17 @@ public class StatusViewModel extends ViewModel {
      * Use this for updating status in unlockfragment
      */
 
-    private MutableLiveData<String> names = new MutableLiveData<>();
+    private MutableLiveData<String> status = new MutableLiveData<>();
+    private MutableLiveData<String> time = new MutableLiveData<>();
+    private MutableLiveData<String> date = new MutableLiveData<>();
 
-    public MutableLiveData<String> getNames() {
-        return names;
+
+    public MutableLiveData<String> getStatus() {
+        return status;
     }
 
-    public void setNames(MutableLiveData<String> names) {
-        this.names = names;
-    }
+    public MutableLiveData<String> getTime() { return time; }
 
-
+    public MutableLiveData<String> getDate() { return date; }
 }
 
