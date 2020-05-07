@@ -21,4 +21,5 @@
     <string name="menu_unlock_logging_settings">Logging settings</string>
     <string name="menu_unlock_delete">Data storage management</string>
     <string name="menu_unlock_shutdown">Shutdown RPI</string>
+    <string name="rpisettings_uptime_placeholder">Calculating..</string>
 </resources>

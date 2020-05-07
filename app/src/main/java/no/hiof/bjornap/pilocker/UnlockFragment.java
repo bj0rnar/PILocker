@@ -175,7 +175,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         return true;
                     case R.id.menu_unlock_second:
                         Log.i("MENUTEST", "Andre knappen");
-                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
                         return true;
                 }
 
@@ -294,7 +294,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             }
         }
         else {
-            Toast.makeText(getContext().getApplicationContext(), "Error, are you connected to eduroam?", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
             statusText.setText("Unknown");
         }
 
