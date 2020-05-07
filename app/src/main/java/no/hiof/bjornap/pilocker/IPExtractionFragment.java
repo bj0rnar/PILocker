@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -101,6 +102,8 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     @Override
     public void onComplete(String result) {
         result = result.substring(0, result.length()-1);
+
+        Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
 
         SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         SharedPreferences.Editor edit = pref.edit();

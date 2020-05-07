@@ -21,7 +21,14 @@
         android:id="@+id/unlockFragment2"
         android:name="no.hiof.bjornap.pilocker.UnlockFragment"
         android:label="fragment_unlock"
-        tools:layout="@layout/fragment_unlock" />
+        tools:layout="@layout/fragment_unlock" >
+        <action
+            android:id="@+id/action_unlockFragment2_to_emailSettingsFragment"
+            app:destination="@id/emailSettingsFragment" />
+        <action
+            android:id="@+id/action_unlockFragment2_to_installLoggingSetup2"
+            app:destination="@id/installLoggingSetup" />
+    </fragment>
     <fragment
         android:id="@+id/installFragment"
         android:name="no.hiof.bjornap.pilocker.InstallFragment"
@@ -39,13 +46,13 @@
         android:name="no.hiof.bjornap.pilocker.ProgressFragment"
         android:label="fragment_progress"
         tools:layout="@layout/fragment_progress" >
-        <action
-            android:id="@+id/action_progressFragment_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
         <argument
             android:name="ethernetIp"
             app:argType="string"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_progressFragment_to_installLoggingSetup"
+            app:destination="@id/installLoggingSetup" />
     </fragment>
     <fragment
         android:id="@+id/installNamingFragment"
@@ -92,5 +99,21 @@
         <action
             android:id="@+id/action_installPasswordFragment_to_installNamingFragment"
             app:destination="@id/installNamingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailSettingsFragment"
+        android:name="no.hiof.bjornap.pilocker.EmailSettingsFragment"
+        android:label="EmailSettingsFragment" >
+        <action
+            android:id="@+id/action_emailSettingsFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/installLoggingSetup"
+        android:name="no.hiof.bjornap.pilocker.InstallLoggingSetup"
+        android:label="InstallLoggingSetup" >
+        <action
+            android:id="@+id/action_installLoggingSetup_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
     </fragment>
 </navigation>

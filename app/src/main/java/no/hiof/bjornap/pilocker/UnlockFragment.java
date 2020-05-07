@@ -8,19 +8,27 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.concurrent.Executor;
 
@@ -41,6 +49,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private String prefName;
     private String prefPub;
     private String prefPriv;
+    private Boolean prefEmailLoggedIn;
 
     private SharedPreferences pref;
 
@@ -53,6 +62,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private BiometricPrompt bioPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
+    private NavController navController;
+
     public UnlockFragment() {
         // Required empty public constructor
     }
@@ -62,6 +73,17 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        View view = inflater.inflate(R.layout.fragment_unlock, container, false);
+
+        /*
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        prefHost = pref.getString("key_ip", null);
+        prefName = pref.getString("doorName", null);
+        prefSide = pref.getString("side", null);
+        prefPriv = pref.getString("rsapriv", null);
+        prefPub = pref.getString("rsapub", null);
+        */
 
         //executer.response = this;
         exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
@@ -99,10 +121,21 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         bioPrompt.authenticate(promptInfo);
 
         */
-        //Initializing interface for dependency injection
+        //Initialize toolbar and set Menu.
+        setHasOptionsMenu(true);
 
-        return inflater.inflate(R.layout.fragment_unlock, container, false);
+        /*
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(prefName);
+        toolbar.setOnMenuItemClickListener(this);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //*/
+        return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -110,12 +143,49 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
 
         //Initialize sharedpreferences
+
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
         prefName = pref.getString("doorName", null);
         prefSide = pref.getString("side", null);
         prefPriv = pref.getString("rsapriv", null);
         prefPub = pref.getString("rsapub", null);
+        prefEmailLoggedIn = pref.getBoolean("isLoggingEnabled", false);
+
+        navController = Navigation.findNavController(view);
+
+        //Initialize toolbar only for this fragment.
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(prefName);
+        toolbar.inflateMenu(R.menu.unlockmenu);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_unlock_email_settings:
+                        Log.i("MENUTEST", "Email knappen");
+                        //Can navigate using this.
+                        if (prefEmailLoggedIn) {
+                            navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
+                        }
+                        else {
+                            navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        }
+                        return true;
+                    case R.id.menu_unlock_second:
+                        Log.i("MENUTEST", "Andre knappen");
+                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
@@ -126,7 +196,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
 
-        statusText.setText("UNKNOWN");
+        statusText.setText("Waiting for command");
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
 
@@ -182,7 +252,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "left"){
-                    command = "./counter.sh;";
+                    command = "./turnClockwise.sh;";
                 }
                 else {
                     command = "./turnCounterClockwise.sh;";
@@ -235,13 +305,16 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
 
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        /*promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
                 .setDeviceCredentialAllowed(true)
                 .build();
 
         bioPrompt.authenticate(promptInfo);
-
+        */
     }
+
+
+
 }

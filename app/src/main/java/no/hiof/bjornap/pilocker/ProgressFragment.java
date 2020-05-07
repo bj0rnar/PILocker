@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import static no.hiof.bjornap.pilocker.Utility.RSAGenerator.generateRSAPairs;
 
@@ -54,6 +56,9 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private String pub;
     private String priv;
 
+    private ProgressBar progressBar;
+    private Button retryButton;
+
     private SharedPreferences pref;
 
     private String prefHost;
@@ -85,6 +90,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         Log.i("SSHREADER", "PROGRESSFRAGMENT STARTED");
 
         //SPIN THE WHEEL FOR NOW
+        progressBar = view.findViewById(R.id.progress_fragment_progressbar);
+        retryButton = view.findViewById(R.id.progress_fragment_retrybutton);
 
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
@@ -102,9 +109,18 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         Log.i("PASSWORD", prefPass);
 
 
-        SSHInstaller sshInstaller = new SSHInstaller();
-        sshInstaller.response = thisInterface;
-        sshInstaller.execute(pub, actualUser, prefHost, prefPass);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                installKeys();
+            }
+        });
+
+
+        installKeys();
+
+
+
 
         /*
         if (getArguments() != null){
@@ -176,6 +192,16 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     }
 
+    private void installKeys() {
+        progressBar.setVisibility(View.VISIBLE);
+        retryButton.setVisibility(View.INVISIBLE);
+        retryButton.setEnabled(false);
+
+        SSHInstaller sshInstaller = new SSHInstaller();
+        sshInstaller.response = thisInterface;
+        sshInstaller.execute(pub, actualUser, prefHost, prefPass);
+    }
+
     @Override
     public void onComplete(String result) {
 
@@ -184,16 +210,25 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
          * EncryptedSharedPreference
          */
 
-        Log.i("SSHREADER", "onComplete i progressfragment?!");
+        if (result != null) {
 
-        //Save to sharedpreferences, switch to encryptedsharedpreferences later.
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        SharedPreferences.Editor edit = pref.edit();
-        edit.putString("rsapub", pub);
-        edit.putString("rsapriv", priv);
-        edit.apply();
+            Log.i("SSHREADER", "onComplete i progressfragment?!");
+
+            //Save to sharedpreferences, switch to encryptedsharedpreferences later.
+            SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString("rsapub", pub);
+            edit.putString("rsapriv", priv);
+            edit.apply();
 
 
-        navController.navigate(R.id.action_progressFragment_to_unlockFragment2);
+            navController.navigate(R.id.action_progressFragment_to_installLoggingSetup);
+        }
+        else {
+            Toast.makeText(getContext().getApplicationContext(), "Could not generate keys. Make sure you're on the same network as RPI", Toast.LENGTH_LONG).show();
+            retryButton.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+            retryButton.setEnabled(true);
+        }
     }
 }
