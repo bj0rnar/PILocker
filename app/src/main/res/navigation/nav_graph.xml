@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_unlockFragment2_to_installLoggingSetup2"
             app:destination="@id/installLoggingSetup" />
+        <action
+            android:id="@+id/action_unlockFragment2_to_RPISettingsFragment"
+            app:destination="@id/RPISettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/installFragment"
@@ -115,5 +118,17 @@
         <action
             android:id="@+id/action_installLoggingSetup_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/RPISettingsFragment"
+        android:name="no.hiof.bjornap.pilocker.RPISettingsFragment"
+        android:label="fragment_rpisettings"
+        tools:layout="@layout/fragment_rpisettings" >
+        <action
+            android:id="@+id/action_RPISettingsFragment_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+        <action
+            android:id="@+id/action_RPISettingsFragment_to_installWelcomeFragment"
+            app:destination="@id/installWelcomeFragment" />
     </fragment>
 </navigation>

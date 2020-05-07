@@ -3,6 +3,7 @@ package no.hiof.bjornap.pilocker;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
@@ -30,6 +33,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 
 
@@ -40,9 +46,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private AsyncResponseInterface thisInterface = this;
 
-    //private SSHExecuter executer = new SSHExecuter();
     private TextView statusText;
     private TextView doorNameTxt;
+    private TextView timeText;
+    private TextView dateText;
 
     private String prefHost;
     private String prefSide;
@@ -63,6 +70,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private BiometricPrompt.PromptInfo promptInfo;
 
     private NavController navController;
+
+    private StatusViewModel model;
+
+    private boolean locking;
 
     public UnlockFragment() {
         // Required empty public constructor
@@ -154,6 +165,12 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         navController = Navigation.findNavController(view);
 
+
+        model = new ViewModelProvider(this).get(StatusViewModel.class);
+
+
+
+
         //Initialize toolbar only for this fragment.
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle(prefName);
@@ -175,7 +192,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         return true;
                     case R.id.menu_unlock_second:
                         Log.i("MENUTEST", "Andre knappen");
-                        //navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
+                        navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
                         return true;
                 }
 
@@ -191,19 +208,24 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
 
-        doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
-        doorNameTxt.setText(prefName);
+        //doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
+        //doorNameTxt.setText(prefName);
 
         statusText = view.findViewById(R.id.unlock_status_status_textView);
+        dateText = view.findViewById(R.id.unlock_status_date_textView);
+        timeText = view.findViewById(R.id.unlock_status_time_textView);
 
-        statusText.setText("Waiting for command");
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
+
+        //Set all observers
+        SetObservers();
 
         lockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                statusText.setText("LOCKED");
+                locking = true;
+                model.getStatus().setValue("LOCKING..");
 
                 lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 lockBtn.setEnabled(false);
@@ -241,7 +263,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         unlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                statusText.setText("UNLOCKED");
+                locking = false;
+                model.getStatus().setValue("UNLOCKING..");
 
                 lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 lockBtn.setEnabled(false);
@@ -258,8 +281,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     command = "./turnCounterClockwise.sh;";
                 }
 
-                //USE prefHost FOR ACCEPTANCETEST
-                //String manualHost = "158.39.162.128";
 
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
@@ -278,6 +299,36 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     }
 
+    private void SetObservers() {
+        final Observer<String> statusObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newName) {
+                // Update the UI, in this case, a TextView.
+                statusText.setText(newName);
+            }
+        };
+
+        final Observer<String> timeObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newName) {
+                // Update the UI, in this case, a TextView.
+                timeText.setText(newName);
+            }
+        };
+
+        final Observer<String> dateObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newName) {
+                // Update the UI, in this case, a TextView.
+                dateText.setText(newName);
+            }
+        };
+
+        model.getStatus().observe(getViewLifecycleOwner(), statusObserver);
+        model.getDate().observe(getViewLifecycleOwner(), dateObserver);
+        model.getTime().observe(getViewLifecycleOwner(), timeObserver);
+    }
+
 
     @Override
     public void onComplete(String result) {
@@ -289,12 +340,19 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         lockBtn.setEnabled(true);
 
         if (result != null) {
-            if (!result.equals("0")) {
-                Log.i("FINALSTAGE", "echo $? gives no output");
+            if(locking){
+                model.getStatus().setValue("LOCKED");
+                model.getDate().setValue(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+                model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+            }
+            else {
+                model.getStatus().setValue("UNLOCKED");
+                model.getDate().setValue(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+                model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
             }
         }
         else {
-            Toast.makeText(getContext().getApplicationContext(), "Error, are you connected to eduroam?", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
             statusText.setText("Unknown");
         }
 

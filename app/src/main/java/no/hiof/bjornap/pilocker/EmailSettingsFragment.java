@@ -9,13 +9,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,10 +57,10 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sendBtn = view.findViewById(R.id.email_fragment_resendEmailBtn);
-        deleteEmailBtn = view.findViewById(R.id.email_fragment_deleteEmailBtn);
+        sendBtn = view.findViewById(R.id.fragment_rpisettings_shutdownBtn);
+        deleteEmailBtn = view.findViewById(R.id.fragment_rpisettings_factoryResetBtn);
         navController = Navigation.findNavController(view);
-        emailTextView = view.findViewById(R.id.fragment_logging_mail_textView);
+        emailTextView = view.findViewById(R.id.fragment_rpisettings_uptime_actual_textView);
 
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
         prefHost = pref.getString("key_ip", null);
