@@ -8,6 +8,7 @@
         android:id="@+id/menu_unlock_settings"
         android:title="Settings"
         app:showAsAction="always"
+        android:icon="@drawable/ic_settings"
         >
         <menu>
             <item
