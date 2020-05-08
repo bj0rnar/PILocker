@@ -80,16 +80,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
-                android:padding="8sp"
-                android:text="19:43" />
+                android:padding="8sp" />
 
             <TextView
                 android:id="@+id/unlock_status_date_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:padding="8sp"
-                android:text="03/03/2020" />
+                android:padding="8sp" />
 
         </androidx.cardview.widget.CardView>
 
