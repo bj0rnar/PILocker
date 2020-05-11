@@ -9,18 +9,17 @@
     tools:context=".InstallNamingFragment">
 
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:id="@+id/installation_welcome_cardView"
-        android:layout_width="340sp"
+        android:layout_width="300sp"
         android:layout_height="100sp"
-        android:background="@color/primaryLightColor"
         app:cardCornerRadius="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141">
+        app:layout_constraintVertical_bias="0.095">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,35 +39,65 @@
             android:textColor="@color/primaryTextColor"
             android:textSize="25sp" />
 
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="108dp"
+        android:text="@string/welcome_header"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="508dp"
+        android:text="@string/welcome_header_text"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.617" />
 
     <Button
         android:id="@+id/installation_welcome_btn_first_time_installation"
         style="@style/NewInstallButton"
         android:layout_width="340sp"
         android:layout_height="80sp"
-        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="40dp"
         android:text="@string/welcome_button_first"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toTopOf="@+id/installation_welcome_btn_nth_time_installation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/installation_welcome_cardView"
-        app:layout_constraintVertical_bias="0.88" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.985" />
 
     <Button
         android:id="@+id/installation_welcome_btn_nth_time_installation"
         style="@style/AlreadyInstallButton"
-        android:layout_width="300sp"
+        android:layout_width="250sp"
         android:layout_height="60sp"
-        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="224dp"
         android:text="@string/welcome_button_nth"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/installation_welcome_cardView"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
