@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 
 /**
@@ -27,6 +33,7 @@ public class InstallLoginSelection extends Fragment {
     private RadioGroup radioGroup;
     private Button nextButton;
     private int selection = 0;
+    private NavController navController;
 
     public InstallLoginSelection() {
         // Required empty public constructor
@@ -48,6 +55,7 @@ public class InstallLoginSelection extends Fragment {
         pinEditText = view.findViewById(R.id.installation_authSelection_editText_pin);
         repeatPinEditText = view.findViewById(R.id.installation_authSelection_editText_repeatPin);
         nextButton = view.findViewById(R.id.installation_logging_nextBtn);
+        navController = Navigation.findNavController(view);
 
         //Set edittext to invisible
         pinEditText.setVisibility(View.INVISIBLE);
@@ -101,6 +109,25 @@ public class InstallLoginSelection extends Fragment {
                     case 1:
                         break;
                     case 2:
+                        int pin, repeatPin;
+                        try{
+                            pin = Integer.parseInt(pinEditText.getText().toString());
+                            repeatPin = Integer.parseInt(repeatPinEditText.getText().toString());
+                        }catch (NumberFormatException e){
+                            Toast.makeText(getContext().getApplicationContext(), "Please enter a number", Toast.LENGTH_LONG).show();
+                            break;
+                        }
+
+                        if(pinEditText.getText().length() > 4){
+                            if(pin == repeatPin){
+                                navController.navigate(R.id.action_installLoginSelection_to_installFragment);
+                            }else{
+                                Toast.makeText(getContext().getApplicationContext(), "The pin codes dosn't match", Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            Toast.makeText(getContext().getApplicationContext(), "The pin code needs to be at least 4 characters long", Toast.LENGTH_LONG).show();
+                        }
+
                         break;
                 }
             }
