@@ -62,8 +62,6 @@ public class InstallLoginSelection extends Fragment {
         nextButton = view.findViewById(R.id.installation_logging_nextBtn);
         navController = Navigation.findNavController(view);
 
-        final View viewForPrompt = view;
-
         selection = -1;
 
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
@@ -151,7 +149,7 @@ public class InstallLoginSelection extends Fragment {
 
                         break;
                     default:
-                        Snackbar.make(viewForPrompt, "Please choose an option!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        Toast.makeText(getContext().getApplicationContext(), "Please choose an option!", Toast.LENGTH_LONG).show();
                         break;
 
                 }
