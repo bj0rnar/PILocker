@@ -32,7 +32,7 @@
             android:layout_marginBottom="100sp"
             android:elevation="10sp"
             android:text="LOCK"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/primaryTextColor" />
 
         <Button
             android:id="@+id/unlockBtn"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="200sp"
             android:elevation="10sp"
             android:text="UNLOCK"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/primaryTextColor" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="340sp"
