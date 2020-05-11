@@ -2,6 +2,7 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -32,8 +35,10 @@ public class InstallLoginSelection extends Fragment {
     private EditText pinEditText, repeatPinEditText;
     private RadioGroup radioGroup;
     private Button nextButton;
-    private int selection = 0;
+    private int selection;
     private NavController navController;
+
+    private SharedPreferences pref;
 
     public InstallLoginSelection() {
         // Required empty public constructor
@@ -56,6 +61,12 @@ public class InstallLoginSelection extends Fragment {
         repeatPinEditText = view.findViewById(R.id.installation_authSelection_editText_repeatPin);
         nextButton = view.findViewById(R.id.installation_logging_nextBtn);
         navController = Navigation.findNavController(view);
+
+        final View viewForPrompt = view;
+
+        selection = -1;
+
+        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
         //Set edittext to invisible
         pinEditText.setVisibility(View.INVISIBLE);
@@ -103,10 +114,17 @@ public class InstallLoginSelection extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor edit = pref.edit();
                 switch (selection){
                     case 0:
+                        edit.putString("authMethod", "nothing");
+                        edit.apply();
+                        navController.navigate(R.id.action_installLoginSelection_to_installFragment);
                         break;
                     case 1:
+                        edit.putString("authMethod", "biometric");
+                        edit.apply();
+                        navController.navigate(R.id.action_installLoginSelection_to_installFragment);
                         break;
                     case 2:
                         int pin, repeatPin;
@@ -118,8 +136,11 @@ public class InstallLoginSelection extends Fragment {
                             break;
                         }
 
-                        if(pinEditText.getText().length() > 4){
+                        if(pinEditText.getText().length() >= 4){
                             if(pin == repeatPin){
+                                edit.putString("authMethod", "pin");
+                                edit.putInt("pinCode", pin);
+                                edit.apply();
                                 navController.navigate(R.id.action_installLoginSelection_to_installFragment);
                             }else{
                                 Toast.makeText(getContext().getApplicationContext(), "The pin codes dosn't match", Toast.LENGTH_LONG).show();
@@ -129,6 +150,10 @@ public class InstallLoginSelection extends Fragment {
                         }
 
                         break;
+                    default:
+                        Snackbar.make(viewForPrompt, "Please choose an option!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        break;
+
                 }
             }
         });
