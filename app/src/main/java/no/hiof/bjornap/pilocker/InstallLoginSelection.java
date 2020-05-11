@@ -40,6 +40,12 @@ public class InstallLoginSelection extends Fragment {
 
     private SharedPreferences pref;
 
+    private String doorName;
+    private String side;
+
+    private Boolean firstTime;
+    private String password;
+
     public InstallLoginSelection() {
         // Required empty public constructor
     }
@@ -55,6 +61,18 @@ public class InstallLoginSelection extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getArguments() != null){
+            doorName = getArguments().getString("doorName");
+            side = getArguments().getString("side");
+            firstTime = getArguments().getBoolean("firstTime");
+            password = getArguments().getString("password");
+
+            Log.i("BUNDLE FINAL INSTALL", doorName);
+            Log.i("BUNDLE FINAL INSTALL", side);
+            Log.i("BUNDLE FINAL INSTALL", "is it the first time?" + firstTime.toString());
+            Log.i("BUNDLE FINAL INSTALL", password);
+        }
 
         radioGroup = view.findViewById(R.id.radio_logging_radioGroup);
         pinEditText = view.findViewById(R.id.installation_authSelection_editText_pin);
@@ -113,16 +131,21 @@ public class InstallLoginSelection extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor edit = pref.edit();
+                Bundle b = new Bundle();
+                b.putString("side", side);
+                b.putString("doorName", doorName);
+                b.putString("password", password);
+                b.putBoolean("firstTime", firstTime);
                 switch (selection){
                     case 0:
                         edit.putString("authMethod", "nothing");
                         edit.apply();
-                        navController.navigate(R.id.action_installLoginSelection_to_installFragment);
+                        navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                         break;
                     case 1:
                         edit.putString("authMethod", "biometric");
                         edit.apply();
-                        navController.navigate(R.id.action_installLoginSelection_to_installFragment);
+                        navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                         break;
                     case 2:
                         int pin, repeatPin;
@@ -139,7 +162,7 @@ public class InstallLoginSelection extends Fragment {
                                 edit.putString("authMethod", "pin");
                                 edit.putInt("pinCode", pin);
                                 edit.apply();
-                                navController.navigate(R.id.action_installLoginSelection_to_installFragment);
+                                navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                             }else{
                                 Toast.makeText(getContext().getApplicationContext(), "The pin codes dosn't match", Toast.LENGTH_LONG).show();
                             }

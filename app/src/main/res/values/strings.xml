@@ -21,6 +21,9 @@
     <string name="installation_password_header_txt">Service Mode Password</string>
     <string name="installation_service_header">Activate Service Mode</string>
     <string name="installation_service_instructions_textView">Click the Service Button</string>
+    <string name="installation_ap_header_textview">Access Point Configuration</string>
+    <string name="installation_ap_instructions_textView">Connect to the piDOOR WiFI</string>
+    <string name="installation_ap_instructions_password_textView">Password: gruppe_6_rox</string>
     <string name="menu_unlock_logging_settings">Logging settings</string>
     <string name="menu_unlock_delete">Data storage management</string>
     <string name="menu_unlock_shutdown">Shutdown RPI</string>

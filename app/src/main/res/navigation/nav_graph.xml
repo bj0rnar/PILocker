@@ -38,9 +38,6 @@
         android:label="fragment_install"
         tools:layout="@layout/fragment_install" >
         <action
-            android:id="@+id/action_installFragment_to_installHandleSide2"
-            app:destination="@id/installHandleSide2" />
-        <action
             android:id="@+id/action_installFragment_to_IPExtractionFragment"
             app:destination="@id/IPExtractionFragment" />
     </fragment>
@@ -136,7 +133,16 @@
         android:name="no.hiof.bjornap.pilocker.InstallLoginSelection"
         android:label="InstallLoginSelection" >
         <action
-            android:id="@+id/action_installLoginSelection_to_installFragment"
+            android:id="@+id/action_installLoginSelection_to_installServiceModeInstructionsFragment"
+            app:destination="@id/installServiceModeInstructionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/installServiceModeInstructionsFragment"
+        android:name="no.hiof.bjornap.pilocker.InstallServiceModeInstructionsFragment"
+        android:label="fragment_install_service_mode_instructions"
+        tools:layout="@layout/fragment_install_service_mode_instructions" >
+        <action
+            android:id="@+id/action_installServiceModeInstructionsFragment_to_installFragment"
             app:destination="@id/installFragment" />
     </fragment>
 </navigation>

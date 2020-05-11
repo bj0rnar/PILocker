@@ -104,14 +104,14 @@ public class InstallFragment extends Fragment{
 
         //Initialize
         navController = Navigation.findNavController(view);
-        testApBtn = view.findViewById(R.id.installation_ap_testApBtn);
+        //testApBtn = view.findViewById(R.id.installation_ap_testApBtn);
         installBtn = view.findViewById(R.id.installation_ap_installBtn);
-        statusTxt = view.findViewById(R.id.installation_ap_status_textView);
+        //statusTxt = view.findViewById(R.id.installation_ap_status_textView);
 
         //Grey out install button until status is checked OK
-        installBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-        installBtn.setEnabled(false);
-
+        //installBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        //installBtn.setEnabled(false);
+        /*
         //Now gets ethernet IP from raspberry pi
         testApBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,19 +149,29 @@ public class InstallFragment extends Fragment{
 
             }
         });
-
+        */
         installBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b = new Bundle();
-                b.putString("side", side);
-                b.putString("doorName", doorName);
-                b.putString("password", password);
-                b.putBoolean("firstTime", firstTime);
-                //b.putString("ip", "10.0.0.116");
-                //b.putString("ip", "192.168.10.185");
-                b.putString("wlanIp", wlanIp);
-                navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
+
+                wlanIp = getIPAddressTwo();
+
+                if (wlanIp.equals("10.0.60.1")) {
+
+                    Bundle b = new Bundle();
+                    b.putString("side", side);
+                    b.putString("doorName", doorName);
+                    b.putString("password", password);
+                    b.putBoolean("firstTime", firstTime);
+                    //b.putString("ip", "10.0.0.116");
+                    //b.putString("ip", "192.168.10.185");
+                    b.putString("wlanIp", wlanIp);
+                    navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
+                }
+                else {
+                    Toast.makeText(getContext().getApplicationContext(), "Are you connected to piDOOR?", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }

@@ -27,7 +27,7 @@
         android:layout_height="366dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
-        android:src="@drawable/ServiceButton"
+        android:src="@drawable/service_button_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/installation_password_btn_next"
+            android:id="@+id/installation_service_nextBtn"
             style="@style/InstallationButton"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
