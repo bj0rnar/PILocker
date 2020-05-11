@@ -154,13 +154,13 @@ public class InstallFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Bundle b = new Bundle();
-                b.putString("side", side);
-                b.putString("doorName", doorName);
-                b.putString("password", password);
-                b.putBoolean("firstTime", firstTime);
+                b.putString("side", "right");
+                b.putString("doorName", "420");
+                b.putString("password", "gruppe6");
+                b.putBoolean("firstTime", true);
                 //b.putString("ip", "10.0.0.116");
                 //b.putString("ip", "192.168.10.185");
-                b.putString("wlanIp", wlanIp);
+                b.putString("wlanIp", "10.0.60.1");
                 navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
             }
         });
