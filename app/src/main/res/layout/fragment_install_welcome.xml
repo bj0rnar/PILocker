@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5CAE9"
+    android:background="@color/primaryDarkBackgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/installation_name_constraintLayout"
     tools:context=".InstallNamingFragment">
@@ -13,20 +13,22 @@
         android:id="@+id/installation_welcome_cardView"
         android:layout_width="340sp"
         android:layout_height="100sp"
+        android:background="@color/primaryLightColor"
         app:cardCornerRadius="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144">
+        app:layout_constraintVertical_bias="0.141">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
-            android:text="@string/welcome_header"
             android:layout_marginTop="10sp"
+            android:text="@string/welcome_header"
+            android:textColor="@color/primaryTextColor"
             android:textSize="25sp" />
 
         <TextView
@@ -35,33 +37,38 @@
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="10sp"
             android:text="@string/welcome_header_text"
+            android:textColor="@color/primaryTextColor"
             android:textSize="25sp" />
 
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/installation_welcome_btn_first_time_installation"
-        style="@style/InstallationButton"
-        android:layout_width="300sp"
-        android:layout_height="60sp"
+        style="@style/NewInstallButton"
+        android:layout_width="340sp"
+        android:layout_height="80sp"
+        android:textColor="@color/primaryTextColor"
         android:text="@string/welcome_button_first"
         app:layout_constraintBottom_toTopOf="@+id/installation_welcome_btn_nth_time_installation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/installation_welcome_cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/installation_welcome_cardView"
+        app:layout_constraintVertical_bias="0.88" />
 
     <Button
         android:id="@+id/installation_welcome_btn_nth_time_installation"
-        style="@style/InstallationButton"
+        style="@style/AlreadyInstallButton"
         android:layout_width="300sp"
         android:layout_height="60sp"
+        android:textColor="@color/primaryTextColor"
         android:text="@string/welcome_button_nth"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/installation_welcome_cardView"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.62" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
