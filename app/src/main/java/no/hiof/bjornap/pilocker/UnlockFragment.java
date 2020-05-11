@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -28,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +48,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private AsyncResponseInterface thisInterface = this;
 
-    private TextView statusText;
+
     private TextView doorNameTxt;
     private TextView timeText;
     private TextView dateText;
+
+    private ConstraintLayout lockImage;
+    private ConstraintLayout unlockImage;
+    private ConstraintLayout unknownImage;
 
     private String prefHost;
     private String prefSide;
@@ -86,6 +92,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_unlock, container, false);
+
 
         /*
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
@@ -211,9 +218,12 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         //doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
         //doorNameTxt.setText(prefName);
 
-        statusText = view.findViewById(R.id.unlock_status_status_textView);
         dateText = view.findViewById(R.id.unlock_status_date_textView);
         timeText = view.findViewById(R.id.unlock_status_time_textView);
+
+        lockImage = view.findViewById(R.id.unlock_status_status_locked);
+        unlockImage = view.findViewById(R.id.unlock_status_status_unlocked);
+        unknownImage = view.findViewById(R.id.unlock_status_status_unknown);
 
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
@@ -304,7 +314,19 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             @Override
             public void onChanged(@Nullable final String newName) {
                 // Update the UI, in this case, a TextView.
-                statusText.setText(newName);
+                if(newName.equals("UNLOCKED")){
+                    lockImage.setVisibility(View.INVISIBLE);
+                    unlockImage.setVisibility(View.VISIBLE);
+                    unknownImage.setVisibility(View.INVISIBLE);
+                }else if(newName.equals("LOCKED")){
+                    lockImage.setVisibility(View.VISIBLE);
+                    unlockImage.setVisibility(View.INVISIBLE);
+                    unknownImage.setVisibility(View.INVISIBLE);
+                }else{
+                    lockImage.setVisibility(View.INVISIBLE);
+                    unlockImage.setVisibility(View.INVISIBLE);
+                    unknownImage.setVisibility(View.VISIBLE);
+                }
             }
         };
 
@@ -353,7 +375,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         }
         else {
             Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
-            statusText.setText("Unknown");
         }
 
     }
