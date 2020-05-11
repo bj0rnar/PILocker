@@ -13,7 +13,7 @@
         android:layout_width="340sp"
         android:layout_height="80sp"
         app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/installation_logging_centerCardView"
+        app:layout_constraintBottom_toTopOf="@+id/installation_logging_chooseselection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,14 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Installation: 5 of 5"
+            android:text="Installation: 3 of 5"
             android:textSize="25sp" />
 
     </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/installation_logging_centerCardView"
+        android:id="@+id/installation_logging_chooseselection"
         android:layout_width="340sp"
         android:layout_height="300sp"
         app:cardCornerRadius="8sp"
@@ -47,7 +47,7 @@
             android:layout_marginStart="20sp"
             android:layout_marginBottom="100sp"
             android:textSize="14sp"
-            android:text="Do you want to enable logging from RPI?  \nThis requires a valid gmail account with app password"
+            android:text="@string/choose_login_selection"
             />
 
 
@@ -59,37 +59,43 @@
             android:layout_height="wrap_content"
             android:checkedButton="@id/radio_logging_no"
             android:orientation="vertical">
-            <RadioButton android:id="@+id/radio_logging_no"
+            <RadioButton android:id="@+id/radio_authSelection_biometric"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="no" />
-            <RadioButton android:id="@+id/radio_logging_yes"
+                android:text="Biometrics" />
+            <RadioButton android:id="@+id/radio_authSelection_pin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="yes" />
+                android:text="Pin code" />
+            <RadioButton android:id="@+id/radio_authSelection_nothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nothing" />
         </RadioGroup>
 
         <EditText
-            android:id="@+id/installation_logging_editText"
+            android:id="@+id/installation_authSelection_editText_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="50sp"
             android:layout_gravity="center|start"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="70sp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Insert gmail address here" />
+            android:hint="@string/insert_pin_code"
+            android:inputType="number" />
 
         <EditText
-            android:id="@+id/installation_logging_editText_password"
+            android:id="@+id/installation_authSelection_editText_repeatPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="80sp"
             android:layout_gravity="center|start"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="100sp"
             android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Insert app password" />
+            android:hint="@string/repeat_pin_code"
+            android:inputType="number" />
+
+
 
 
     </androidx.cardview.widget.CardView>
@@ -110,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:elevation="10sp"
-            android:text="FINISH" />
+            android:text="@string/next" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

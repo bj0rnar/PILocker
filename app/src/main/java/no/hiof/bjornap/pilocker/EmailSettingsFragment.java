@@ -68,6 +68,7 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
         prefPub = pref.getString("rsapub", null);
         prefMail = pref.getString("email", null);
 
+
         if (prefMail != null) {
             emailTextView.setText(prefMail);
         }

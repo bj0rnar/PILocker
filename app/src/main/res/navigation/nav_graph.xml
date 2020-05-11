@@ -73,7 +73,7 @@
         tools:layout="@layout/fragment_install_handle_side" >
         <action
             android:id="@+id/action_installHandleSide2_to_installFragment"
-            app:destination="@id/installFragment" />
+            app:destination="@+id/installLoginSelection" />
         <action
             android:id="@+id/action_installHandleSide2_to_installNamingFragment"
             app:destination="@id/installNamingFragment" />
@@ -130,5 +130,13 @@
         <action
             android:id="@+id/action_RPISettingsFragment_to_installWelcomeFragment"
             app:destination="@id/installWelcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/installLoginSelection"
+        android:name="no.hiof.bjornap.pilocker.InstallLoginSelection"
+        android:label="InstallLoginSelection" >
+        <action
+            android:id="@+id/action_installLoginSelection_to_installFragment"
+            app:destination="@id/installFragment" />
     </fragment>
 </navigation>
