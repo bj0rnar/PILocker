@@ -22,4 +22,8 @@
     <string name="menu_unlock_delete">Data storage management</string>
     <string name="menu_unlock_shutdown">Shutdown RPI</string>
     <string name="rpisettings_uptime_placeholder">Calculating..</string>
+    <string name="choose_login_selection">What kind of authentication do you want when you unlock the door?</string>
+    <string name="repeat_pin_code">Repeat pin code</string>
+    <string name="insert_pin_code">Insert pin code</string>
+    <string name="next">NEXT</string>
 </resources>
