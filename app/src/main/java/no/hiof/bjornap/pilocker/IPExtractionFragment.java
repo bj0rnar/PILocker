@@ -38,7 +38,6 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
     private NavController navController;
 
-    private Button nextBtn;
 
     public AsyncResponseInterface thisInterface = this;
 
@@ -61,9 +60,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nextBtn = view.findViewById(R.id.ipextraction_next_button);
-        nextBtn.setVisibility(View.INVISIBLE);
-        nextBtn.setEnabled(false);
+
 
         navController = Navigation.findNavController(view);
 
@@ -90,12 +87,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             }
         }
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
-            }
-        });
+
 
     }
 
@@ -113,9 +105,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
         edit.putString("password", password);
         edit.apply();
 
-        nextBtn.setVisibility(View.VISIBLE);
-        nextBtn.setEnabled(true);
 
-        //navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
+        navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
     }
 }

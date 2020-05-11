@@ -34,6 +34,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
 
 
         try {
+            Thread.sleep(3000);
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
             session = jsch.getSession(user, host, 22);
