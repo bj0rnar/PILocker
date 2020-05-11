@@ -9,90 +9,83 @@
     tools:context=".InstallNamingFragment">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="340sp"
-        android:layout_height="80sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/installation_logging_centerCardView"
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="110dp"
+        android:text="Logging"
+        android:textSize="25sp"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Installation: 5 of 5"
-            android:textSize="25sp" />
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/installation_logging_centerCardView"
-        android:layout_width="340sp"
-        android:layout_height="300sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="50dp"
+        android:text="Do you want to enable logging?  \nThis requires a valid gmail account with app password"
+        android:textSize="15sp"
+        android:textColor="@color/primaryTextColor"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385">
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-        <TextView
+    <RadioGroup
+        android:id="@+id/radio_logging_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="25dp"
+        android:checkedButton="@id/radio_logging_no"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+        <RadioButton
+            android:id="@+id/radio_logging_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_marginStart="20sp"
-            android:layout_marginBottom="100sp"
-            android:textSize="14sp"
-            android:text="Do you want to enable logging from RPI?  \nThis requires a valid gmail account with app password"
-            />
+            android:text="No" />
 
-
-        <RadioGroup
-            android:id="@+id/radio_logging_radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_marginStart="20sp"
-            android:layout_height="wrap_content"
-            android:checkedButton="@id/radio_logging_no"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/radio_logging_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="no" />
-            <RadioButton android:id="@+id/radio_logging_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="yes" />
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/installation_logging_editText"
+        <RadioButton
+            android:id="@+id/radio_logging_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="50sp"
-            android:layout_gravity="center|start"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Insert gmail address here" />
-
-        <EditText
-            android:id="@+id/installation_logging_editText_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="80sp"
-            android:layout_gravity="center|start"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Insert app password" />
+            android:text="Yes" />
+    </RadioGroup>
 
 
-    </androidx.cardview.widget.CardView>
+    <EditText
+        android:id="@+id/installation_logging_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="Insert gmail address here"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_logging_radioGroup" />
+
+    <EditText
+        android:id="@+id/installation_logging_editText_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:ems="10"
+        android:hint="Insert app password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/installation_logging_editText" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
