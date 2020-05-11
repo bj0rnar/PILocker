@@ -66,8 +66,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private SharedPreferences pref;
 
-    private Button unlockBtn;
-    private Button lockBtn;
+    private ConstraintLayout unlockBtn;
+    private ConstraintLayout lockBtn;
+
+    private ImageView unlockButtonImage, lockButtonImage;
 
     private String hostName = "ubuntu";
 
@@ -228,6 +230,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
 
+        lockButtonImage = view.findViewById(R.id.lockButtonImage);
+        unlockButtonImage = view.findViewById(R.id.unlockButtonImage);
+
         //Set all observers
         SetObservers();
 
@@ -237,9 +242,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 locking = true;
                 model.getStatus().setValue("LOCKING..");
 
-                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockButtonImage.setColorFilter(Color.argb(150,200,200,200));
+                //lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 lockBtn.setEnabled(false);
-                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockButtonImage.setColorFilter(Color.argb(150,200,200,200));
+                //unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 unlockBtn.setEnabled(false);
 
                 String command = "";
@@ -260,9 +267,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
-                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockButtonImage.setColorFilter(null);
+                    //unlockBtn.getBackground().setColorFilter(null);
                     unlockBtn.setEnabled(true);
-                    lockBtn.getBackground().setColorFilter(null);
+                    lockButtonImage.setColorFilter(null);
+                    //lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
             }
@@ -276,9 +285,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 locking = false;
                 model.getStatus().setValue("UNLOCKING..");
 
-                lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                lockButtonImage.setColorFilter(Color.argb(150,200,200,200));
+                //lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 lockBtn.setEnabled(false);
-                unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                unlockButtonImage.setColorFilter(Color.argb(150,200,200,200));
+                //unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 unlockBtn.setEnabled(false);
 
 
@@ -298,9 +309,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                     executer.execute(hostName, prefHost, command, prefPriv, prefPub);
                 }
                 catch (Exception e){
-                    unlockBtn.getBackground().setColorFilter(null);
+                    unlockButtonImage.setColorFilter(null);
+                    //unlockBtn.getBackground().setColorFilter(null);
                     unlockBtn.setEnabled(true);
-                    lockBtn.getBackground().setColorFilter(null);
+                    lockButtonImage.setColorFilter(null);
+                    //lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
 
@@ -356,9 +369,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     public void onComplete(String result) {
         Log.i("FINALSTAGE", "ONCOMPLETE FRA ASYNC MOTTAR: " + result);
         //UNLOCK BUTTONS ONLY ON RESPONSE
-        unlockBtn.getBackground().setColorFilter(null);
+        //unlockBtn.getBackground().setColorFilter(null);
         unlockBtn.setEnabled(true);
-        lockBtn.getBackground().setColorFilter(null);
+        //lockBtn.getBackground().setColorFilter(null);
         lockBtn.setEnabled(true);
 
         if (result != null) {
