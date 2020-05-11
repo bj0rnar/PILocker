@@ -8,5 +8,6 @@
     <color name="primaryLightBackgroundColor">#f5f5f5</color>
     <color name="green">#3DE21B</color>
     <color name="white">#FFFFFF</color>
+    <color name="red">#f44336</color>
 </resources>
 
