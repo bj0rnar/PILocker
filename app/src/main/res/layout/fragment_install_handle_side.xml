@@ -3,128 +3,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5CAE9"
+    android:background="@color/primaryDarkBackgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/installation_side_constraintLayout"
     tools:context=".InstallHandleSide">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="340sp"
-        android:layout_height="80sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="110dp"
+        android:text="Choose door handle side"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Installation: 2 of 5"
-            android:textSize="25sp" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="340sp"
-        android:layout_height="300sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:padding="12sp"
+        android:textAlignment="center"
+        android:text="Select which side of the door the handle is on"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385">
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="12sp"
-            android:layout_marginBottom="100sp"
-            android:text="Select which side of the door the handle is on"
-            android:textSize="20sp" />
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="150sp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="60sp">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:layout_gravity="center|bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/installation_side_leftDoorConstraintLayout"
-                    android:layout_width="100sp"
-                    android:layout_marginStart="40sp"
-                    android:layout_height="match_parent"
-                    android:padding="12sp"
-                    android:layout_gravity="start">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/installation_side_leftDoorConstraintLayout"
+            android:layout_width="100sp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginStart="40sp"
+            android:padding="12sp">
 
-                    <!-- OBS! Picture from imageSRC are different sizes, that's why they are uneven -->
-                    <ImageView
-                        android:id="@+id/installation_side_leftImage"
-                        android:layout_width="50sp"
-                        android:layout_height="100sp"
-                        android:layout_gravity="start|top"
-                        android:contentDescription="LEFT"
-                        android:src="@drawable/doorhandleleft"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.3" />
+            <!-- OBS! Picture from imageSRC are different sizes, that's why they are uneven -->
+            <ImageView
+                android:id="@+id/installation_side_leftImage"
+                android:layout_width="50sp"
+                android:layout_height="100sp"
+                android:layout_gravity="start|top"
+                android:contentDescription="LEFT"
+                android:src="@drawable/doorhandleleft"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LEFT"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/installation_side_leftImage" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LEFT"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/installation_side_leftImage" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/installation_side_rightDoorConstraintLayout"
-                android:layout_width="100sp"
-                android:layout_marginEnd="40sp"
-                android:padding="12sp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/installation_side_rightDoorConstraintLayout"
+            android:layout_width="100sp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40sp"
+            android:padding="12sp">
 
-                <ImageView
-                    android:id="@+id/installation_side_rightImage"
-                    android:layout_width="50sp"
-                    android:layout_height="100sp"
-                    android:layout_gravity="start|top"
-                    android:contentDescription="LEFT"
-                    android:src="@drawable/doorhandleright"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.3" />
+            <ImageView
+                android:id="@+id/installation_side_rightImage"
+                android:layout_width="50sp"
+                android:layout_height="100sp"
+                android:layout_gravity="start|top"
+                android:contentDescription="LEFT"
+                android:src="@drawable/doorhandleright"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RIGHT"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/installation_side_rightImage" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RIGHT"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/installation_side_rightImage" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
