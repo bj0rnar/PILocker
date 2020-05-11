@@ -14,7 +14,7 @@
     <string name="welcome_header_text">Choose installation mode</string>
     <string name="welcome_button_first">Install new lock</string>
     <string name="welcome_button_nth">Already installed?</string>
-    <string name="installation_password_create_new_password">Create a new password for Service mode</string>
+    <string name="installation_password_create_new_password">Set a password for Service mode</string>
     <string name="installation_password_write_in_password">Write in password for Service mode</string>
     <string name="installation_password_firsttime_edittext_hint">Set a new password..</string>
     <string name="installation_password_nthtime_edittext_hint">Write in password..</string>
@@ -26,4 +26,5 @@
     <string name="repeat_pin_code">Repeat pin code</string>
     <string name="insert_pin_code">Insert pin code</string>
     <string name="next">NEXT</string>
+
 </resources>
