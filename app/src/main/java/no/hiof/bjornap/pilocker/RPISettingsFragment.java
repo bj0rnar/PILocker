@@ -187,12 +187,12 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         //factoryReset = true;
 
         //Wipe all RPI data
-        //SSHExecuter executer = new SSHExecuter();
-        //executer.response = thisInterface;
-        //executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
+        SSHExecuter executer = new SSHExecuter();
+        executer.response = thisInterface;
+        executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
 
         //Wipe SharedPreferences.
-        //pref.edit().clear().apply();
+        pref.edit().clear().apply();
         navController.navigate(R.id.action_RPISettingsFragment_to_installWelcomeFragment);
 
     }
