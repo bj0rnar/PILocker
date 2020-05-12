@@ -204,7 +204,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
                         return true;
                 }
-
                 return false;
             }
         });
