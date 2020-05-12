@@ -78,7 +78,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
                 //Run reader method
                 SSHReader sshReader = new SSHReader();
                 sshReader.response = thisInterface;
-                sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.exp " + password);
+                sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.sh " + password);
             }
             else {
                 SSHReader sshReader2 = new SSHReader();
