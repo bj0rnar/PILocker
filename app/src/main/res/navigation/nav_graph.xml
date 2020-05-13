@@ -156,7 +156,7 @@
         <action
             android:id="@+id/action_installLoginSelection_to_installServiceModeInstructionsFragment"
             app:destination="@id/installServiceModeInstructionsFragment"
-            app:enterAnim="@anim/backward_animation"
+            app:enterAnim="@anim/forward_animation"
             app:exitAnim="@anim/backward_animation"
             app:popEnterAnim="@anim/pop_forward"
             app:popExitAnim="@anim/pop_backward" />
