@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -97,13 +98,10 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
         Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        SharedPreferences.Editor edit = pref.edit();
-        edit.putString("side", side);
-        edit.putString("doorName", doorName);
-        edit.putString("key_ip", result);
-        edit.putString("password", password);
-        edit.apply();
+        EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, side);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.DOORNAME, doorName);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.KEY_IP, result);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.PASSWORD, password);
 
 
         navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);

@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,8 +32,6 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
     private Button sendBtn;
     private Button deleteEmailBtn;
 
-
-    private SharedPreferences pref;
 
     private String prefHost;
     private String prefPub;
@@ -62,11 +61,11 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
         navController = Navigation.findNavController(view);
         emailTextView = view.findViewById(R.id.fragment_rpisettings_uptime_actual_textView);
 
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefPriv = pref.getString("rsapriv", null);
-        prefPub = pref.getString("rsapub", null);
-        prefMail = pref.getString("email", null);
+
+        prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+        prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
+        prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
+        prefMail = EncryptedSharedPref.readString(EncryptedSharedPref.EMAIL, null);
 
 
         if (prefMail != null) {
@@ -95,8 +94,8 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 executer.execute("ubuntu", prefHost, "./deleteMail.sh", prefPriv, prefPub);
-                pref.edit().remove("email").apply();
-                pref.edit().putBoolean("isLoggingEnabled", false).apply();
+                EncryptedSharedPref.delete(EncryptedSharedPref.EMAIL);
+                EncryptedSharedPref.writeBool(EncryptedSharedPref.LOGGINGENABLED, false);
 
                 Toast.makeText(getContext().getApplicationContext(), "Email successfully deleted", Toast.LENGTH_LONG).show();
                 navController.navigate(R.id.action_emailSettingsFragment_to_unlockFragment2);

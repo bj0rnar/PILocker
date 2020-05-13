@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,9 +52,9 @@ public class ConnectFragment extends Fragment {
          */
 
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        //SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 1;
+        //int key = 1;
 
         /*
         if (pref.getString("key_ip", null) != null){
@@ -62,10 +63,19 @@ public class ConnectFragment extends Fragment {
         }
         */
 
+        if (EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null) != null &&
+                EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null) != null) {
+            navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
+        }
+        else {
+            navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
+        }
+
 
         
 
         //Basically slekk en ska ha dæ.
+        /*
         if (key == 0){
             navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
         }
@@ -73,5 +83,6 @@ public class ConnectFragment extends Fragment {
 
             navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
         }
+         */
     }
 }

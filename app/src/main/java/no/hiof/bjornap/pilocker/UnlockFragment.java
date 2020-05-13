@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -162,13 +163,12 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         //Initialize sharedpreferences
 
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefName = pref.getString("doorName", null);
-        prefSide = pref.getString("side", null);
-        prefPriv = pref.getString("rsapriv", null);
-        prefPub = pref.getString("rsapub", null);
-        prefEmailLoggedIn = pref.getBoolean("isLoggingEnabled", false);
+        prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+        prefName = EncryptedSharedPref.readString(EncryptedSharedPref.DOORNAME, null);
+        prefSide = EncryptedSharedPref.readString(EncryptedSharedPref.SIDE, null);
+        prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
+        prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
+        prefEmailLoggedIn = EncryptedSharedPref.readBool(EncryptedSharedPref.LOGGINGENABLED, false);
 
         navController = Navigation.findNavController(view);
 
@@ -213,6 +213,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefPriv);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
 
         //doorNameTxt = view.findViewById(R.id.unlock_status_door_name);

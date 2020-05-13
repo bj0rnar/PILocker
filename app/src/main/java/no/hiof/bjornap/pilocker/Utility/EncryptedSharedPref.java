@@ -26,6 +26,7 @@ public class EncryptedSharedPref {
     public static final String EMAIL = "email";
     public static final String LOGGINGENABLED = "isLoggingEnabled";
     public static final String APPLOGINMETHOD = "authMethod";
+    public static final String PINCODE = "pinCode";
 
 
     private static SharedPreferences encryptedSharedPreferences;
@@ -59,6 +60,12 @@ public class EncryptedSharedPref {
 
     public static String readString(String key, String defaultValue){
         return encryptedSharedPreferences.getString(key, defaultValue);
+    }
+
+    public static void delete(String key) {
+        SharedPreferences.Editor edit = encryptedSharedPreferences.edit();
+        edit.remove(key);
+        edit.apply();
     }
 
     public static void writeBool(String key, boolean value) {

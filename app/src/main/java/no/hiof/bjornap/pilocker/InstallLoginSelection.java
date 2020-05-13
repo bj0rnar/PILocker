@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -138,13 +139,11 @@ public class InstallLoginSelection extends Fragment {
                 b.putBoolean("firstTime", firstTime);
                 switch (selection){
                     case 0:
-                        edit.putString("authMethod", "nothing");
-                        edit.apply();
+                        EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "nothing");
                         navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                         break;
                     case 1:
-                        edit.putString("authMethod", "biometric");
-                        edit.apply();
+                        EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "biometric");
                         navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                         break;
                     case 2:
@@ -159,9 +158,9 @@ public class InstallLoginSelection extends Fragment {
 
                         if(pinEditText.getText().length() >= 4){
                             if(pin == repeatPin){
-                                edit.putString("authMethod", "pin");
-                                edit.putInt("pinCode", pin);
-                                edit.apply();
+                                EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "pin");
+                                EncryptedSharedPref.writeInt(EncryptedSharedPref.PINCODE, pin);
+
                                 navController.navigate(R.id.action_installLoginSelection_to_installServiceModeInstructionsFragment, b);
                             }else{
                                 Toast.makeText(getContext().getApplicationContext(), "The pin codes dosn't match", Toast.LENGTH_LONG).show();
