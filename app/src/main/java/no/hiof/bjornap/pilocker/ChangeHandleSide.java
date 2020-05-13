@@ -48,8 +48,8 @@ public class ChangeHandleSide extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rightDoorLayout = view.findViewById(R.id.installation_side_rightDoorConstraintLayout);
-        leftDoorLayout = view.findViewById(R.id.installation_side_leftDoorConstraintLayout);
+        rightDoorLayout = view.findViewById(R.id.change_side_rightDoorConstraintLayout);
+        leftDoorLayout = view.findViewById(R.id.change_side_leftDoorConstraintLayout);
         saveButton = view.findViewById(R.id.change_side_saveBtn);
         navController = Navigation.findNavController(view);
 
