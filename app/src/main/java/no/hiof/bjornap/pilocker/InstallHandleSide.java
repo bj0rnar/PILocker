@@ -111,7 +111,7 @@ public class InstallHandleSide extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_installHandleSide2_to_installNamingFragment);
+                System.out.println("lOL");
             }
         });
 

@@ -24,13 +24,17 @@
         tools:layout="@layout/fragment_unlock" >
         <action
             android:id="@+id/action_unlockFragment2_to_emailSettingsFragment"
-            app:destination="@id/emailSettingsFragment" />
+            app:destination="@id/emailSettingsFragment"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/wait_animation" />
         <action
             android:id="@+id/action_unlockFragment2_to_installLoggingSetup2"
             app:destination="@id/installLoggingSetup" />
         <action
             android:id="@+id/action_unlockFragment2_to_RPISettingsFragment"
-            app:destination="@id/RPISettingsFragment" />
+            app:destination="@id/RPISettingsFragment"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/wait_animation" />
     </fragment>
     <fragment
         android:id="@+id/installFragment"
@@ -39,7 +43,8 @@
         tools:layout="@layout/fragment_install" >
         <action
             android:id="@+id/action_installFragment_to_IPExtractionFragment"
-            app:destination="@id/IPExtractionFragment" />
+            app:destination="@id/IPExtractionFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/progressFragment"
@@ -52,7 +57,8 @@
             android:defaultValue="0" />
         <action
             android:id="@+id/action_progressFragment_to_installLoggingSetup"
-            app:destination="@id/installLoggingSetup" />
+            app:destination="@id/installLoggingSetup"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/installNamingFragment"
@@ -61,7 +67,11 @@
         tools:layout="@layout/fragment_install_naming" >
         <action
             android:id="@+id/action_installNamingFragment_to_installHandleSide2"
-            app:destination="@id/installHandleSide2" />
+            app:destination="@id/installHandleSide2"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward"/>
     </fragment>
     <fragment
         android:id="@+id/installHandleSide2"
@@ -70,10 +80,11 @@
         tools:layout="@layout/fragment_install_handle_side" >
         <action
             android:id="@+id/action_installHandleSide2_to_installFragment"
-            app:destination="@+id/installLoginSelection" />
-        <action
-            android:id="@+id/action_installHandleSide2_to_installNamingFragment"
-            app:destination="@id/installNamingFragment" />
+            app:destination="@+id/installLoginSelection"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward"/>
     </fragment>
     <fragment
         android:id="@+id/IPExtractionFragment"
@@ -82,7 +93,8 @@
         tools:layout="@layout/fragment_ipextraction" >
         <action
             android:id="@+id/action_IPExtractionFragment_to_progressFragment"
-            app:destination="@id/progressFragment" />
+            app:destination="@id/progressFragment"
+            app:enterAnim="@anim/forward_animation" />
     </fragment>
     <fragment
         android:id="@+id/installWelcomeFragment"
@@ -90,7 +102,11 @@
         android:label="InstallWelcomeFragment" >
         <action
             android:id="@+id/action_installWelcomeFragment_to_installPasswordFragment"
-            app:destination="@id/installPasswordFragment" />
+            app:destination="@id/installPasswordFragment"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward" />
     </fragment>
     <fragment
         android:id="@+id/installPasswordFragment"
@@ -98,7 +114,11 @@
         android:label="InstallPasswordFragment" >
         <action
             android:id="@+id/action_installPasswordFragment_to_installNamingFragment"
-            app:destination="@id/installNamingFragment" />
+            app:destination="@id/installNamingFragment"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward"/>
     </fragment>
     <fragment
         android:id="@+id/emailSettingsFragment"
@@ -114,7 +134,8 @@
         android:label="InstallLoggingSetup" >
         <action
             android:id="@+id/action_installLoggingSetup_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
+            app:destination="@id/unlockFragment2"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/RPISettingsFragment"
@@ -134,7 +155,11 @@
         android:label="InstallLoginSelection" >
         <action
             android:id="@+id/action_installLoginSelection_to_installServiceModeInstructionsFragment"
-            app:destination="@id/installServiceModeInstructionsFragment" />
+            app:destination="@id/installServiceModeInstructionsFragment"
+            app:enterAnim="@anim/backward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward" />
     </fragment>
     <fragment
         android:id="@+id/installServiceModeInstructionsFragment"
@@ -143,6 +168,10 @@
         tools:layout="@layout/fragment_install_service_mode_instructions" >
         <action
             android:id="@+id/action_installServiceModeInstructionsFragment_to_installFragment"
-            app:destination="@id/installFragment" />
+            app:destination="@id/installFragment"
+            app:enterAnim="@anim/forward_animation"
+            app:exitAnim="@anim/backward_animation"
+            app:popEnterAnim="@anim/pop_forward"
+            app:popExitAnim="@anim/pop_backward" />
     </fragment>
 </navigation>
