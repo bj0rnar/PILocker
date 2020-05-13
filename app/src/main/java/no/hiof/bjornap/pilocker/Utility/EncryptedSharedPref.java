@@ -38,6 +38,7 @@ public class EncryptedSharedPref {
             try {
                 String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 
+
                 encryptedSharedPreferences = EncryptedSharedPreferences.create(
                         "secret_shared_prefs",
                         masterKeyAlias,

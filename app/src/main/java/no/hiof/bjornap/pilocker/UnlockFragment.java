@@ -1,6 +1,9 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
@@ -13,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +24,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -386,17 +391,26 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
 
+        String loginMethod = EncryptedSharedPref.readString(EncryptedSharedPref.APPLOGINMETHOD, "nothing");
 
+        switch (loginMethod){
+            case "nothing":
+                Toast.makeText(getContext().getApplicationContext(), "You should consider getting an authentication method", Toast.LENGTH_LONG).show();
+                break;
+            case "pin":
+                //Alert dialog
 
+                break;
+            case "biometric":
+                promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle("Biometric login for my app")
+                        .setSubtitle("Log in using your biometric credential")
+                        .setDeviceCredentialAllowed(true)
+                        .build();
+                bioPrompt.authenticate(promptInfo);
+                break;
+        }
 
-        /*promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
-                .setDeviceCredentialAllowed(true)
-                .build();
-
-        bioPrompt.authenticate(promptInfo);
-        */
     }
 
 
