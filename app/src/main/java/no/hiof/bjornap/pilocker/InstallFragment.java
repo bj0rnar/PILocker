@@ -159,13 +159,11 @@ public class InstallFragment extends Fragment{
                 if (wlanIp.equals("10.0.60.1")) {
 
                     Bundle b = new Bundle();
-                    b.putString("side", "right");
-                    b.putString("doorName", "døra");
-                    b.putString("password", "gruppe6");
-                    b.putBoolean("firstTime", true);
-                    //b.putString("ip", "10.0.0.116");
-                    //b.putString("ip", "192.168.10.185");
-                    b.putString("wlanIp", "10.0.60.1");
+                    b.putString("side", side);
+                    b.putString("doorName", doorName);
+                    b.putString("password", password);
+                    b.putBoolean("firstTime", firstTime);
+                    b.putString("wlanIp", wlanIp);
                     navController.navigate(R.id.action_installFragment_to_IPExtractionFragment, b);
                 }
                 else {
