@@ -94,7 +94,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         };
 
         model.getUptime().observe(getViewLifecycleOwner(), nameObserver);
-        
+
         prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
         prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
         prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);

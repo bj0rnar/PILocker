@@ -59,9 +59,10 @@ public class ConnectFragment extends Fragment {
         /*
         if (pref.getString("key_ip", null) != null){
             key = 0;
-
         }
         */
+
+
 
         if (EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null) != null &&
                 EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null) != null) {
