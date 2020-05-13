@@ -26,6 +26,7 @@ import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +35,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -399,7 +402,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 break;
             case "pin":
                 //Alert dialog
-
+                buildAlertDialog();
                 break;
             case "biometric":
                 promptInfo = new BiometricPrompt.PromptInfo.Builder()
@@ -413,6 +416,43 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     }
 
+    private void buildAlertDialog() {
 
+        final int pinCode = EncryptedSharedPref.readInt(EncryptedSharedPref.PINCODE, 0);
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity().getApplicationContext(), R.layout.pin_code_dialog, null);
+        alertDialog.setView(view);
+
+        alertDialog.setCancelable(false);
+        final EditText input = view.findViewById(R.id.pin_code_dialog_code);
+        Button button = view.findViewById(R.id.pin_code_btn);
+
+
+        final AlertDialog alertDialog1 = alertDialog.show();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if(input.getText().length() >= 4) {
+                        int inputCode = Integer.parseInt(input.getText().toString());
+
+                        if (inputCode == pinCode) {
+                            Toast.makeText(getContext().getApplicationContext(), "Correct pin", Toast.LENGTH_SHORT).show();
+                            alertDialog1.dismiss();
+                        } else {
+                            Toast.makeText(getContext().getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext().getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NumberFormatException e){
+                    Toast.makeText(getContext().getApplicationContext(), "Something went wrong, try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 }
