@@ -20,7 +20,6 @@ import android.widget.Button;
 public class ConnectFragment extends Fragment {
 
     private Button connectBtn;
-    private StatusViewModel pvm = new StatusViewModel();
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -30,8 +29,6 @@ public class ConnectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        pvm = new ViewModelProvider(this).get(StatusViewModel.class);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connect, container, false);

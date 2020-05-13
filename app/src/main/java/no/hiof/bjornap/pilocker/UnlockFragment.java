@@ -384,6 +384,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
 
+
+
+
         /*promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
