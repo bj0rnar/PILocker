@@ -127,6 +127,9 @@
         <action
             android:id="@+id/action_RPISettingsFragment_to_installWelcomeFragment"
             app:destination="@id/installWelcomeFragment" />
+        <action
+            android:id="@+id/action_RPISettingsFragment_to_changeHandleSide"
+            app:destination="@id/changeHandleSide" />
     </fragment>
     <fragment
         android:id="@+id/installLoginSelection"
@@ -144,5 +147,14 @@
         <action
             android:id="@+id/action_installServiceModeInstructionsFragment_to_installFragment"
             app:destination="@id/installFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeHandleSide"
+        android:name="no.hiof.bjornap.pilocker.ChangeHandleSide"
+        android:label="fragment_change_handle_side"
+        tools:layout="@layout/fragment_change_handle_side" >
+        <action
+            android:id="@+id/action_changeHandleSide_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
     </fragment>
 </navigation>
