@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_RPISettingsFragment_to_changeHandleSide"
             app:destination="@id/changeHandleSide" />
+        <action
+            android:id="@+id/action_RPISettingsFragment_to_changeAuthenticationForApplication"
+            app:destination="@id/changeAuthenticationForApplication" />
     </fragment>
     <fragment
         android:id="@+id/installLoginSelection"
@@ -184,6 +187,15 @@
         tools:layout="@layout/fragment_change_handle_side" >
         <action
             android:id="@+id/action_changeHandleSide_to_unlockFragment2"
+            app:destination="@id/unlockFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeAuthenticationForApplication"
+        android:name="no.hiof.bjornap.pilocker.ChangeAuthenticationForApplication"
+        android:label="fragment_change_authentication_for_application"
+        tools:layout="@layout/fragment_change_authentication_for_application" >
+        <action
+            android:id="@+id/action_changeAuthenticationForApplication_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
     </fragment>
 </navigation>
