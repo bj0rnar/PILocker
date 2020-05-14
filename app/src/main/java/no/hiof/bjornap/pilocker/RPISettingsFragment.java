@@ -61,6 +61,10 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         // Required empty public constructor
     }
 
+    /**
+     * Under construction, needs a redo in navigation
+     */
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
