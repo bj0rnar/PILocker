@@ -33,7 +33,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         String password = strings[1];
         String host = strings[2];
 
-        int port = 22;
+        int port = 5182;
         session = null;
 
         Log.i("SSHREADER", "strings[0] = " + strings[0]);
@@ -49,6 +49,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             session.connect();
 
             if (strings[4] != null) {
+                Log.i("SSHREADER", "strings[4] = " + strings[4]);
                 String newPassord = strings[4];
                 ChannelExec channelExec = (ChannelExec)session.openChannel("exec");
                 channelExec.setCommand(newPassord);

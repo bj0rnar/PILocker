@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHInstaller;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 import no.hiof.bjornap.pilocker.Utility.Tuples;
 
 import android.util.Log;
@@ -93,11 +94,10 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
         progressBar = view.findViewById(R.id.progress_fragment_progressbar);
         retryButton = view.findViewById(R.id.progress_fragment_retrybutton);
 
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefName = pref.getString("doorName", null);
-        prefSide = pref.getString("side", null);
-        prefPass = pref.getString("password", null);
+        prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+        prefName = EncryptedSharedPref.readString(EncryptedSharedPref.DOORNAME, null);
+        prefSide = EncryptedSharedPref.readString(EncryptedSharedPref.SIDE, null);
+        prefPass = EncryptedSharedPref.readString(EncryptedSharedPref.PASSWORD, null);
 
 
         Tuples tuples = generateRSAPairs();
@@ -214,13 +214,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
             Log.i("SSHREADER", "onComplete i progressfragment?!");
 
-            //Save to sharedpreferences, switch to encryptedsharedpreferences later.
-            SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-            SharedPreferences.Editor edit = pref.edit();
-            edit.putString("rsapub", pub);
-            edit.putString("rsapriv", priv);
-            edit.apply();
-
+            EncryptedSharedPref.writeString(EncryptedSharedPref.RSAPUB, pub);
+            EncryptedSharedPref.writeString(EncryptedSharedPref.RSAPRIV, priv);
 
             navController.navigate(R.id.action_progressFragment_to_installLoggingSetup);
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5CAE9"
+    android:background="@color/primaryDarkBackgroundColor"
     tools:context=".EmailSettingsFragment">
 
 
@@ -67,7 +67,7 @@
         android:layout_marginTop="372dp"
         android:elevation="10sp"
         android:text="Send log to email"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,18 +76,20 @@
 
     <Button
         android:id="@+id/fragment_rpisettings_factoryResetBtn"
-        style="@style/LockingButton"
+        style="@style/DeleteButton"
         android:layout_width="300sp"
         android:layout_height="60sp"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="40dp"
         android:elevation="10sp"
         android:text="Delete email account"
-        android:textColor="@color/colorPrimaryDark"
+        android:drawableRight="@drawable/ic_warning_black"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_rpisettings_shutdownBtn" />
+
 
 
 

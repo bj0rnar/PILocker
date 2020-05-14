@@ -14,6 +14,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 import no.hiof.bjornap.pilocker.Utility.InputValidator;
 
 import android.util.Log;
@@ -125,10 +126,10 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
                         if (result.first){
 
                             //Retrieve necessary data from sharedpreferences.
-                            pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-                            prefHost = pref.getString("key_ip", null);
-                            prefPriv = pref.getString("rsapriv", null);
-                            prefPub = pref.getString("rsapub", null);
+
+                            prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+                            prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
+                            prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
 
                             nextBtn.setEnabled(false);
                             nextBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
@@ -176,11 +177,8 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
         //Just to be helpful, result sometimes returns a blank space. The assumption is this a newline from the shell exec channel.
         if (result == null || result.equals(" ") || result.equals("")){
 
-            SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-            SharedPreferences.Editor edit = pref.edit();
-            edit.putString("email", mail);
-            edit.putBoolean("isLoggingEnabled", true);
-            edit.apply();
+            EncryptedSharedPref.writeString(EncryptedSharedPref.EMAIL, mail);
+            EncryptedSharedPref.writeBool(EncryptedSharedPref.LOGGINGENABLED, true);
 
             Toast.makeText(getContext().getApplicationContext(), "Email setup successful", Toast.LENGTH_SHORT).show();
             navController.navigate(R.id.action_installLoggingSetup_to_unlockFragment2);

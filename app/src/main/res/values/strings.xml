@@ -7,19 +7,31 @@
     <string name="connecting">Connecting…</string>
     <string name="installing">Installing…</string>
     <string name="install_guide">No device found. Connect the lock to a power supply before pressing install</string>
-    <string name="progress_loading_text">Extracting IP address..</string>
+    <string name="progress_loading_text">Connecting..</string>
     <string name="installation_name_edittext_hint">Office door</string>
-    <string name="exchangingrsakey">Exchanging RSA keys..</string>
+    <string name="exchangingrsakey">Pairing..</string>
     <string name="welcome_header">Welcome to PILocker</string>
     <string name="welcome_header_text">Choose installation mode</string>
-    <string name="welcome_button_first">First time installation \n Create new password</string>
-    <string name="welcome_button_nth">I have the installed the controller \n I have the password</string>
-    <string name="installation_password_create_new_password">Create a new password for Service mode</string>
+    <string name="welcome_button_first">Install new lock</string>
+    <string name="welcome_button_nth">Already installed?</string>
+    <string name="installation_password_create_new_password">Set a password for Service mode</string>
     <string name="installation_password_write_in_password">Write in password for Service mode</string>
     <string name="installation_password_firsttime_edittext_hint">Set a new password..</string>
     <string name="installation_password_nthtime_edittext_hint">Write in password..</string>
+    <string name="installation_password_header_txt">Service Mode Password</string>
+    <string name="installation_service_header">Activate Service Mode</string>
+    <string name="installation_service_instructions_textView">Click the Service Button</string>
+    <string name="installation_ap_header_textview">Access Point Configuration</string>
+    <string name="installation_ap_instructions_textView">Connect to the piDOOR WiFI</string>
+    <string name="installation_ap_instructions_password_textView">Password: gruppe_6_rox</string>
     <string name="menu_unlock_logging_settings">Logging settings</string>
     <string name="menu_unlock_delete">Data storage management</string>
     <string name="menu_unlock_shutdown">Shutdown RPI</string>
     <string name="rpisettings_uptime_placeholder">Calculating..</string>
+    <string name="choose_login_selection">What kind of authentication do you want when you unlock the door?</string>
+    <string name="repeat_pin_code">Repeat pin code</string>
+    <string name="insert_pin_code">Insert pin code</string>
+    <string name="next">NEXT</string>
+
+
 </resources>

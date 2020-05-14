@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.Button;
 public class ConnectFragment extends Fragment {
 
     private Button connectBtn;
-    private StatusViewModel pvm = new StatusViewModel();
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -30,8 +30,6 @@ public class ConnectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        pvm = new ViewModelProvider(this).get(StatusViewModel.class);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connect, container, false);
@@ -54,26 +52,38 @@ public class ConnectFragment extends Fragment {
          */
 
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
+        //SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
 
-        int key = 1;
+        //int key = 1;
 
-
+        /*
         if (pref.getString("key_ip", null) != null){
             key = 0;
-
         }
+        */
 
+
+
+        if (EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null) != null &&
+                EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null) != null) {
+            navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
+        }
+        else {
+            navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
+        }
 
 
         
 
         //Basically slekk en ska ha dæ.
+        /*
         if (key == 0){
             navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
         }
         else if (key == 1){
+
             navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
         }
+         */
     }
 }

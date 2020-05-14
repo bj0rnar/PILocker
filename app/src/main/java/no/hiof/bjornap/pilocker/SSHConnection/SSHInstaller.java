@@ -29,14 +29,15 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         //String script = strings[2];
         //String privatekey = strings[3];
 
-        int port = 22;
+        int port = 5182;
         Session session = null;
 
 
         try {
+            Thread.sleep(3000);
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
-            session = jsch.getSession(user, host, 22);
+            session = jsch.getSession(user, host, port);
             //Add identity here instead of actual password..
             session.setPassword(password);
             session.setConfig("StrictHostKeyChecking", "no");
@@ -62,15 +63,13 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             Thread.sleep(3000);
             channel2.disconnect();
 
-
-            /*
             //DISABLE PASSWORD, ONLY KEY FROM HERE ON
             ChannelExec channel6 = (ChannelExec)session.openChannel("exec");
-            channel6.setCommand("./counter.sh");
+            channel6.setCommand("./disablePass.sh");
             channel6.connect();
             Thread.sleep(2000);
             channel6.disconnect();
-            */
+
 
             return "ok";
         }

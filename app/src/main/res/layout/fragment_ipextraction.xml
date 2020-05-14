@@ -21,11 +21,4 @@
         android:layout_gravity="center"
         />
 
-    <Button
-        android:id="@+id/ipextraction_next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NEXT"
-        android:layout_gravity="center" />
-
 </FrameLayout>

@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -94,12 +95,10 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
 
         model.getUptime().observe(getViewLifecycleOwner(), nameObserver);
 
-
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefPriv = pref.getString("rsapriv", null);
-        prefPub = pref.getString("rsapub", null);
-        prefPass = pref.getString("password", null);
+        prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+        prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
+        prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
+        prefPass = EncryptedSharedPref.readString(EncryptedSharedPref.PASSWORD, null);
 
 
         SSHExecuter executer = new SSHExecuter();
@@ -187,9 +186,9 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         //factoryReset = true;
 
         //Wipe all RPI data
-        //SSHExecuter executer = new SSHExecuter();
-        //executer.response = thisInterface;
-        //executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
+        SSHExecuter executer = new SSHExecuter();
+        executer.response = thisInterface;
+        executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
 
         //Wipe SharedPreferences.
         //pref.edit().clear().apply();

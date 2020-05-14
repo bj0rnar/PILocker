@@ -73,7 +73,7 @@ public class InstallHandleSide extends Fragment {
             @Override
             public void onClick(View view) {
                 rightDoorLayout.setBackgroundColor(getResources().getColor(R.color.green));
-                leftDoorLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                leftDoorLayout.setBackgroundColor(getResources().getColor(R.color.primaryDarkBackgroundColor));
                 selectedDoor = "right";
             }
         });
@@ -82,7 +82,7 @@ public class InstallHandleSide extends Fragment {
             @Override
             public void onClick(View view) {
                 leftDoorLayout.setBackgroundColor(getResources().getColor(R.color.green));
-                rightDoorLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                rightDoorLayout.setBackgroundColor(getResources().getColor(R.color.primaryDarkBackgroundColor));
                 selectedDoor = "left";
             }
         });
@@ -111,7 +111,7 @@ public class InstallHandleSide extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_installHandleSide2_to_installNamingFragment);
+                System.out.println("lOL");
             }
         });
 

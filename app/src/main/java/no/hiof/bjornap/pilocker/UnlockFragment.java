@@ -1,6 +1,9 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
@@ -11,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +24,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,10 +35,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,10 +57,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     private AsyncResponseInterface thisInterface = this;
 
-    private TextView statusText;
+
     private TextView doorNameTxt;
     private TextView timeText;
     private TextView dateText;
+
+    private ConstraintLayout lockImage;
+    private ConstraintLayout unlockImage;
+    private ConstraintLayout unknownImage;
 
     private String prefHost;
     private String prefSide;
@@ -86,6 +101,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_unlock, container, false);
+
 
         /*
         pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
@@ -155,13 +171,12 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         //Initialize sharedpreferences
 
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefName = pref.getString("doorName", null);
-        prefSide = pref.getString("side", null);
-        prefPriv = pref.getString("rsapriv", null);
-        prefPub = pref.getString("rsapub", null);
-        prefEmailLoggedIn = pref.getBoolean("isLoggingEnabled", false);
+        prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
+        prefName = EncryptedSharedPref.readString(EncryptedSharedPref.DOORNAME, null);
+        prefSide = EncryptedSharedPref.readString(EncryptedSharedPref.SIDE, null);
+        prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
+        prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
+        prefEmailLoggedIn = EncryptedSharedPref.readBool(EncryptedSharedPref.LOGGINGENABLED, false);
 
         navController = Navigation.findNavController(view);
 
@@ -207,13 +222,18 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefPriv);
+        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
 
         //doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
         //doorNameTxt.setText(prefName);
 
-        statusText = view.findViewById(R.id.unlock_status_status_textView);
         dateText = view.findViewById(R.id.unlock_status_date_textView);
         timeText = view.findViewById(R.id.unlock_status_time_textView);
+
+        lockImage = view.findViewById(R.id.unlock_status_status_locked);
+        unlockImage = view.findViewById(R.id.unlock_status_status_unlocked);
+        unknownImage = view.findViewById(R.id.unlock_status_status_unknown);
 
         lockBtn = view.findViewById(R.id.lockBtn);
         unlockBtn = view.findViewById(R.id.unlockBtn);
@@ -304,7 +324,19 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             @Override
             public void onChanged(@Nullable final String newName) {
                 // Update the UI, in this case, a TextView.
-                statusText.setText(newName);
+                if(newName.equals("UNLOCKED")){
+                    lockImage.setVisibility(View.INVISIBLE);
+                    unlockImage.setVisibility(View.VISIBLE);
+                    unknownImage.setVisibility(View.INVISIBLE);
+                }else if(newName.equals("LOCKED")){
+                    lockImage.setVisibility(View.VISIBLE);
+                    unlockImage.setVisibility(View.INVISIBLE);
+                    unknownImage.setVisibility(View.INVISIBLE);
+                }else{
+                    lockImage.setVisibility(View.INVISIBLE);
+                    unlockImage.setVisibility(View.INVISIBLE);
+                    unknownImage.setVisibility(View.VISIBLE);
+                }
             }
         };
 
@@ -353,7 +385,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         }
         else {
             Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
-            statusText.setText("Unknown");
         }
 
     }
@@ -363,16 +394,65 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         super.onStart();
         Log.d("BIOMETRIC", "onStart called");
 
-        /*promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
-                .setDeviceCredentialAllowed(true)
-                .build();
+        String loginMethod = EncryptedSharedPref.readString(EncryptedSharedPref.APPLOGINMETHOD, "nothing");
 
-        bioPrompt.authenticate(promptInfo);
-        */
+        switch (loginMethod){
+            case "nothing":
+                Toast.makeText(getContext().getApplicationContext(), "You should consider getting an authentication method", Toast.LENGTH_LONG).show();
+                break;
+            case "pin":
+                //Alert dialog
+                buildAlertDialog();
+                break;
+            case "biometric":
+                promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle("Biometric login for my app")
+                        .setSubtitle("Log in using your biometric credential")
+                        .setDeviceCredentialAllowed(true)
+                        .build();
+                bioPrompt.authenticate(promptInfo);
+                break;
+        }
+
     }
 
+    private void buildAlertDialog() {
 
+        final int pinCode = EncryptedSharedPref.readInt(EncryptedSharedPref.PINCODE, 0);
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity().getApplicationContext(), R.layout.pin_code_dialog, null);
+        alertDialog.setView(view);
+
+        alertDialog.setCancelable(false);
+        final EditText input = view.findViewById(R.id.pin_code_dialog_code);
+        Button button = view.findViewById(R.id.pin_code_btn);
+
+
+        final AlertDialog alertDialog1 = alertDialog.show();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if(input.getText().length() >= 4) {
+                        int inputCode = Integer.parseInt(input.getText().toString());
+
+                        if (inputCode == pinCode) {
+                            Toast.makeText(getContext().getApplicationContext(), "Correct pin", Toast.LENGTH_SHORT).show();
+                            alertDialog1.dismiss();
+                        } else {
+                            Toast.makeText(getContext().getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext().getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NumberFormatException e){
+                    Toast.makeText(getContext().getApplicationContext(), "Something went wrong, try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 }

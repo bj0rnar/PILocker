@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
+import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,6 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
     private NavController navController;
 
-    private Button nextBtn;
 
     public AsyncResponseInterface thisInterface = this;
 
@@ -61,9 +61,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nextBtn = view.findViewById(R.id.ipextraction_next_button);
-        nextBtn.setVisibility(View.INVISIBLE);
-        nextBtn.setEnabled(false);
+
 
         navController = Navigation.findNavController(view);
 
@@ -81,7 +79,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
                 //Run reader method
                 SSHReader sshReader = new SSHReader();
                 sshReader.response = thisInterface;
-                sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.exp " + password);
+                sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.sh " + password);
             }
             else {
                 SSHReader sshReader2 = new SSHReader();
@@ -90,12 +88,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             }
         }
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
-            }
-        });
+
 
     }
 
@@ -105,17 +98,12 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
         Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
 
-        SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        SharedPreferences.Editor edit = pref.edit();
-        edit.putString("side", side);
-        edit.putString("doorName", doorName);
-        edit.putString("key_ip", result);
-        edit.putString("password", password);
-        edit.apply();
+        EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, side);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.DOORNAME, doorName);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.KEY_IP, result);
+        EncryptedSharedPref.writeString(EncryptedSharedPref.PASSWORD, password);
 
-        nextBtn.setVisibility(View.VISIBLE);
-        nextBtn.setEnabled(true);
 
-        //navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
+        navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
     }
 }

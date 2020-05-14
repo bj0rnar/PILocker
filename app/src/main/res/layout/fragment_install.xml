@@ -3,100 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5CAE9"
+    android:background="@color/primaryDarkBackgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/installation_name_constraintLayout"
     tools:context=".InstallFragment">
 
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="340sp"
-        android:layout_height="80sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/installation_ap_centerCardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Installation: 3 of 4"
-            android:textSize="25sp" />
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/installation_ap_centerCardView"
-        android:layout_width="340sp"
-        android:layout_height="300sp"
-        app:cardCornerRadius="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_marginBottom="80sp"
-            android:layout_marginStart="20sp"
-            android:text="Step 1: \nPress the Service Button on the PILocker unit"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_marginBottom="20sp"
-            android:layout_marginStart="20sp"
-            android:text="Step 2:\n Connect to the WiFi named ''piDOOR'' "
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_marginTop="30sp"
-            android:layout_marginStart="20sp"
-            android:text="Step 3:\n Click Test button once connected"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="30sp"
-            android:text="Status:"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/installation_ap_status_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="30sp"
-            android:layout_marginStart="80sp"
-            android:textSize="22sp" />
-
-        <Button
-            android:id="@+id/installation_ap_testApBtn"
-            style="@style/InstallationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginBottom="20sp"
-            android:layout_marginStart="20sp"
-            android:elevation="10sp"
-            android:text="TEST" />
-
-    </androidx.cardview.widget.CardView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -118,5 +29,52 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <TextView
+        android:id="@+id/installation_ap_header_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="110dp"
+        android:text="@string/installation_ap_header_textview"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/installation_ap_connection_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/installation_ap_instructions_password_textView"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/installation_ap_password_textView" />
+
+    <TextView
+        android:id="@+id/installation_ap_password_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/installation_ap_instructions_textView"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="302dp"
+        android:layout_height="264dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/pidoor_wifi_example"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/installation_ap_header_textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
