@@ -47,6 +47,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
 
     private Button shutdownBtn;
     private Button factoryResetBtn;
+    private Button changeHandleSide;
 
     private Boolean settingUpdateTime = true;
     private Boolean factoryReset = false;
@@ -79,6 +80,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         //initialize UI elements
         shutdownBtn = view.findViewById(R.id.fragment_rpisettings_shutdownBtn);
         factoryResetBtn = view.findViewById(R.id.fragment_rpisettings_factoryResetBtn);
+        changeHandleSide = view.findViewById(R.id.fragment_rpisettings_changeHandleBtn);
         uptimeTextView = view.findViewById(R.id.fragment_rpisettings_uptime_actual_textView);
         uptimeTextView.setText(R.string.rpisettings_uptime_placeholder);
 
@@ -126,6 +128,12 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
             }
         });
 
+        changeHandleSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_RPISettingsFragment_to_changeHandleSide);
+            }
+        });
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();

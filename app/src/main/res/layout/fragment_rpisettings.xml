@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5CAE9"
+    android:background="@color/primaryDarkBackgroundColor"
     tools:context=".RPISettingsFragment">
 
 
@@ -88,6 +88,21 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_rpisettings_shutdownBtn" />
+
+    <Button
+        android:id="@+id/fragment_rpisettings_changeHandleBtn"
+        style="@style/LockingButton"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="40dp"
+        android:elevation="10sp"
+        android:text="Change handle side"
+        android:textColor="@color/primaryTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_rpisettings_factoryResetBtn" />
 
 
 

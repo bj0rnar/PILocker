@@ -161,33 +161,75 @@
                     android:padding="8sp" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <Button
-                android:id="@+id/lockBtn"
-                style="@style/LockingButton"
-                android:layout_width="300sp"
-                android:layout_height="60sp"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="25dp"
-                android:elevation="10sp"
-                android:text="LOCK"
-                android:textColor="@color/primaryTextColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/unlockBtn" />
 
-            <Button
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="150dp"
                 android:id="@+id/unlockBtn"
-                style="@style/LockingButton"
-                android:layout_width="300sp"
-                android:layout_height="60sp"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="50dp"
-                android:elevation="10sp"
-                android:text="UNLOCK"
-                android:textColor="@color/primaryTextColor"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout3" />
+                app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout3">
+
+                <ImageView
+                    android:id="@+id/lockButtonImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:contentDescription="UNKNOWN"
+                    android:src="@drawable/unlock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UNLOCKED"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lockButtonImage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="150dp"
+                android:id="@+id/lockBtn"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/unlockButtonImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:contentDescription="LOCKED"
+                    android:src="@drawable/lock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOCKED"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/unlockButtonImage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
