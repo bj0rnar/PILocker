@@ -48,6 +48,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
     private Button shutdownBtn;
     private Button factoryResetBtn;
     private Button changeHandleSide;
+    private Button changeAuthBtn;
 
     private Boolean settingUpdateTime = true;
     private Boolean factoryReset = false;
@@ -81,6 +82,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         shutdownBtn = view.findViewById(R.id.fragment_rpisettings_shutdownBtn);
         factoryResetBtn = view.findViewById(R.id.fragment_rpisettings_factoryResetBtn);
         changeHandleSide = view.findViewById(R.id.fragment_rpisettings_changeHandleBtn);
+        changeAuthBtn = view.findViewById(R.id.fragment_rpisettings_changeAuth);
         uptimeTextView = view.findViewById(R.id.fragment_rpisettings_uptime_actual_textView);
         uptimeTextView.setText(R.string.rpisettings_uptime_placeholder);
 
@@ -132,6 +134,13 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_RPISettingsFragment_to_changeHandleSide);
+            }
+        });
+
+        changeAuthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_RPISettingsFragment_to_changeAuthenticationForApplication);
             }
         });
 
