@@ -388,11 +388,15 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getStatus().setValue("LOCKED");
                 model.getDate().setValue(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+                lockButtonImage.setColorFilter(null);
+                unlockButtonImage.setColorFilter(null);
             }
             else {
                 model.getStatus().setValue("UNLOCKED");
                 model.getDate().setValue(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+                lockButtonImage.setColorFilter(null);
+                unlockButtonImage.setColorFilter(null);
             }
         }
         else {
