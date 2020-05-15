@@ -18,7 +18,7 @@
     <string name="installation_password_write_in_password">Write in password for Service mode</string>
     <string name="installation_password_firsttime_edittext_hint">Set a new password..</string>
     <string name="installation_password_nthtime_edittext_hint">Write in password..</string>
-    <string name="installation_password_header_txt">Service Mode Password</string>
+    <string name="installation_password_header_txt">Set password for doorlock</string>
     <string name="installation_service_header">Activate Service Mode</string>
     <string name="installation_service_instructions_textView">Click the Service Button</string>
     <string name="installation_ap_header_textview">Access Point Configuration</string>

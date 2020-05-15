@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:key="side_side_category"
+        app:title="Click to select side">
+
+        <ListPreference
+            app:key="sideSelectionListPref"
+            app:title="Select side"
+            app:entries="@array/sideSelectionArray"
+            app:entryValues="@array/sideSelectionArray"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

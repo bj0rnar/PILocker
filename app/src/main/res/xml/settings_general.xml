@@ -5,43 +5,11 @@
     <Preference android:layout="@layout/custom_preference" />
 
     <PreferenceCategory
-        app:key="doorlock_category"
-        app:title="Door lock">
-
-        <Preference
-            app:key="1"
-            app:title="Shutdown Raspberry Pi"
-            app:summary="Remotely shutdown Raspberry PI"/>
-
-        <Preference
-            app:key="2"
-            app:title="Factory Reset"
-            app:summary="Reset to factory settings"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:key="application_category"
-        app:title="Application">
-
-        <Preference
-            app:key="3"
-            app:title="Change handle side"
-            app:summary="Set the rotation direction of the motor"/>
-
-        <Preference
-            app:key="4"
-            app:title="Login method"
-            app:summary="Switch between Biometric, PIN or nothing"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         app:key="email_category"
         app:title="Email">
 
         <Preference
-            app:key="5"
+            app:key="sendLogToEmailPref"
             app:title="Send log to email"
             app:summary="Retrieve log from Raspberry PI and send it to your email"/>
 
@@ -51,5 +19,40 @@
             app:summary="Deletes email from Raspberry PI and application"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="application_category"
+        app:title="Application">
+
+        <Preference
+            app:key="changeHandleSidePref"
+            app:title="Change handle side"
+            app:summary="Set the rotation direction of the motor"/>
+
+        <Preference
+            app:key="changeLoginMethodPref"
+            app:title="Login method"
+            app:summary="Switch between Biometric, PIN or nothing"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="doorlock_category"
+        app:title="Door lock">
+
+        <Preference
+            app:key="shutDownRaspberryPiPref"
+            app:title="Shutdown Raspberry Pi"
+            app:summary="Remotely shutdown Raspberry PI"/>
+
+        <Preference
+            app:key="factoryResetPref"
+            app:title="Factory Reset"
+            app:summary="Reset to factory settings"/>
+
+    </PreferenceCategory>
+
+
+
 
 </PreferenceScreen>

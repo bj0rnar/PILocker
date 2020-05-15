@@ -203,6 +203,14 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="no.hiof.bjornap.pilocker.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:name="no.hiof.bjornap.pilocker.Settings.GeneralSettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_changeSideSettings"
+            app:destination="@id/changeSideSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeSideSettings"
+        android:name="no.hiof.bjornap.pilocker.Settings.ChangeSideSettings"
+        android:label="ChangeSideSettings" />
 </navigation>
