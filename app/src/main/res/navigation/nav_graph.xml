@@ -35,6 +35,9 @@
             app:destination="@id/RPISettingsFragment"
             app:enterAnim="@anim/forward_animation"
             app:exitAnim="@anim/wait_animation" />
+        <action
+            android:id="@+id/action_unlockFragment2_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/installFragment"
@@ -198,4 +201,8 @@
             android:id="@+id/action_changeAuthenticationForApplication_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="no.hiof.bjornap.pilocker.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

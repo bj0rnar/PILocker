@@ -41,6 +41,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         Log.i("SSHREADER", "strings[2] = " + strings[2]);
 
         try {
+            Thread.sleep(5000);
             JSch jsch = new JSch();
             session = jsch.getSession(user, host, port);
             session.setPassword(password);
