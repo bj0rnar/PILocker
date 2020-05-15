@@ -24,10 +24,12 @@
         app:key="application_category"
         app:title="Application">
 
-        <Preference
-            app:key="changeHandleSidePref"
+        <ListPreference
+            app:key="sideSelectionListPref"
             app:title="Change handle side"
-            app:summary="Set the rotation direction of the motor"/>
+            app:summary="Set the rotation direction of the motor"
+            app:entries="@array/sideSelectionArray"
+            app:entryValues="@array/sideSelectionArray"/>
 
         <Preference
             app:key="changeLoginMethodPref"

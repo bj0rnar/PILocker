@@ -8,12 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import no.hiof.bjornap.pilocker.R;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
     private Preference shutdownPref;
     private Preference sendEmailPref;
     private Preference factoryResetPref;
-    private Preference changeHandleSidePref;
+    private ListPreference changeHandleSidePref;
     private Preference changeLoginMethodPref;
     private Preference changeEmailPref;
 
@@ -67,17 +69,27 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
             }
         });
 
-        //CHANGE HANDLE SIDE
-        changeHandleSidePref = (Preference) findPreference("changeHandleSidePref");
-        changeHandleSidePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                navController.navigate(R.id.action_settingsFragment_to_changeSideSettings);
-                return true;
-            }
-        });
+        //-------------------------CHANGE HANDLE SIDE---------------------------------
+        changeHandleSidePref = (ListPreference) findPreference("sideSelectionListPref");
+        String currentSelection = EncryptedSharedPref.readString(EncryptedSharedPref.SIDE, null);
 
-        //CHANGE LOGIN METHOD
+        //Right = index 0
+        //Left = index 1
+
+        if (currentSelection != null){
+            //changeHandleSidePref.setSummary("Current side is: " + currentSelection);
+            Log.i("SIDESELECTION", currentSelection);
+            if (currentSelection.equals("right")){
+                changeHandleSidePref.setValueIndex(0);
+            }
+            else {
+                changeHandleSidePref.setValueIndex(1);
+            }
+        }
+
+        changeHandleSidePref.getEntry();
+
+        //---------------------------CHANGE LOGIN METHOD-------------------------------------
         changeLoginMethodPref = (Preference) findPreference("changeLoginMethodPref");
         changeLoginMethodPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -108,8 +120,19 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
             }
         });
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //User navigates away from settings, save selections made.
+
+        //ChangeHandleSide
+        String leavingSelection = changeHandleSidePref.getEntry().toString().toLowerCase();
+        EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, leavingSelection);
 
 
+        Log.i("SIDESETTINGS", changeHandleSidePref.getEntry().toString().toLowerCase());
 
 
     }

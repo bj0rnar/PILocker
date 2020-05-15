@@ -222,7 +222,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
+        Log.i("SIDESETTINGS", "UNLOCK HAS SIDE: " + prefSide);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefPriv);
         Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
 
