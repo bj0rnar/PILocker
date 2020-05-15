@@ -87,13 +87,12 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
             }
         }
 
-        changeHandleSidePref.getEntry();
-
         //---------------------------CHANGE LOGIN METHOD-------------------------------------
         changeLoginMethodPref = (Preference) findPreference("changeLoginMethodPref");
-        changeLoginMethodPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        changeLoginMethodPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Log.i("SIDESETTINGS", newValue.toString());
                 return false;
             }
         });
@@ -122,20 +121,20 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
 
     }
 
+
     @Override
-    public void onPause() {
-        super.onPause();
-        //User navigates away from settings, save selections made.
+    public void onDetach() {
+        super.onDetach();
 
         //ChangeHandleSide
         String leavingSelection = changeHandleSidePref.getEntry().toString().toLowerCase();
         EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, leavingSelection);
 
 
-        Log.i("SIDESETTINGS", changeHandleSidePref.getEntry().toString().toLowerCase());
-
-
+        Log.i("SIDESETTINGS", "SETTING HAS: " + changeHandleSidePref.getEntry().toString().toLowerCase());
     }
+
+
 
     @Override
     public void onComplete(String result) {
