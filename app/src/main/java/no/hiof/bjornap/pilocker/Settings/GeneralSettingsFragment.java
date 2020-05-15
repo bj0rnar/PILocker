@@ -87,12 +87,33 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
             }
         }
 
+        changeHandleSidePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Log.i("SIDESETTINGS", "NEWVALUE?: " + newValue.toString());
+
+                //Save it to EncryptedSharedPreferences
+                EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, newValue.toString().toLowerCase());
+
+                //Set defaultValue to last selected
+                if (newValue.toString().toLowerCase().equals("right")){
+                    changeHandleSidePref.setValueIndex(0);
+                }
+                else {
+                    changeHandleSidePref.setValueIndex(1);
+                }
+
+                return true;
+            }
+        });
+
+
+
         //---------------------------CHANGE LOGIN METHOD-------------------------------------
         changeLoginMethodPref = (Preference) findPreference("changeLoginMethodPref");
         changeLoginMethodPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Log.i("SIDESETTINGS", newValue.toString());
                 return false;
             }
         });
@@ -121,21 +142,7 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
 
     }
 
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        //ChangeHandleSide
-        String leavingSelection = changeHandleSidePref.getEntry().toString().toLowerCase();
-        EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, leavingSelection);
-
-
-        Log.i("SIDESETTINGS", "SETTING HAS: " + changeHandleSidePref.getEntry().toString().toLowerCase());
-    }
-
-
-
+    
     @Override
     public void onComplete(String result) {
 
