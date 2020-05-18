@@ -11,6 +11,9 @@ import androidx.navigation.Navigation;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreference;
 import no.hiof.bjornap.pilocker.R;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
@@ -19,7 +22,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,12 +37,16 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
     private ListPreference changeHandleSidePref;
     private Preference changeLoginMethodPref;
     private Preference changeEmailPref;
+    private Preference deleteEmailPref;
+
+    private SwitchPreference enableLoggingSwitchPref;
 
     private NavController navController;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings_general, rootKey);
+        
     }
 
 
@@ -45,11 +54,34 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        PreferenceScreen x = (PreferenceScreen) findPreference("preferenceScreen");
+
+
+
+
+        //initialize navcontroller
         navController = Navigation.findNavController(view);
 
+        //find references.
+        sendEmailPref =  findPreference("sendLogToEmailPref");
+        shutdownPref =  findPreference("shutDownRaspberryPiPref");
+        factoryResetPref =  findPreference("factoryResetPref");
+        changeLoginMethodPref =  findPreference("changeLoginMethodPref");
+        enableLoggingSwitchPref = findPreference("enableLoggingSwitchPref");
+        changeEmailPref =  findPreference("changeLoginMethodPref");
+        deleteEmailPref =  findPreference("deleteEmailPref");
+
+        if (EncryptedSharedPref.readBool(EncryptedSharedPref.LOGGINGENABLED, false)){
+            sendEmailPref.setVisible(true);
+            changeEmailPref.setVisible(true);
+        }
+        else {
+            sendEmailPref.setVisible(false);
+            changeEmailPref.setVisible(false);
+        }
 
         //SHUTDOWN
-        shutdownPref = (Preference) findPreference("shutDownRaspberryPiPref");
+
         shutdownPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -61,7 +93,7 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
         });
 
         //FACTORY RESET
-        factoryResetPref = (Preference) findPreference("factoryResetPref");
+
         factoryResetPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -110,7 +142,7 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
 
 
         //---------------------------CHANGE LOGIN METHOD-------------------------------------
-        changeLoginMethodPref = (Preference) findPreference("changeLoginMethodPref");
+
         changeLoginMethodPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -118,7 +150,25 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
             }
         });
 
+        //ENABLE EMAIL
 
+        enableLoggingSwitchPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Log.i("LOGGINGSETTINGS", newValue.toString());
+
+                if((boolean) newValue){
+                    sendEmailPref.setVisible(true);
+                    deleteEmailPref.setVisible(true);
+                }
+                else {
+                    sendEmailPref.setVisible(false);
+                    deleteEmailPref.setVisible(false);
+                }
+
+                return true;
+            }
+        });
 
         //SEND EMAIL
         String currentEmail = EncryptedSharedPref.readString(EncryptedSharedPref.EMAIL, null);
@@ -132,7 +182,6 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
 
 
         //DELETE EMAIL
-        changeEmailPref = (Preference) findPreference("changeLoginMethodPref");
         changeEmailPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -142,7 +191,6 @@ public class GeneralSettingsFragment extends PreferenceFragmentCompat implements
 
     }
 
-    
     @Override
     public void onComplete(String result) {
 

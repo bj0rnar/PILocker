@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="110dp"
-        android:text="Application authentication"
+        android:text="@string/settings_authentication_header"
         android:textColor="@color/primaryTextColor"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,19 +51,19 @@
             android:id="@+id/radio_authSelection_biometric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Biometrics" />
+            android:text="@string/settings_authentication_biometric" />
 
         <RadioButton
             android:id="@+id/radio_authSelection_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pin code" />
+            android:text="@string/settings_authentication_PIN" />
 
         <RadioButton
             android:id="@+id/radio_authSelection_nothing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nothing" />
+            android:text="@string/settings_authentication_none" />
     </RadioGroup>
 
 
@@ -75,7 +75,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/insert_pin_code"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
         android:layout_gravity="center|start"
         android:ems="10"
         android:hint="@string/repeat_pin_code"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:key="preferenceScreen">
 
     <Preference android:layout="@layout/custom_preference" />
 
@@ -8,15 +8,21 @@
         app:key="email_category"
         app:title="Email">
 
+        <SwitchPreference
+            app:key="enableLoggingSwitchPref"
+            app:title="Enable Logging"/>
+
         <Preference
             app:key="sendLogToEmailPref"
             app:title="Send log to email"
-            app:summary="Retrieve log from Raspberry PI and send it to your email"/>
+            app:summary="Retrieve log from Raspberry PI and send it to your email"
+            app:isPreferenceVisible="false"/>
 
         <Preference
-            app:key="6"
+            app:key="deleteEmailPref"
             app:title="Delete email"
-            app:summary="Deletes email from Raspberry PI and application"/>
+            app:summary="Deletes email from Raspberry PI and application"
+            app:isPreferenceVisible="false"/>
 
     </PreferenceCategory>
 
