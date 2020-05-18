@@ -41,6 +41,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         Log.i("SSHREADER", "strings[2] = " + strings[2]);
 
         try {
+            /*
             JSch jsch = new JSch();
             session = jsch.getSession(user, host, port);
             session.setPassword(password);
@@ -71,29 +72,20 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             a = output.toString();
             Log.i("SSHREADER", "OUTPUT TOSTRINGA?!: " + output.toString());
             return output.toString();
+
+             */
+
+            Thread.sleep(5000);
+
+            return "abrakadabra";
         }
-        catch (JSchException ex){
-            //Show error in UI
-            String errorMessage = "JSCH exception: " + ex.getMessage();
-            Log.i("SSHREADER", errorMessage);
-        }
+
         catch (Exception ex){
             //anycatcher
             String errorMessage = "any other: " + ex.getMessage();
             Log.i("SSHREADER", errorMessage);
         }
-        finally {
-            Log.i("SSHREADER", "Finally: " + a);
-            if (session != null) {
-                session.disconnect();
-                Log.i("SSHREADER", "session isConnected in finally clause " + session.isConnected());
-            }
-            else {
-                Log.i("SSHREADER", "session == null, wtf");
-            }
-            Log.i("SSHREADER", "session isConnected: " + session.isConnected());
 
-        }
         return null;
     }
 
@@ -101,8 +93,6 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //Not working?!
-        Log.i("SSHREADER", "onPostExecute: " + s);
-        Log.i("SSHREADER", "onPostExecute session isConnected status:" + session.isConnected());
         response.onComplete(s);
 
     }

@@ -154,7 +154,7 @@ public class InstallFragment extends Fragment{
             @Override
             public void onClick(View view) {
 
-                wlanIp = getIPAddressTwo();
+                wlanIp = "10.0.60.1";
 
                 if (wlanIp.equals("10.0.60.1")) {
 
