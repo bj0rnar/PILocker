@@ -80,7 +80,6 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     //PIN fields in prompt
     private EditText pin;
     private EditText repeat;
-    private Integer option;
 
 
     @Override
@@ -372,6 +371,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
                         Pair<Boolean, String> inputCheck = InputValidator.isPinGood(pin.getText().toString(), repeat.getText().toString());
                         if (inputCheck.first) {
                             EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "pin");
+                            EncryptedSharedPref.writeInt(EncryptedSharedPref.PINCODE, Integer.parseInt(pin.getText().toString()));
                             alertDialog1.cancel();
                         }
                         else {
