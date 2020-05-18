@@ -399,8 +399,8 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         }
         else {
             //Turn invisble
-            pin.setVisibility(View.INVISIBLE);
-            repeat.setVisibility(View.INVISIBLE);
+            pin.setVisibility(View.GONE);
+            repeat.setVisibility(View.GONE);
 
             //Clear text
             pin.getText().clear();
