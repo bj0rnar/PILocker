@@ -44,6 +44,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     private LinearLayout changeLoginMethodBtn;
     private LinearLayout shutDownBtn;
     private LinearLayout factoryResetBtn;
+    private LinearLayout setupEmailBtn;
 
     private String prefMail;
     private String prefPub;
@@ -81,6 +82,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         changeLoginMethodBtn = view.findViewById(R.id.settings_login_method_btn);
         shutDownBtn = view.findViewById(R.id.settings_shutdown_rpi_btn);
         factoryResetBtn = view.findViewById(R.id.settings_factory_reset_btn);
+        setupEmailBtn = view.findViewById(R.id.settings_setup_email_btn);
 
         //Load from storage.
         prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
@@ -129,9 +131,12 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         //Set email if found
         if (prefMail != null) {
             currentSignedInEmailText.setText(prefMail);
+            setupEmailBtn.setVisibility(View.INVISIBLE);
         }
         else {
             currentSignedInEmailText.setText(R.string.settings_no_email_found);
+            greyOutButton(sendLogToMailBtn);
+            greyOutButton(deleteMailBtn);
         }
 
 
@@ -144,6 +149,18 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         });
 
 
+    }
+
+    private void greyOutButton(LinearLayout button){
+        button.setClickable(false);
+        button.setEnabled(false);
+        button.setFocusable(false);
+        int childCount = button.getChildCount();
+        for(int i = 0; i < childCount; i++){
+            TextView child = (TextView) button.getChildAt(i);
+            child.setTextColor(getResources().getColor(R.color.greyedOutButtonTextColor));
+        }
+        //button.setBackgroundColor(getResources().getColor(R.color.greyedOutButtonBackgroundColor));
     }
 
     @Override

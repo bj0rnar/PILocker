@@ -68,6 +68,26 @@
                 style="@style/SettingsHeadingField"/>
 
             <LinearLayout
+                android:id="@+id/settings_setup_email_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Setup email"
+                    style="@style/SettingsHeadingForButton"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Setup email to be able to get the log file from the door lock"
+                    style="@style/SettingsDescriptionForButton"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/settings_send_email_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
