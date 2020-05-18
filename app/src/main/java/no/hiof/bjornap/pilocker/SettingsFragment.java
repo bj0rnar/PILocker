@@ -131,7 +131,8 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         //Set email if found
         if (prefMail != null) {
             currentSignedInEmailText.setText(prefMail);
-            setupEmailBtn.setVisibility(View.INVISIBLE);
+            setupEmailBtn.setVisibility(View.GONE);
+
         }
         else {
             currentSignedInEmailText.setText(R.string.settings_no_email_found);
