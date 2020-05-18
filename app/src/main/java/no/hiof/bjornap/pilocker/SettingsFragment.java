@@ -1,6 +1,8 @@
 package no.hiof.bjornap.pilocker;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,18 @@ import androidx.navigation.Navigation;
 import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
+import no.hiof.bjornap.pilocker.Utility.InputValidator;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +75,12 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     private boolean factoryReset = false;
     private boolean shutdown = false;
     private boolean deleteEmail = false;
+
+
+    //PIN fields in prompt
+    private EditText pin;
+    private EditText repeat;
+    private Integer option;
 
 
     @Override
@@ -240,6 +254,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             @Override
             public void onClick(View view) {
                 //Create prompt, change encryptedSharedPref
+                buildLoginSelectionPrompt();
             }
         });
 
@@ -297,6 +312,107 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         }
         //button.setBackgroundColor(getResources().getColor(R.color.greyedOutButtonBackgroundColor));
     }
+
+    private void buildLoginSelectionPrompt(){
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_settings_dialog, null);
+        alertDialog.setView(view);
+
+        alertDialog.setCancelable(false);
+        Button cancelButton = view.findViewById(R.id.fragment_settings_dialog_cancel);
+        Button saveButton = view.findViewById(R.id.fragment_settings_dialog_save);
+
+        pin = view.findViewById(R.id.fragment_settings_dialog_pin);
+        repeat = view.findViewById(R.id.fragment_settings_dialog_pin_repeat);
+
+        final RadioGroup radioGroup = view.findViewById(R.id.fragment_settings_dialog_radioGroup);
+
+        switchVisibility(false);
+
+        final AlertDialog alertDialog1 = alertDialog.show();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog1.cancel();
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.fragment_settings_dialog_radio_biometric:
+                        switchVisibility(false);
+                        break;
+                    case R.id.fragment_settings_dialog_radio_pin:
+                        switchVisibility(true);
+                        break;
+                    case R.id.fragment_settings_dialog_radio_nothing:
+                        switchVisibility(false);
+                        break;
+
+                }
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(radioGroup.getCheckedRadioButtonId() != -1){
+                    int selectedButton = radioGroup.getCheckedRadioButtonId();
+
+                    if (selectedButton == R.id.fragment_settings_dialog_radio_biometric){
+                        EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "biometric");
+                        alertDialog1.cancel();
+                    }
+                    if (selectedButton == R.id.fragment_settings_dialog_radio_pin){
+                        Pair<Boolean, String> inputCheck = InputValidator.isPinGood(pin.getText().toString(), repeat.getText().toString());
+                        if (inputCheck.first) {
+                            EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "pin");
+                            alertDialog1.cancel();
+                        }
+                        else {
+                            Toast.makeText(getContext().getApplicationContext(), inputCheck.second, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    if (selectedButton == R.id.fragment_settings_dialog_radio_nothing) {
+                        EncryptedSharedPref.writeString(EncryptedSharedPref.APPLOGINMETHOD, "nothing");
+                        alertDialog1.cancel();
+                    }
+                }
+                else {
+                    alertDialog1.cancel();
+                }
+
+            }
+        });
+
+    }
+
+    private void switchVisibility(boolean visible){
+        if (visible){
+            pin.setVisibility(View.VISIBLE);
+            repeat.setVisibility(View.VISIBLE);
+        }
+        else {
+            //Turn invisble
+            pin.setVisibility(View.INVISIBLE);
+            repeat.setVisibility(View.INVISIBLE);
+
+            //Clear text
+            pin.getText().clear();
+            repeat.getText().clear();
+
+            //Hide keyboard
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(pin.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(repeat.getWindowToken(), 0);
+        }
+    }
+
 
     @Override
     public void onComplete(String result) {

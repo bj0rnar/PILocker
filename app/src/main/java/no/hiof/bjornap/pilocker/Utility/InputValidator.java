@@ -4,11 +4,6 @@ import android.util.Pair;
 
 public class InputValidator {
 
-    /**
-     * Created by Andreas M.
-     *
-     */
-
 
     public static Pair<Boolean, String> isDoorNameGood(String name){
         //  Rules for door name:
@@ -67,6 +62,24 @@ public class InputValidator {
         //Checking for containing
         if(!password.matches("^(?=.*[a-zæøå])(?=.*[A-ZÆØÅ])(?=.*\\d)(?=.*[@$!%*?&])[A-ZÆØÅa-zæøå\\d@$!%<>\\\\\\/*?& ,\\-.:_;|]{10,}$")){
             return new Pair<>(false, "Password needs to at least have: 1 small character, 1 big character, 1 number and 1 special character");
+        }
+
+        return new Pair<>(true, "All good");
+    }
+
+    public static Pair<Boolean, String> isPinGood(String pin, String repeat){
+
+
+        if (!pin.matches("\\d+") || !repeat.matches("\\d+")){
+            return new Pair<>(false, "only numbers 0-9 allowed");
+        }
+
+        if (pin.length() < 4 || repeat.length() < 4 ){
+            return new Pair<>(false, "minimum four digits");
+        }
+
+        if (!pin.equals(repeat)){
+            return new Pair<>(false, "PIN codes does not match");
         }
 
         return new Pair<>(true, "All good");
