@@ -209,5 +209,8 @@
         <action
             android:id="@+id/action_settingsFragment3_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
+        <action
+            android:id="@+id/action_settingsFragment3_to_installLoggingSetup"
+            app:destination="@id/installLoggingSetup" />
     </fragment>
 </navigation>

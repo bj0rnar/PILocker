@@ -17,9 +17,7 @@ import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
-import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +55,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
 
     private TextView uptimeTextView;
 
-    private UptimeViewModel model;
+    private SettingsViewModel model;
 
     public RPISettingsFragment() {
         // Required empty public constructor
@@ -87,7 +85,7 @@ public class RPISettingsFragment extends Fragment implements AsyncResponseInterf
         uptimeTextView.setText(R.string.rpisettings_uptime_placeholder);
 
         //Initialize ViewModel
-        model = new ViewModelProvider(this).get(UptimeViewModel.class);
+        model = new ViewModelProvider(this).get(SettingsViewModel.class);
 
         final Observer<String> nameObserver = new Observer<String>() {
             @Override
