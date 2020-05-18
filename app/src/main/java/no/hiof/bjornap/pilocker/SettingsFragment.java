@@ -232,9 +232,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         changeHandleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //changeHandleSwitch.callOnClick();
                 changeHandleSwitch.performClick();
-                
             }
         });
 
