@@ -78,6 +78,10 @@ public class InputValidator {
             return new Pair<>(false, "minimum four digits");
         }
 
+        if(pin.length() > 9 || repeat.length() > 9){
+            return new Pair<>(false, "maximum twelve digits");
+        }
+
         if (!pin.equals(repeat)){
             return new Pair<>(false, "PIN codes does not match");
         }
