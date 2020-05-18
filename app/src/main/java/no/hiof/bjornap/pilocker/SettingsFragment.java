@@ -46,6 +46,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     private LinearLayout shutDownBtn;
     private LinearLayout factoryResetBtn;
     private LinearLayout setupEmailBtn;
+    private LinearLayout changeHandleBtn;
     private Switch changeHandleSwitch;
 
     private String prefMail;
@@ -97,6 +98,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         factoryResetBtn = view.findViewById(R.id.settings_factory_reset_btn);
         setupEmailBtn = view.findViewById(R.id.settings_setup_email_btn);
         changeHandleSwitch = view.findViewById(R.id.settings_change_handle_switch);
+        changeHandleBtn = view.findViewById(R.id.settings_change_handle_side_btn);
 
         //Load from storage.
         prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
@@ -224,6 +226,15 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
                     Toast.makeText(getContext(), "Changed to left", Toast.LENGTH_SHORT).show();
                     EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, "left");
                 }
+            }
+        });
+
+        changeHandleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //changeHandleSwitch.callOnClick();
+                changeHandleSwitch.performClick();
+                
             }
         });
 
