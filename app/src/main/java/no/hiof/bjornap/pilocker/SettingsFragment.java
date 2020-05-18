@@ -219,6 +219,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
                 //#4 Shutdown
                 shutdown = true;
                 model.getUptime().setValue("Turning off RPI..");
+                greyOutButton(shutDownBtn);
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 executer.execute("ubuntu", prefHost, "./shutdown.sh", prefPriv, prefPub);
