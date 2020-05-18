@@ -18,7 +18,9 @@ import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,17 +42,18 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     private TextView uptimeTextView;
     private LinearLayout sendLogToMailBtn;
     private LinearLayout deleteMailBtn;
-    private LinearLayout changeHandleSideBtn;
     private LinearLayout changeLoginMethodBtn;
     private LinearLayout shutDownBtn;
     private LinearLayout factoryResetBtn;
     private LinearLayout setupEmailBtn;
+    private Switch changeHandleSwitch;
 
     private String prefMail;
     private String prefPub;
     private String prefPriv;
     private String prefHost;
     private String prefPass;
+    private String prefHandleSide;
 
     private SettingsViewModel model;
 
@@ -89,11 +92,11 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         //Buttons for settings
         sendLogToMailBtn = view.findViewById(R.id.settings_send_email_btn);
         deleteMailBtn = view.findViewById(R.id.settings_delete_email_btn);
-        changeHandleSideBtn = view.findViewById(R.id.settings_change_handle_side_btn);
         changeLoginMethodBtn = view.findViewById(R.id.settings_login_method_btn);
         shutDownBtn = view.findViewById(R.id.settings_shutdown_rpi_btn);
         factoryResetBtn = view.findViewById(R.id.settings_factory_reset_btn);
         setupEmailBtn = view.findViewById(R.id.settings_setup_email_btn);
+        changeHandleSwitch = view.findViewById(R.id.settings_change_handle_switch);
 
         //Load from storage.
         prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
@@ -101,6 +104,8 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
         prefPass = EncryptedSharedPref.readString(EncryptedSharedPref.PASSWORD, null);
         prefMail = EncryptedSharedPref.readString(EncryptedSharedPref.EMAIL, null);
+        prefHandleSide = EncryptedSharedPref.readString(EncryptedSharedPref.SIDE, null);
+
 
         //Set temp text
         uptimeTextView.setText(R.string.settings_calculating_uptime);
@@ -168,6 +173,15 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
                 navController.navigate(R.id.action_settingsFragment3_to_installLoggingSetup);
             }
         });
+        //Default handle side
+        if(prefHandleSide == null){
+            EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, "right");
+        }
+        if(prefHandleSide.equals("right")){
+            changeHandleSwitch.setChecked(true);
+        }else{
+            changeHandleSwitch.setChecked(false);
+        }
 
 
         //Listener for send log to email
@@ -199,10 +213,17 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             }
         });
 
-        changeHandleSideBtn.setOnClickListener(new View.OnClickListener() {
+        //Listener for handleside
+        changeHandleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                //Create prompt, change encryptedSharedPref
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(getContext(), "Changed to right", Toast.LENGTH_SHORT).show();
+                    EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, "right");
+                }else{
+                    Toast.makeText(getContext(), "Changed to left", Toast.LENGTH_SHORT).show();
+                    EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, "left");
+                }
             }
         });
 
@@ -240,6 +261,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
                  */
             }
         });
+
 
     }
 

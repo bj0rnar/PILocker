@@ -142,20 +142,40 @@
                 android:id="@+id/settings_change_handle_side_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?android:attr/selectableItemBackground">
-                <TextView
-                    android:layout_width="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Change handle side"
-                    style="@style/SettingsHeadingForButton"/>
-                <TextView
-                    android:layout_width="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Change handle side"
+                        style="@style/SettingsHeadingForButton"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Set the rotation direction of the motor"
+                        style="@style/SettingsDescriptionForButton"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Set the rotation direction of the motor"
-                    style="@style/SettingsDescriptionForButton"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <Switch
+                        android:id="@+id/settings_change_handle_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOn="Right"
+                        android:textOff="Left"
+                        android:checked="true"
+                        android:track="@drawable/switch_track_custom"
+                        android:thumbTint="@color/primaryTextColor"
+                        android:scrollbarSize="20dp"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
