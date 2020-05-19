@@ -11,16 +11,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import no.hiof.bjornap.pilocker.Utility.InputValidator;
 
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class InstallPasswordFragment extends Fragment {
@@ -28,7 +33,10 @@ public class InstallPasswordFragment extends Fragment {
     private Boolean firstTime;
     private TextView password_textView;
     private EditText password_editText;
+    private EditText password_editText_repeat;
     private Button password_nextBtn;
+    private ImageView viewPassword_imageView;
+
 
     private Boolean showPassword = false;
 
@@ -60,7 +68,9 @@ public class InstallPasswordFragment extends Fragment {
 
         password_editText = view.findViewById(R.id.installation_password_editText);
         password_textView = view.findViewById(R.id.installation_password_textView);
+        password_editText_repeat = view.findViewById(R.id.installation_password_editText_repeat);
         password_nextBtn = view.findViewById(R.id.installation_password_btn_next);
+        viewPassword_imageView = view.findViewById(R.id.installation_password_viewPassword_imageView);
 
         navController = Navigation.findNavController(view);
 
@@ -78,6 +88,23 @@ public class InstallPasswordFragment extends Fragment {
 
         }
 
+        viewPassword_imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    password_editText_repeat.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    return true;
+                }
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    password_editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    password_editText_repeat.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    return true;
+                }
+                return false;
+            }
+        });
+        /*
         password_editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -98,19 +125,27 @@ public class InstallPasswordFragment extends Fragment {
                 return false;
             }
         });
+         */
 
         password_nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (!password_editText.equals("")) {
+                if (!password_editText.getText().toString().equals("")) {
 
-                    String nPassword = password_editText.getText().toString();
+                    Pair<Boolean, String> validator = InputValidator.isServiceModePasswordGood(password_editText.getText().toString(), password_editText_repeat.getText().toString());
 
-                    Bundle b = new Bundle();
-                    b.putString("password", nPassword);
-                    b.putBoolean("firstTime", firstTime);
-                    navController.navigate(R.id.action_installPasswordFragment_to_installNamingFragment, b);
+                    if (validator.first) {
+                        String nPassword = password_editText.getText().toString();
+
+                        Bundle b = new Bundle();
+                        b.putString("password", nPassword);
+                        b.putBoolean("firstTime", firstTime);
+                        navController.navigate(R.id.action_installPasswordFragment_to_installNamingFragment, b);
+                    }
+                    else {
+                        Toast.makeText(getContext().getApplicationContext(), validator.second, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
