@@ -28,6 +28,8 @@ public class EncryptedSharedPref {
     public static final String APPLOGINMETHOD = "authMethod";
     public static final String PINCODE = "pinCode";
 
+    public static final String[] ALLKEYWORDS = {SIDE, DOORNAME, KEY_IP, PASSWORD, RSAPUB, RSAPRIV, EMAIL, LOGGINGENABLED, APPLOGINMETHOD, PINCODE};
+
 
     private static SharedPreferences encryptedSharedPreferences;
 

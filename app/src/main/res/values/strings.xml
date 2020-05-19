@@ -36,6 +36,7 @@
     <string name="save">Save</string>
     <string name="settings_no_email_found">No user signed in</string>
     <string name="settings_calculating_uptime">Calculating..</string>
+    <string name="settings">Settings</string>
 
 
 </resources>

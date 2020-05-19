@@ -18,6 +18,7 @@ import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 import no.hiof.bjornap.pilocker.Utility.InputValidator;
 
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -274,14 +275,16 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         factoryResetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //#5 Complete reset
-                /*
+
                 factoryReset = true;
+                //Deletes everything in storage
+                for(int i = 0; i < EncryptedSharedPref.ALLKEYWORDS.length; i++){
+                    EncryptedSharedPref.delete(EncryptedSharedPref.ALLKEYWORDS[i]);
+                }
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
                 executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
 
-                 */
             }
         });
 
@@ -445,7 +448,8 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             }
             //#5 Factory reset
             if (factoryReset) {
-                //KILL ALL
+                navController.navigate(R.id.action_settingsFragment3_to_connectFragment2);
+
             }
 
 

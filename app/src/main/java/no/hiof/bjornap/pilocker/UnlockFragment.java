@@ -196,22 +196,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_unlock_email_settings:
-                        Log.i("MENUTEST", "Email knappen");
-                        //Can navigate using this.
-                        if (prefEmailLoggedIn) {
-                            navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
-                        }
-                        else {
-                            navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
-                        }
-                        return true;
-                    case R.id.menu_unlock_second:
-                        Log.i("MENUTEST", "Andre knappen");
-                        //navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
-                        navController.navigate(R.id.action_unlockFragment2_to_settingsFragment3);
-                        return true;
+                if (item.getItemId() == R.id.menu_unlock_settings_selectable) {
+                    Log.i("MENUTEST", "Andre knappen");
+                    //navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
+                    navController.navigate(R.id.action_unlockFragment2_to_settingsFragment3);
+                    return true;
                 }
                 return false;
             }

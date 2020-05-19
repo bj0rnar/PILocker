@@ -212,5 +212,8 @@
         <action
             android:id="@+id/action_settingsFragment3_to_installLoggingSetup"
             app:destination="@id/installLoggingSetup" />
+        <action
+            android:id="@+id/action_settingsFragment3_to_connectFragment2"
+            app:destination="@id/connectFragment2" />
     </fragment>
 </navigation>
