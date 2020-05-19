@@ -433,21 +433,23 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
 
             //#3 Delete mail
             if (deleteEmail) {
+                deleteEmail = false;
                 model.getEmail().setValue("No user signed in");
                 //currentSignedInEmailText.setText(R.string.settings_no_email_found);
                 setupEmailBtn.setVisibility(View.VISIBLE);
                 greyOutButton(sendLogToMailBtn);
                 greyOutButton(deleteMailBtn);
                 Toast.makeText(getContext().getApplicationContext(), "Email successfully deleted", Toast.LENGTH_LONG).show();
-                deleteEmail = false;
             }
 
             //#4 Shutdown
             if (shutdown) {
+                shutdown = false;
                 navController.navigate(R.id.action_settingsFragment3_to_unlockFragment2);
             }
             //#5 Factory reset
             if (factoryReset) {
+                factoryReset = false;
                 navController.navigate(R.id.action_settingsFragment3_to_connectFragment2);
 
             }
