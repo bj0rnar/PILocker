@@ -111,8 +111,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
+                getActivity().finish();
                 Toast.makeText(getActivity().getApplicationContext(),
-                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                        "ERROR: " + errString, Toast.LENGTH_SHORT)
                         .show();
             }
 
@@ -411,9 +412,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 break;
             case "biometric":
                 promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                        .setTitle("Biometric login for my app")
+                        .setTitle("Biometric login for PILocker")
                         .setSubtitle("Log in using your biometric credential")
-                        .setDeviceCredentialAllowed(true)
+                        .setDeviceCredentialAllowed(false)
+                        .setNegativeButtonText("Exit application")
                         .build();
                 bioPrompt.authenticate(promptInfo);
                 break;
