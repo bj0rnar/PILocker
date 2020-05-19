@@ -1,5 +1,6 @@
 package no.hiof.bjornap.pilocker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +29,8 @@ public class InstallPasswordFragment extends Fragment {
     private TextView password_textView;
     private EditText password_editText;
     private Button password_nextBtn;
+
+    private Boolean showPassword = false;
 
     private NavController navController;
 
@@ -47,6 +53,7 @@ public class InstallPasswordFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_install_password, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -70,6 +77,33 @@ public class InstallPasswordFragment extends Fragment {
             }
 
         }
+
+        password_editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3; 
+
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (password_editText.getRight() - password_editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        System.out.println("DRAWABLE RIGHT PRESSED");
+                        if(showPassword){
+                            password_editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            showPassword = false;
+                        }else{
+                            password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            showPassword = true;
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
         password_nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
