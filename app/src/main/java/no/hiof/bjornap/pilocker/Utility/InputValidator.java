@@ -78,7 +78,7 @@ public class InputValidator {
             return new Pair<>(false, "Minimum 6 characters");
         }
 
-        if(!password.matches("[A-ZÆØÅa-zæøå0-9]")){
+        if(password.matches("[^A-ZÆØÅa-zæøå0-9]")){
             return new Pair<>(false, "Only numbers and digits allowed");
         }
 

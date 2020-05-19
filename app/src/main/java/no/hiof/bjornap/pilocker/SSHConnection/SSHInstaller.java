@@ -34,6 +34,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
 
 
         try {
+            /*
             Thread.sleep(3000);
             JSch jsch = new JSch();
             //jsch.addIdentity(privatekey);
@@ -70,22 +71,19 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
             Thread.sleep(2000);
             channel6.disconnect();
 
+             */
+            Thread.sleep(8000);
 
             return "ok";
         }
-        catch (JSchException ex){
-            //Show error in UI
-            String errorMessage = "JSCH exception: " + ex.getMessage();
-            Log.d("SSH", errorMessage);
-        }
+
+
         catch (Exception ex){
             //anycatcher
             String errorMessage = "any other: " + ex.getMessage();
             Log.d("SSH", errorMessage);
         }
-        finally {
-            session.disconnect();
-        }
+
 
         return null;
     }

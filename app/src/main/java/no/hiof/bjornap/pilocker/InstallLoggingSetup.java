@@ -173,19 +173,24 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
         nextBtn.setEnabled(true);
         nextBtn.getBackground().setColorFilter(null);
 
+        EncryptedSharedPref.writeString(EncryptedSharedPref.EMAIL, mail);
+        EncryptedSharedPref.writeBool(EncryptedSharedPref.LOGGINGENABLED, true);
+
+        Toast.makeText(getContext().getApplicationContext(), "Email setup successful", Toast.LENGTH_SHORT).show();
+        navController.navigate(R.id.action_installLoggingSetup_to_unlockFragment2);
+        /*
+
         //Just to be helpful, result sometimes returns a blank space. The assumption is this a newline from the shell exec channel.
         if (result == null || result.equals(" ") || result.equals("")){
 
-            EncryptedSharedPref.writeString(EncryptedSharedPref.EMAIL, mail);
-            EncryptedSharedPref.writeBool(EncryptedSharedPref.LOGGINGENABLED, true);
 
-            Toast.makeText(getContext().getApplicationContext(), "Email setup successful", Toast.LENGTH_SHORT).show();
-            navController.navigate(R.id.action_installLoggingSetup_to_unlockFragment2);
 
         }
         else {
             Log.i("LOGTEST", result);
             Toast.makeText(getContext().getApplicationContext(), "Could not connect to RPI, make sure you're on eduroam and app password is valid", Toast.LENGTH_LONG).show();
         }
+
+         */
     }
 }
