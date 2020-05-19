@@ -421,6 +421,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     }
 
+
+
+
     private void buildAlertDialog() {
 
         final int pinCode = EncryptedSharedPref.readInt(EncryptedSharedPref.PINCODE, 0);

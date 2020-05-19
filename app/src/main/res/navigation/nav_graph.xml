@@ -96,8 +96,7 @@
         tools:layout="@layout/fragment_ipextraction" >
         <action
             android:id="@+id/action_IPExtractionFragment_to_progressFragment"
-            app:destination="@id/progressFragment"
-            app:enterAnim="@anim/forward_animation" />
+            app:destination="@id/progressFragment" />
     </fragment>
     <fragment
         android:id="@+id/installWelcomeFragment"
@@ -215,6 +214,8 @@
             app:destination="@id/installLoggingSetup" />
         <action
             android:id="@+id/action_settingsFragment3_to_connectFragment2"
-            app:destination="@id/connectFragment2" />
+            app:destination="@id/connectFragment2"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -84,21 +84,15 @@ public class InstallPasswordFragment extends Fragment {
                 final int DRAWABLE_LEFT = 0;
                 final int DRAWABLE_TOP = 1;
                 final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3; 
+                final int DRAWABLE_BOTTOM = 3;
 
-
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (password_editText.getRight() - password_editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if(event.getRawX() >= (password_editText.getRight() - password_editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
                         // your action here
-                        System.out.println("DRAWABLE RIGHT PRESSED");
-                        if(showPassword){
-                            password_editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            showPassword = false;
-                        }else{
-                            password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            showPassword = true;
-                        }
-                        return true;
+                        password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    }
+                    else if (event.getAction() == MotionEvent.ACTION_UP){
+                        password_editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     }
                 }
                 return false;
