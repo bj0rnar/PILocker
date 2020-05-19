@@ -3,6 +3,9 @@ package no.hiof.bjornap.pilocker;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +35,8 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 /**
@@ -81,6 +86,8 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
     //PIN fields in prompt
     private EditText pin;
     private EditText repeat;
+
+    private AlertDialog warningDialog;
 
 
     @Override
@@ -275,20 +282,22 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         factoryResetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                factoryReset = true;
-                //Deletes everything in storage
-                for(int i = 0; i < EncryptedSharedPref.ALLKEYWORDS.length; i++){
-                    EncryptedSharedPref.delete(EncryptedSharedPref.ALLKEYWORDS[i]);
-                }
-                SSHExecuter executer = new SSHExecuter();
-                executer.response = thisInterface;
-                executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
-
+                buildWarningDialog();
             }
         });
 
 
+    }
+
+    private void wipeAllData() {
+        factoryReset = true;
+        //Deletes everything in storage
+        for(int i = 0; i < EncryptedSharedPref.ALLKEYWORDS.length; i++){
+            EncryptedSharedPref.delete(EncryptedSharedPref.ALLKEYWORDS[i]);
+        }
+        SSHExecuter executer = new SSHExecuter();
+        executer.response = thisInterface;
+        executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
     }
 
     private void greyOutButton(LinearLayout button){
@@ -395,6 +404,40 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
 
     }
 
+    private void buildWarningDialog(){
+        final AlertDialog.Builder warningBuilder = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_settings_warning_dialog, null);
+        warningBuilder.setView(view);
+
+        warningBuilder.setCancelable(false);
+        final Button cancelButton = view.findViewById(R.id.fragment_settings_warning_cancelBtn);
+        final Button acceptButton = view.findViewById(R.id.fragment_settings_warning_acceptBtn);
+
+        warningDialog = warningBuilder.show();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                warningDialog.cancel();
+            }
+        });
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acceptButton.setTextColor(Color.GRAY);
+                acceptButton.setEnabled(false);
+
+                cancelButton.setTextColor(Color.GRAY);
+                cancelButton.setEnabled(false);
+
+                wipeAllData();
+
+            }
+        });
+
+    }
+
     private void switchVisibility(boolean visible){
         if (visible){
             pin.setVisibility(View.VISIBLE);
@@ -450,6 +493,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             //#5 Factory reset
             if (factoryReset) {
                 factoryReset = false;
+                warningDialog.cancel();
                 navController.navigate(R.id.action_settingsFragment3_to_connectFragment2);
 
             }
