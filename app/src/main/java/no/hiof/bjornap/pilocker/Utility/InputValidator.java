@@ -74,7 +74,7 @@ public class InputValidator {
         }
 
         int length = password.length();
-        if (length > 6){
+        if (length < 6){
             return new Pair<>(false, "Minimum 6 characters");
         }
 
