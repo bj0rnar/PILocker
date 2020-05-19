@@ -62,6 +62,11 @@ public class EmailSettingsFragment extends Fragment implements AsyncResponseInte
         emailTextView = view.findViewById(R.id.fragment_rpisettings_uptime_actual_textView);
 
 
+
+
+
+
+
         prefHost = EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null);
         prefPriv = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPRIV, null);
         prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);

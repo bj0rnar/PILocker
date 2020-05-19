@@ -22,11 +22,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,9 +70,9 @@ public class InstallLoginSelection extends Fragment {
             Log.i("BUNDLE FINAL INSTALL", password);
         }
 
-        radioGroup = view.findViewById(R.id.radio_logging_radioGroup);
-        pinEditText = view.findViewById(R.id.installation_authSelection_editText_pin);
-        repeatPinEditText = view.findViewById(R.id.installation_authSelection_editText_repeatPin);
+        radioGroup = view.findViewById(R.id.fragment_settings_dialog_radioGroup);
+        pinEditText = view.findViewById(R.id.fragment_settings_dialog_pin);
+        repeatPinEditText = view.findViewById(R.id.fragment_settings_dialog_pin_repeat);
         nextButton = view.findViewById(R.id.installation_logging_nextBtn);
         navController = Navigation.findNavController(view);
 
@@ -94,7 +89,7 @@ public class InstallLoginSelection extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId) {
-                    case R.id.radio_authSelection_biometric:
+                    case R.id.fragment_settings_dialog_radio_biometric:
                         //Set invisible and clear text
                         pinEditText.setVisibility(View.INVISIBLE);
                         repeatPinEditText.setVisibility(View.INVISIBLE);

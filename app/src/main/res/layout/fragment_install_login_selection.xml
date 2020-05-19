@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <RadioGroup
-        android:id="@+id/radio_logging_radioGroup"
+        android:id="@+id/fragment_settings_dialog_radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <RadioButton
-            android:id="@+id/radio_authSelection_biometric"
+            android:id="@+id/fragment_settings_dialog_radio_biometric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Biometrics" />
@@ -68,31 +68,31 @@
 
 
     <EditText
-        android:id="@+id/installation_authSelection_editText_pin"
+        android:id="@+id/fragment_settings_dialog_pin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/insert_pin_code"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radio_logging_radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_dialog_radioGroup" />
 
     <EditText
-        android:id="@+id/installation_authSelection_editText_repeatPin"
+        android:id="@+id/fragment_settings_dialog_pin_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
         android:ems="10"
         android:hint="@string/repeat_pin_code"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/installation_authSelection_editText_pin" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_dialog_pin" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

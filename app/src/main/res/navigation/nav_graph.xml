@@ -35,6 +35,9 @@
             app:destination="@id/RPISettingsFragment"
             app:enterAnim="@anim/forward_animation"
             app:exitAnim="@anim/wait_animation" />
+        <action
+            android:id="@+id/action_unlockFragment2_to_settingsFragment3"
+            app:destination="@id/settingsFragment3" />
     </fragment>
     <fragment
         android:id="@+id/installFragment"
@@ -93,8 +96,7 @@
         tools:layout="@layout/fragment_ipextraction" >
         <action
             android:id="@+id/action_IPExtractionFragment_to_progressFragment"
-            app:destination="@id/progressFragment"
-            app:enterAnim="@anim/forward_animation" />
+            app:destination="@id/progressFragment" />
     </fragment>
     <fragment
         android:id="@+id/installWelcomeFragment"
@@ -197,5 +199,23 @@
         <action
             android:id="@+id/action_changeAuthenticationForApplication_to_unlockFragment2"
             app:destination="@id/unlockFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment3"
+        android:name="no.hiof.bjornap.pilocker.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment3_to_unlockFragment2"
+            app:destination="@id/unlockFragment2"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_settingsFragment3_to_installLoggingSetup"
+            app:destination="@id/installLoggingSetup" />
+        <action
+            android:id="@+id/action_settingsFragment3_to_connectFragment2"
+            app:destination="@id/connectFragment2"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

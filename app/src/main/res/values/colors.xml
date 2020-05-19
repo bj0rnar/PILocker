@@ -6,6 +6,8 @@
     <color name="primaryTextColor">#000000</color>
     <color name="primaryDarkBackgroundColor">#e0e0e0</color>
     <color name="primaryLightBackgroundColor">#f5f5f5</color>
+    <color name="greyedOutButtonTextColor">#B2B2B2</color>
+    <color name="greyedOutButtonBackgroundColor">#676767</color>
     <color name="green">#3DE21B</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#f44336</color>

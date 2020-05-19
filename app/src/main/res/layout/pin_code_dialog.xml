@@ -16,7 +16,7 @@
         android:contentDescription="@string/app_name" />
     <EditText
         android:id="@+id/pin_code_dialog_code"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primaryTextColor"

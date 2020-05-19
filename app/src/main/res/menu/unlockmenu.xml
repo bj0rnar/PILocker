@@ -12,13 +12,10 @@
         >
         <menu>
             <item
-                android:id="@+id/menu_unlock_email_settings"
+                android:id="@+id/menu_unlock_settings_selectable"
                 android:orderInCategory="100"
-                android:title="@string/menu_unlock_logging_settings" />
-            <item
-                android:id="@+id/menu_unlock_second"
-                android:orderInCategory="100"
-                android:title="@string/menu_unlock_delete" />
+                android:title="@string/settings" />
+
         </menu>
     </item>
 

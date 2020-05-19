@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -71,7 +70,7 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Initialize
-        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radio_logging_radioGroup);
+        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.fragment_settings_dialog_radioGroup);
         mailEditText = view.findViewById(R.id.installation_logging_editText);
         passEditText = view.findViewById(R.id.installation_logging_editText_password);
         nextBtn = view.findViewById(R.id.installation_logging_nextBtn);

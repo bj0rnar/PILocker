@@ -2,7 +2,6 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,14 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -56,8 +53,8 @@ public class ChangeAuthenticationForApplication extends Fragment {
 
 
         radioGroup = view.findViewById(R.id.radio_auth_radioGroup);
-        pinEditText = view.findViewById(R.id.installation_authSelection_editText_pin);
-        repeatPinEditText = view.findViewById(R.id.installation_authSelection_editText_repeatPin);
+        pinEditText = view.findViewById(R.id.fragment_settings_dialog_pin);
+        repeatPinEditText = view.findViewById(R.id.fragment_settings_dialog_pin_repeat);
         nextButton = view.findViewById(R.id.installation_logging_nextBtn);
         navController = Navigation.findNavController(view);
 
@@ -73,7 +70,7 @@ public class ChangeAuthenticationForApplication extends Fragment {
         if(oldSelection.equals("pin")){
             radioGroup.check(R.id.radio_authSelection_pin);
         }else if(oldSelection.equals("biometric")){
-            radioGroup.check(R.id.radio_authSelection_biometric);
+            radioGroup.check(R.id.fragment_settings_dialog_radio_biometric);
         }else{
             radioGroup.check(R.id.radio_authSelection_nothing);
         }
@@ -83,7 +80,7 @@ public class ChangeAuthenticationForApplication extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId) {
-                    case R.id.radio_authSelection_biometric:
+                    case R.id.fragment_settings_dialog_radio_biometric:
                         //Set invisible and clear text
                         pinEditText.setVisibility(View.INVISIBLE);
                         repeatPinEditText.setVisibility(View.INVISIBLE);

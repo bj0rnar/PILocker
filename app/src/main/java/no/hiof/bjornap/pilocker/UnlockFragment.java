@@ -2,21 +2,16 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,23 +21,19 @@ import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHExecuter;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -196,21 +187,11 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_unlock_email_settings:
-                        Log.i("MENUTEST", "Email knappen");
-                        //Can navigate using this.
-                        if (prefEmailLoggedIn) {
-                            navController.navigate(R.id.action_unlockFragment2_to_emailSettingsFragment);
-                        }
-                        else {
-                            navController.navigate(R.id.action_unlockFragment2_to_installLoggingSetup2);
-                        }
-                        return true;
-                    case R.id.menu_unlock_second:
-                        Log.i("MENUTEST", "Andre knappen");
-                        navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
-                        return true;
+                if (item.getItemId() == R.id.menu_unlock_settings_selectable) {
+                    Log.i("MENUTEST", "Andre knappen");
+                    //navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
+                    navController.navigate(R.id.action_unlockFragment2_to_settingsFragment3);
+                    return true;
                 }
                 return false;
             }
@@ -329,6 +310,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             }
         });
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+        getActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     private void SetObservers() {
@@ -432,6 +421,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
     }
 
+
+
+
     private void buildAlertDialog() {
 
         final int pinCode = EncryptedSharedPref.readInt(EncryptedSharedPref.PINCODE, 0);
@@ -470,5 +462,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         });
 
     }
+
+
 
 }
