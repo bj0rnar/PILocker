@@ -202,11 +202,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "right"){
-                    Log.i("SIDEFIXES", "LOCK, IF RIGHT");
-                    command = "./turnClockwise.sh;";
+                    command = "./turnCounterClockwise.sh;";
                 }
                 else {
-                    Log.i("SIDEFIXES", "LOCK, IF LEFT");
                     command = "./turnCounterClockwise.sh;";
                 }
 
@@ -242,12 +240,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "right"){
-                    Log.i("SIDEFIXES", "UNLOCK, IF LEFT");
                     command = "./turnClockwise.sh;";
                 }
                 else {
-                    Log.i("SIDEFIXES", "UNLOCK, IF RIGHT");
-                    command = "./turnCounterClockwise.sh;";
+                    command = "./turnClockwise.sh;";
                 }
 
 
