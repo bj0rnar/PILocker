@@ -337,6 +337,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         }
         else {
             Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
+            lockButtonImage.setColorFilter(null);
+            unlockButtonImage.setColorFilter(null);
         }
 
     }
