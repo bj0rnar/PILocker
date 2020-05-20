@@ -27,8 +27,11 @@ public class EncryptedSharedPref {
     public static final String LOGGINGENABLED = "isLoggingEnabled";
     public static final String APPLOGINMETHOD = "authMethod";
     public static final String PINCODE = "pinCode";
+    public static final String LASTCOMMAND_STATUS = "lastCommand_status";
+    public static final String LASTCOMMAND_TIME = "lastCommand_time";
+    public static final String LASTCOMMAND_DATE = "lastCommand_date";
 
-    public static final String[] ALLKEYWORDS = {SIDE, DOORNAME, KEY_IP, PASSWORD, RSAPUB, RSAPRIV, EMAIL, LOGGINGENABLED, APPLOGINMETHOD, PINCODE};
+    public static final String[] ALLKEYWORDS = {SIDE, DOORNAME, KEY_IP, PASSWORD, RSAPUB, RSAPRIV, EMAIL, LOGGINGENABLED, APPLOGINMETHOD, PINCODE, LASTCOMMAND_STATUS, LASTCOMMAND_TIME, LASTCOMMAND_DATE};
 
 
     private static SharedPreferences encryptedSharedPreferences;

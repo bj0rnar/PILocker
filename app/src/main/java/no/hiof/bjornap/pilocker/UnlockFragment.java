@@ -64,6 +64,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     private String prefPriv;
     private Boolean prefEmailLoggedIn;
 
+    private String prefStatus;
+    private String prefDate;
+    private String prefTime;
+
     private SharedPreferences pref;
 
     private ConstraintLayout unlockBtn;
@@ -143,12 +147,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         prefPub = EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null);
         prefEmailLoggedIn = EncryptedSharedPref.readBool(EncryptedSharedPref.LOGGINGENABLED, false);
 
+        prefStatus = EncryptedSharedPref.readString(EncryptedSharedPref.LASTCOMMAND_STATUS, null);
+        prefDate = EncryptedSharedPref.readString(EncryptedSharedPref.LASTCOMMAND_DATE, null);
+        prefTime = EncryptedSharedPref.readString(EncryptedSharedPref.LASTCOMMAND_TIME, null);
+
         navController = Navigation.findNavController(view);
 
 
         model = new ViewModelProvider(this).get(StatusViewModel.class);
-
-
 
 
         //Initialize toolbar only for this fragment.
@@ -182,6 +188,23 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         lockButtonImage = view.findViewById(R.id.lockButtonImage);
         unlockButtonImage = view.findViewById(R.id.unlockButtonImage);
+
+        //LAST COMMAND SENT LOGIC
+        if (prefDate != null && prefTime != null) {
+            dateText.setText(prefDate);
+            timeText.setText(prefTime);
+        }
+        if (prefStatus != null) {
+            if (prefStatus.equals("UNLOCKED")) {
+                lockImage.setVisibility(View.VISIBLE);
+                unlockImage.setVisibility(View.INVISIBLE);
+                unknownImage.setVisibility(View.INVISIBLE);
+            } else if (prefStatus.equals("LOCKED")) {
+                lockImage.setVisibility(View.VISIBLE);
+                unlockImage.setVisibility(View.INVISIBLE);
+                unknownImage.setVisibility(View.INVISIBLE);
+            }
+        }
 
         //Set all observers
         SetObservers();
@@ -326,6 +349,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 lockButtonImage.setColorFilter(null);
                 unlockButtonImage.setColorFilter(null);
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "UNLOCKED");
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_TIME, new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_DATE, new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
             }
             else {
                 model.getStatus().setValue("UNLOCKED");
@@ -333,6 +359,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 lockButtonImage.setColorFilter(null);
                 unlockButtonImage.setColorFilter(null);
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "LOCKED");
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_TIME, new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_DATE, new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
             }
         }
         else {
