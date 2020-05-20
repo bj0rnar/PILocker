@@ -27,7 +27,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         String password = strings[3];
 
 
-        int port = 5182;
+        int port = 22;
         Session session = null;
 
 

@@ -31,7 +31,7 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
         Log.i("SSHREADER", "SSHEXECTURE: strings[3] = " + strings[3]);
 
 
-        int port = 5182;
+        int port = 22;
         Session session = null;
 
 
