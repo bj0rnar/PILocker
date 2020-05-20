@@ -89,7 +89,6 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
         }
 
 
-
     }
 
     @Override

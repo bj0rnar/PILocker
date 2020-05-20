@@ -29,7 +29,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         //String script = strings[2];
         //String privatekey = strings[3];
 
-        int port = 5182;
+        int port = 22;
         Session session = null;
 
 
