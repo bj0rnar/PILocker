@@ -196,8 +196,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         }
         if (prefStatus != null) {
             if (prefStatus.equals("UNLOCKED")) {
-                lockImage.setVisibility(View.VISIBLE);
-                unlockImage.setVisibility(View.INVISIBLE);
+                lockImage.setVisibility(View.INVISIBLE);
+                unlockImage.setVisibility(View.VISIBLE);
                 unknownImage.setVisibility(View.INVISIBLE);
             } else if (prefStatus.equals("LOCKED")) {
                 lockImage.setVisibility(View.VISIBLE);
@@ -349,7 +349,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 lockButtonImage.setColorFilter(null);
                 unlockButtonImage.setColorFilter(null);
-                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "UNLOCKED");
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "LOCKED");
                 EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_TIME, new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_DATE, new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
             }
@@ -359,7 +359,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getTime().setValue(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 lockButtonImage.setColorFilter(null);
                 unlockButtonImage.setColorFilter(null);
-                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "LOCKED");
+                EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_STATUS, "UNLOCKED");
                 EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_TIME, new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
                 EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_DATE, new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
             }
