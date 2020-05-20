@@ -1,7 +1,6 @@
 package no.hiof.bjornap.pilocker;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,9 @@ import no.hiof.bjornap.pilocker.SSHConnection.AsyncResponseInterface;
 import no.hiof.bjornap.pilocker.SSHConnection.SSHReader;
 import no.hiof.bjornap.pilocker.Utility.EncryptedSharedPref;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -72,11 +69,8 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             password = getArguments().getString("password");
             firstTime = getArguments().getBoolean("firstTime");
 
-            //if strings[4] != null;
-            //then set password
 
             if (firstTime) {
-                //Run reader method
                 SSHReader sshReader = new SSHReader();
                 sshReader.response = thisInterface;
                 sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.sh " + password);

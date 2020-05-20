@@ -309,7 +309,6 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             TextView child = (TextView) button.getChildAt(i);
             child.setTextColor(getResources().getColor(R.color.greyedOutButtonTextColor));
         }
-        //button.setBackgroundColor(getResources().getColor(R.color.greyedOutButtonBackgroundColor));
     }
 
     private void reverseGreyOutButton(LinearLayout button){
@@ -321,7 +320,6 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             TextView child = (TextView) button.getChildAt(i);
             child.setTextColor(getResources().getColor(R.color.primaryTextColor));
         }
-        //button.setBackgroundColor(getResources().getColor(R.color.greyedOutButtonBackgroundColor));
     }
 
     private void buildLoginSelectionPrompt(){

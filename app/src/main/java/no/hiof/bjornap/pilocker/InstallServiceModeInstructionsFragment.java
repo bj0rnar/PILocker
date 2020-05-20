@@ -54,10 +54,6 @@ public class InstallServiceModeInstructionsFragment extends Fragment {
             firstTime = getArguments().getBoolean("firstTime");
             password = getArguments().getString("password");
 
-            Log.i("BUNDLE FINAL INSTALL", doorName);
-            Log.i("BUNDLE FINAL INSTALL", side);
-            Log.i("BUNDLE FINAL INSTALL", "is it the first time?" + firstTime.toString());
-            Log.i("BUNDLE FINAL INSTALL", password);
         }
 
         nextBtn = view.findViewById(R.id.installation_service_nextBtn);

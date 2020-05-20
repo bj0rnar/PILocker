@@ -2,7 +2,6 @@ package no.hiof.bjornap.pilocker;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -45,7 +44,6 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
 
     private NavController navController;
 
-    private SharedPreferences pref;
 
     private String prefHost;
     private String prefPub;
@@ -97,16 +95,11 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
                         imm.hideSoftInputFromWindow(passEditText.getWindowToken(), 0);
 
                         loggingEnabled = false;
-                        Log.i("RADIOTEST", "Pressed: " + i);
-                        Log.i("RADIOTEST", "Radio_logging_no: "  + R.id.radio_logging_no);
                         break;
                     case R.id.radio_logging_yes:
-                        //Set visible
                         mailEditText.setVisibility(View.VISIBLE);
                         passEditText.setVisibility(View.VISIBLE);
                         loggingEnabled = true;
-                        Log.i("RADIOTEST", "Pressed: " + i);
-                        Log.i("RADIOTEST", "Radio_logging_yes: "  + R.id.radio_logging_yes);
                         break;
                 }
             }
@@ -173,7 +166,6 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
         nextBtn.setEnabled(true);
         nextBtn.getBackground().setColorFilter(null);
 
-        //Just to be helpful, result sometimes returns a blank space. The assumption is this a newline from the shell exec channel.
         if (result == null || result.equals(" ") || result.equals("")){
 
             EncryptedSharedPref.writeString(EncryptedSharedPref.EMAIL, mail);
@@ -184,7 +176,6 @@ public class InstallLoggingSetup extends Fragment implements AsyncResponseInterf
 
         }
         else {
-            Log.i("LOGTEST", result);
             Toast.makeText(getContext().getApplicationContext(), "Could not connect to RPI, make sure you're on eduroam and app password is valid", Toast.LENGTH_LONG).show();
         }
     }

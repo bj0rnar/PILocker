@@ -41,27 +41,6 @@ public class ConnectFragment extends Fragment {
 
         final NavController navController = Navigation.findNavController(view);
 
-        /**
-         * TODO: Store key + ip to EncryptedSharedPreferences
-         * TODO: Check if encrypted SharedPreferences has a key
-         * TODO: Scan for SSID.
-         * TODO: If key exists, connect to SSH via JSCH library, if NO KEY => InstallFragment
-         * TODO: Validate IP address
-         * TODO: Use jsch.addIdentity for SSH keybased authentication
-         * TODO: Use jsch.addIdentity for SSH keybased authentication
-         */
-
-
-        //SharedPreferences pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-
-        //int key = 1;
-
-        /*
-        if (pref.getString("key_ip", null) != null){
-            key = 0;
-        }
-        */
-
 
 
         if (EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null) != null &&
@@ -72,18 +51,5 @@ public class ConnectFragment extends Fragment {
             navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
         }
 
-
-        
-
-        //Basically slekk en ska ha dæ.
-        /*
-        if (key == 0){
-            navController.navigate(R.id.action_connectFragment2_to_unlockFragment2);
-        }
-        else if (key == 1){
-
-            navController.navigate(R.id.action_connectFragment2_to_installWelcomeFragment);
-        }
-         */
     }
 }

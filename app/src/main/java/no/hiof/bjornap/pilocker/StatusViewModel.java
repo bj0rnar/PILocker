@@ -10,10 +10,6 @@ import androidx.lifecycle.ViewModel;
 
 public class StatusViewModel extends ViewModel {
 
-    /**
-     * Under construction, currently not working.
-     * Use this for updating status in unlockfragment
-     */
 
     private MutableLiveData<String> status = new MutableLiveData<>();
     private MutableLiveData<String> time = new MutableLiveData<>();

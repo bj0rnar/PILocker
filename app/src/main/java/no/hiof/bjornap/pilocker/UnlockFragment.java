@@ -95,17 +95,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
         View view = inflater.inflate(R.layout.fragment_unlock, container, false);
 
-
-        /*
-        pref = getContext().getApplicationContext().getSharedPreferences("myPref", 0);
-        prefHost = pref.getString("key_ip", null);
-        prefName = pref.getString("doorName", null);
-        prefSide = pref.getString("side", null);
-        prefPriv = pref.getString("rsapriv", null);
-        prefPub = pref.getString("rsapub", null);
-        */
-
-        //executer.response = this;
         exec = ContextCompat.getMainExecutor(getActivity().getApplicationContext());
         bioPrompt = new BiometricPrompt(UnlockFragment.this, exec, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -132,28 +121,10 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                         .show();
             }
         });
-        /*
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
-                .setDeviceCredentialAllowed(true)
-                .build();
 
-        bioPrompt.authenticate(promptInfo);
-
-        */
-        //Initialize toolbar and set Menu.
         setHasOptionsMenu(true);
 
-        /*
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle(prefName);
-        toolbar.setOnMenuItemClickListener(this);
 
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //*/
         return view;
     }
 
@@ -199,18 +170,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         });
 
 
-
-
-
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS IP: " + prefHost);
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS NAME: " + prefName);
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefPriv);
-        Log.i("FINALSTAGE", "SHAREDPREFERENCES HAS SIDE: " + prefSide);
-
-        //doorNameTxt = view.findViewById(R.id.unlock_status_door_name);
-        //doorNameTxt.setText(prefName);
-
         dateText = view.findViewById(R.id.unlock_status_date_textView);
         timeText = view.findViewById(R.id.unlock_status_time_textView);
 
@@ -243,14 +202,14 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 String command = "";
 
                 if (prefSide == "right"){
-                    command = "./turnCounterClockwise.sh;";
-                }
-                else {
+                    Log.i("SIDEFIXES", "LOCK, IF RIGHT");
                     command = "./turnClockwise.sh;";
                 }
+                else {
+                    Log.i("SIDEFIXES", "LOCK, IF LEFT");
+                    command = "./turnCounterClockwise.sh;";
+                }
 
-                //USE prefHost FOR ACCEPTANCETEST
-                //String manualHost = "158.39.162.128";
 
                 SSHExecuter executer = new SSHExecuter();
                 executer.response = thisInterface;
@@ -259,10 +218,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 }
                 catch (Exception e){
                     unlockButtonImage.setColorFilter(null);
-                    //unlockBtn.getBackground().setColorFilter(null);
                     unlockBtn.setEnabled(true);
                     lockButtonImage.setColorFilter(null);
-                    //lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
             }
@@ -277,19 +234,19 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 model.getStatus().setValue("UNLOCKING..");
 
                 lockButtonImage.setColorFilter(Color.argb(150,200,200,200));
-                //lockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 lockBtn.setEnabled(false);
                 unlockButtonImage.setColorFilter(Color.argb(150,200,200,200));
-                //unlockBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                 unlockBtn.setEnabled(false);
 
 
                 String command = "";
 
-                if (prefSide == "left"){
+                if (prefSide == "right"){
+                    Log.i("SIDEFIXES", "UNLOCK, IF LEFT");
                     command = "./turnClockwise.sh;";
                 }
                 else {
+                    Log.i("SIDEFIXES", "UNLOCK, IF RIGHT");
                     command = "./turnCounterClockwise.sh;";
                 }
 
@@ -301,10 +258,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 }
                 catch (Exception e){
                     unlockButtonImage.setColorFilter(null);
-                    //unlockBtn.getBackground().setColorFilter(null);
                     unlockBtn.setEnabled(true);
                     lockButtonImage.setColorFilter(null);
-                    //lockBtn.getBackground().setColorFilter(null);
                     lockBtn.setEnabled(true);
                 }
 
@@ -345,7 +300,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         final Observer<String> timeObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newName) {
-                // Update the UI, in this case, a TextView.
                 timeText.setText(newName);
             }
         };
@@ -353,7 +307,6 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         final Observer<String> dateObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newName) {
-                // Update the UI, in this case, a TextView.
                 dateText.setText(newName);
             }
         };
@@ -367,10 +320,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
     @Override
     public void onComplete(String result) {
         Log.i("FINALSTAGE", "ONCOMPLETE FRA ASYNC MOTTAR: " + result);
-        //UNLOCK BUTTONS ONLY ON RESPONSE
-        //unlockBtn.getBackground().setColorFilter(null);
         unlockBtn.setEnabled(true);
-        //lockBtn.getBackground().setColorFilter(null);
         lockBtn.setEnabled(true);
 
         if (result != null) {

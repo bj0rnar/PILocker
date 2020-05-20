@@ -1,9 +1,6 @@
 package no.hiof.bjornap.pilocker;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +12,6 @@ import no.hiof.bjornap.pilocker.Utility.InputValidator;
 
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -38,11 +34,9 @@ public class InstallPasswordFragment extends Fragment {
     private ImageView viewPassword_imageView;
 
 
-    private Boolean showPassword = false;
 
     private NavController navController;
 
-    private String standardPassword = "gruppe6";
 
     public InstallPasswordFragment() {
         // Required empty public constructor
@@ -104,28 +98,6 @@ public class InstallPasswordFragment extends Fragment {
                 return false;
             }
         });
-        /*
-        password_editText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-
-                if(event.getRawX() >= (password_editText.getRight() - password_editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                        // your action here
-                        password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    }
-                    else if (event.getAction() == MotionEvent.ACTION_UP){
-                        password_editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    }
-                }
-                return false;
-            }
-        });
-         */
 
         password_nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
