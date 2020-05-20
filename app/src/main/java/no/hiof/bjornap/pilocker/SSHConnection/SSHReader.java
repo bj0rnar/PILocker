@@ -33,7 +33,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
         String password = strings[1];
         String host = strings[2];
 
-        int port = 22;
+        int port = 5182;
         session = null;
 
         Log.i("SSHREADER", "strings[0] = " + strings[0]);
