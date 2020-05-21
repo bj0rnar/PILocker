@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_IPExtractionFragment_to_progressFragment"
             app:destination="@id/progressFragment" />
+        <action
+            android:id="@+id/action_IPExtractionFragment_to_installWelcomeFragment2"
+            app:destination="@id/installWelcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/installWelcomeFragment"

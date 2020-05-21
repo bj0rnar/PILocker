@@ -88,16 +88,22 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
     @Override
     public void onComplete(String result) {
-        result = result.substring(0, result.length()-1);
+        if (result != null) {
+            result = result.substring(0, result.length() - 1);
 
-        Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
 
-        EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, side);
-        EncryptedSharedPref.writeString(EncryptedSharedPref.DOORNAME, doorName);
-        EncryptedSharedPref.writeString(EncryptedSharedPref.KEY_IP, result);
-        EncryptedSharedPref.writeString(EncryptedSharedPref.PASSWORD, password);
+            EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, side);
+            EncryptedSharedPref.writeString(EncryptedSharedPref.DOORNAME, doorName);
+            EncryptedSharedPref.writeString(EncryptedSharedPref.KEY_IP, result);
+            EncryptedSharedPref.writeString(EncryptedSharedPref.PASSWORD, password);
 
 
-        navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
+            navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
+        }
+        else {
+            navController.navigate(R.id.action_IPExtractionFragment_to_installWelcomeFragment2);
+            Toast.makeText(getContext().getApplicationContext(), "WRONG PASSWORD", Toast.LENGTH_LONG).show();
+        }
     }
 }
