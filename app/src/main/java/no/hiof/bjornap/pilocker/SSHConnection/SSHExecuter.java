@@ -39,7 +39,6 @@ public class SSHExecuter extends AsyncTask<String, Void, String> {
             JSch jsch = new JSch();
             jsch.addIdentity(user, privArray, pubArray, null);
             session = jsch.getSession(user, host, port);
-            //Add identity here instead of actual password..
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);
             session.connect();

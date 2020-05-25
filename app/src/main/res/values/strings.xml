@@ -37,6 +37,10 @@
     <string name="settings_no_email_found">No user signed in</string>
     <string name="settings_calculating_uptime">Calculating..</string>
     <string name="settings">Settings</string>
+    <string name="global_password_hint">Password</string>
+    <string name="global_password_hint_repeat">Repeat password</string>
+    <string name="fragment_settings_warning_dialog_header">Restore factory settings?</string>
+    <string name="fragment_settings_warning_dialog_text">This will delete all stored data in both the application and lock unit</string>
 
 
 </resources>

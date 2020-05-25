@@ -26,8 +26,6 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         String host = strings[2];
         String password = strings[3];
 
-        //String script = strings[2];
-        //String privatekey = strings[3];
 
         int port = 5182;
         Session session = null;
@@ -36,9 +34,7 @@ public class SSHInstaller extends AsyncTask<String, Void, String> {
         try {
             Thread.sleep(3000);
             JSch jsch = new JSch();
-            //jsch.addIdentity(privatekey);
             session = jsch.getSession(user, host, port);
-            //Add identity here instead of actual password..
             session.setPassword(password);
             session.setConfig("StrictHostKeyChecking", "no");
             session.setTimeout(10000);

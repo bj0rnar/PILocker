@@ -67,6 +67,24 @@ public class InputValidator {
         return new Pair<>(true, "All good");
     }
 
+    public static Pair<Boolean, String> isServiceModePasswordGood(String password, String repeat){
+
+        if (!password.equals(repeat)) {
+            return new Pair<>(false, "Password does not match");
+        }
+
+        int length = password.length();
+        if (length < 6){
+            return new Pair<>(false, "Minimum 6 characters");
+        }
+
+        if(password.matches("[^a-zæøåA-ZÆØÅ0-9]")){
+            return new Pair<>(false, "Only numbers and digits allowed");
+        }
+
+        return new Pair<>(true, "All good");
+    }
+
     public static Pair<Boolean, String> isPinGood(String pin, String repeat){
 
 

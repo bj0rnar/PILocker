@@ -23,18 +23,8 @@
         android:label="fragment_unlock"
         tools:layout="@layout/fragment_unlock" >
         <action
-            android:id="@+id/action_unlockFragment2_to_emailSettingsFragment"
-            app:destination="@id/emailSettingsFragment"
-            app:enterAnim="@anim/forward_animation"
-            app:exitAnim="@anim/wait_animation" />
-        <action
             android:id="@+id/action_unlockFragment2_to_installLoggingSetup2"
             app:destination="@id/installLoggingSetup" />
-        <action
-            android:id="@+id/action_unlockFragment2_to_RPISettingsFragment"
-            app:destination="@id/RPISettingsFragment"
-            app:enterAnim="@anim/forward_animation"
-            app:exitAnim="@anim/wait_animation" />
         <action
             android:id="@+id/action_unlockFragment2_to_settingsFragment3"
             app:destination="@id/settingsFragment3" />
@@ -97,6 +87,9 @@
         <action
             android:id="@+id/action_IPExtractionFragment_to_progressFragment"
             app:destination="@id/progressFragment" />
+        <action
+            android:id="@+id/action_IPExtractionFragment_to_installWelcomeFragment2"
+            app:destination="@id/installWelcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/installWelcomeFragment"
@@ -123,14 +116,6 @@
             app:popExitAnim="@anim/pop_backward"/>
     </fragment>
     <fragment
-        android:id="@+id/emailSettingsFragment"
-        android:name="no.hiof.bjornap.pilocker.EmailSettingsFragment"
-        android:label="EmailSettingsFragment" >
-        <action
-            android:id="@+id/action_emailSettingsFragment_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
-    </fragment>
-    <fragment
         android:id="@+id/installLoggingSetup"
         android:name="no.hiof.bjornap.pilocker.InstallLoggingSetup"
         android:label="InstallLoggingSetup" >
@@ -138,24 +123,6 @@
             android:id="@+id/action_installLoggingSetup_to_unlockFragment2"
             app:destination="@id/unlockFragment2"
             app:enterAnim="@anim/fragment_close_enter" />
-    </fragment>
-    <fragment
-        android:id="@+id/RPISettingsFragment"
-        android:name="no.hiof.bjornap.pilocker.RPISettingsFragment"
-        android:label="fragment_rpisettings"
-        tools:layout="@layout/fragment_rpisettings" >
-        <action
-            android:id="@+id/action_RPISettingsFragment_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
-        <action
-            android:id="@+id/action_RPISettingsFragment_to_installWelcomeFragment"
-            app:destination="@id/installWelcomeFragment" />
-        <action
-            android:id="@+id/action_RPISettingsFragment_to_changeHandleSide"
-            app:destination="@id/changeHandleSide" />
-        <action
-            android:id="@+id/action_RPISettingsFragment_to_changeAuthenticationForApplication"
-            app:destination="@id/changeAuthenticationForApplication" />
     </fragment>
     <fragment
         android:id="@+id/installLoginSelection"
@@ -181,24 +148,6 @@
             app:exitAnim="@anim/backward_animation"
             app:popEnterAnim="@anim/pop_forward"
             app:popExitAnim="@anim/pop_backward" />
-    </fragment>
-    <fragment
-        android:id="@+id/changeHandleSide"
-        android:name="no.hiof.bjornap.pilocker.ChangeHandleSide"
-        android:label="fragment_change_handle_side"
-        tools:layout="@layout/fragment_change_handle_side" >
-        <action
-            android:id="@+id/action_changeHandleSide_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/changeAuthenticationForApplication"
-        android:name="no.hiof.bjornap.pilocker.ChangeAuthenticationForApplication"
-        android:label="fragment_change_authentication_for_application"
-        tools:layout="@layout/fragment_change_authentication_for_application" >
-        <action
-            android:id="@+id/action_changeAuthenticationForApplication_to_unlockFragment2"
-            app:destination="@id/unlockFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment3"
