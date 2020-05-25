@@ -22,12 +22,12 @@ import android.widget.Toast;
 import static android.content.Context.WIFI_SERVICE;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class InstallFragment extends Fragment{
 
-
+    /**
+     * Fragment for installation
+     */
 
 
     private NavController navController;
@@ -63,6 +63,7 @@ public class InstallFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Receive data from bundle
         if (getArguments() != null){
             doorName = getArguments().getString("doorName");
             side = getArguments().getString("side");
@@ -82,6 +83,7 @@ public class InstallFragment extends Fragment{
 
                 wlanIp = getIPAddressTwo();
 
+                //wlanIP is always this address, and this is just to confirm that the user is connected to Service mode WiFi
                 if (wlanIp.equals("10.0.60.1")) {
 
                     Bundle b = new Bundle();
@@ -100,7 +102,7 @@ public class InstallFragment extends Fragment{
         });
     }
 
-    //Use this is progressfragment, check if getIp matches ethernetIp.
+    //Gets the IP address from currently connected WiFi
     private String getIPAddressTwo() {
         final WifiManager manager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         final DhcpInfo dhcp = manager.getDhcpInfo();

@@ -16,10 +16,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class InstallWelcomeFragment extends Fragment {
+
+    /**
+     * Welcome screen for installation.
+     * Seperates first time installation and already installed.
+     * Landing screen for installation phase.
+     */
 
     private Button newInstallButton;
     private Button oldInstallButton;

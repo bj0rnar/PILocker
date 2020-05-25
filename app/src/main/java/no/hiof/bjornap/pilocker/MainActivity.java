@@ -31,15 +31,17 @@ import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Wrapper activity class for Single Activity Architecture.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * Initialize EncryptedSharedPreferences
-         */
-
+        //Initialize singleton EncryptedSharedPreferences class.
+        //This ensures that we only have one instance of ESP, since this activity is not closed until the application is terminated.
         EncryptedSharedPref.initESP(this);
 
 

@@ -11,6 +11,11 @@ import com.jcraft.jsch.Session;
 import java.io.ByteArrayOutputStream;
 
 public class SSHExecuter extends AsyncTask<String, Void, String> {
+    /**
+     * Multipurpose Async SSH class for executing script and returning output from Raspberry PI
+     * Class uses public/private key for keyless authentication
+     */
+
 
     public AsyncResponseInterface response = null;
 

@@ -8,6 +8,12 @@ import java.io.ByteArrayOutputStream;
 
 public class RSAGenerator {
 
+    /**
+     * Uses the JSch library to generate a keypair with RSA encryption.
+     * These are sent as a custom Tuples class as String value.
+     */
+
+
     private static ByteArrayOutputStream privateKeyBuff;
     private static ByteArrayOutputStream publicKeyBuff;
 

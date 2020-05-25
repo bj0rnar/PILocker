@@ -80,7 +80,7 @@ public class InstallLoginSelection extends Fragment {
         pinEditText.setVisibility(View.INVISIBLE);
         repeatPinEditText.setVisibility(View.INVISIBLE);
 
-
+        //Select authentication method from radio buttons. Shows PIN code text if option is selected
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

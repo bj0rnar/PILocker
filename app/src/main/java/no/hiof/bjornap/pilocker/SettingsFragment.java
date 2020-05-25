@@ -44,6 +44,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
  */
 public class SettingsFragment extends Fragment implements AsyncResponseInterface{
 
+    /**
+     * Compact settings class for changing all parts of installation
+     */
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -240,6 +243,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         changeHandleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //If clicked, change doorlock location.
                 if(isChecked){
                     Toast.makeText(getContext(), "Changed to right", Toast.LENGTH_SHORT).show();
                     EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, "right");
@@ -295,11 +299,13 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         for(int i = 0; i < EncryptedSharedPref.ALLKEYWORDS.length; i++){
             EncryptedSharedPref.delete(EncryptedSharedPref.ALLKEYWORDS[i]);
         }
+        //Call script for deleting all info stored on RPI
         SSHExecuter executer = new SSHExecuter();
         executer.response = thisInterface;
         executer.execute("ubuntu", prefHost, "./wipeAllData.sh", prefPriv, prefPub);
     }
 
+    //Grey out and disabled button
     private void greyOutButton(LinearLayout button){
         button.setClickable(false);
         button.setEnabled(false);
@@ -310,7 +316,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             child.setTextColor(getResources().getColor(R.color.greyedOutButtonTextColor));
         }
     }
-
+    //Reverse above action
     private void reverseGreyOutButton(LinearLayout button){
         button.setClickable(true);
         button.setEnabled(true);
@@ -322,6 +328,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         }
     }
 
+    //Build Alert Dialog for setting PIN code
     private void buildLoginSelectionPrompt(){
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
@@ -348,6 +355,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             }
         });
 
+        //Disable and enable visibility of PIN fields in the alert dialog
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -366,6 +374,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
             }
         });
 
+        //Validate input on save and store it to EncryptedSharedPreferences
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -402,6 +411,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
 
     }
 
+    //If factory reset is clicked, build warning dialog since this action is irreversible
     private void buildWarningDialog(){
         final AlertDialog.Builder warningBuilder = new AlertDialog.Builder(getActivity());
         View view = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_settings_warning_dialog, null);
@@ -435,7 +445,7 @@ public class SettingsFragment extends Fragment implements AsyncResponseInterface
         });
 
     }
-
+    //Toggle pin fields, clear text and hide keyboard.
     private void switchVisibility(boolean visible){
         if (visible){
             pin.setVisibility(View.VISIBLE);

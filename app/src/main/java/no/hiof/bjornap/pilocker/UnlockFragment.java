@@ -46,6 +46,13 @@ import java.util.concurrent.Executor;
  */
 public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
+    /**
+     * Main fragment for user to control the doorlock
+     * Uses SSHExecutur with AsyncResponseInterface to connect to RPI
+     * Creates and display it's own toolbar
+     *
+     */
+
     private AsyncResponseInterface thisInterface = this;
 
 
@@ -165,9 +172,8 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //Send user to settings fragment
                 if (item.getItemId() == R.id.menu_unlock_settings_selectable) {
-                    Log.i("MENUTEST", "Andre knappen");
-                    //navController.navigate(R.id.action_unlockFragment2_to_RPISettingsFragment);
                     navController.navigate(R.id.action_unlockFragment2_to_settingsFragment3);
                     return true;
                 }
@@ -175,7 +181,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
             }
         });
 
-
+        //Initialize
         dateText = view.findViewById(R.id.unlock_status_date_textView);
         timeText = view.findViewById(R.id.unlock_status_time_textView);
 
@@ -341,8 +347,9 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         Log.i("FINALSTAGE", "ONCOMPLETE FRA ASYNC MOTTAR: " + result);
         unlockBtn.setEnabled(true);
         lockBtn.setEnabled(true);
-
+        //If result means that the async method ran successfully
         if (result != null) {
+            //If locking or unlocking, change the ViewModel, ungrey the images and store the last status in EncryptedSharedPreferences.
             if(locking){
                 model.getStatus().setValue("LOCKED");
                 model.getDate().setValue(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
@@ -364,6 +371,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 EncryptedSharedPref.writeString(EncryptedSharedPref.LASTCOMMAND_DATE, new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
             }
         }
+        //No result means that the connection failed.
         else {
             Toast.makeText(getContext().getApplicationContext(), "Error, no connection to RPI", Toast.LENGTH_SHORT).show();
             lockButtonImage.setColorFilter(null);
@@ -378,7 +386,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
         Log.d("BIOMETRIC", "onStart called");
 
         String loginMethod = EncryptedSharedPref.readString(EncryptedSharedPref.APPLOGINMETHOD, "nothing");
-
+        //Check onStart which login method is used, and act accordingly
         switch (loginMethod){
             case "nothing":
                 Toast.makeText(getContext().getApplicationContext(), "You should consider getting an authentication method", Toast.LENGTH_LONG).show();
@@ -388,6 +396,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
                 buildAlertDialog();
                 break;
             case "biometric":
+                //SetDeviceCredientialAllowed(false) means that only biometric will work, no alternative once biometric is activated.
                 promptInfo = new BiometricPrompt.PromptInfo.Builder()
                         .setTitle("Biometric login for PILocker")
                         .setSubtitle("Log in using your biometric credential")
@@ -402,7 +411,7 @@ public class UnlockFragment extends Fragment implements AsyncResponseInterface {
 
 
 
-
+    //Alert Dialog for entering pin code
     private void buildAlertDialog() {
 
         final int pinCode = EncryptedSharedPref.readInt(EncryptedSharedPref.PINCODE, 0);

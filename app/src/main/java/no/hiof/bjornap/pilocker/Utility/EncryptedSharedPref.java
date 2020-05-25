@@ -38,6 +38,7 @@ public class EncryptedSharedPref {
 
     private EncryptedSharedPref() {}
 
+    //If instance exists, don't create a new one
     public static void initESP(Context context){
         if(encryptedSharedPreferences == null){
             try {

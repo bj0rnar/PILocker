@@ -23,11 +23,16 @@ import android.widget.Toast;
  */
 public class IPExtractionFragment extends Fragment implements AsyncResponseInterface {
 
+    /**
+     * Uses the SSHExecutur class through AsyncResponseInterface to extract the actual IP
+     *
+     */
+
     private String doorName = "";
     private String side = "";
     private String wlanIp = "";
 
-
+    //Hardcoded default values, user is prompted to change these.
     private String actualUser = "ubuntu";
     private String actualPass = "gruppe6";
 
@@ -69,12 +74,13 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
             password = getArguments().getString("password");
             firstTime = getArguments().getBoolean("firstTime");
 
-
+            //If first time installation call the changePassword script to change the SSH password.
             if (firstTime) {
                 SSHReader sshReader = new SSHReader();
                 sshReader.response = thisInterface;
                 sshReader.execute(actualUser, actualPass, wlanIp, "./getIp.sh", "./changePassword.sh " + password);
             }
+            //If not, just send the password in.
             else {
                 SSHReader sshReader2 = new SSHReader();
                 sshReader2.response = thisInterface;
@@ -88,11 +94,13 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
     @Override
     public void onComplete(String result) {
+        //If result is null, it means that the connection failed, which only happens on entering wrong password.
         if (result != null) {
             result = result.substring(0, result.length() - 1);
 
             Toast.makeText(getContext().getApplicationContext(), "Extracted IP: " + result, Toast.LENGTH_LONG).show();
 
+            //Store all relevant info in encryptedsharedpreferences.
             EncryptedSharedPref.writeString(EncryptedSharedPref.SIDE, side);
             EncryptedSharedPref.writeString(EncryptedSharedPref.DOORNAME, doorName);
             EncryptedSharedPref.writeString(EncryptedSharedPref.KEY_IP, result);
@@ -101,6 +109,7 @@ public class IPExtractionFragment extends Fragment implements AsyncResponseInter
 
             navController.navigate(R.id.action_IPExtractionFragment_to_progressFragment);
         }
+        //If wrong password, display error message and restart installation.
         else {
             navController.navigate(R.id.action_IPExtractionFragment_to_installWelcomeFragment2);
             Toast.makeText(getContext().getApplicationContext(), "WRONG PASSWORD", Toast.LENGTH_LONG).show();

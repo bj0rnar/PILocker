@@ -16,10 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class InstallServiceModeInstructionsFragment extends Fragment {
+
+    /**
+     * Fragment for displaying installation instructions.
+     */
 
     private String doorName;
     private String side;

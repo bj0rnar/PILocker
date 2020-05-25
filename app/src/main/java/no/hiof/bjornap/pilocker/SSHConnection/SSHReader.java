@@ -14,12 +14,10 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
 
     public AsyncResponseInterface response = null;
 
-    private String a = "a";
     private Session session;
 
     /**
-     * Connect => Run Command => Disconnect
-     * This works as intended, but reconnecting is required for each action
+     * Async JSch class for setting the new/old SSH password.
      */
 
     //Pew pew
@@ -68,8 +66,6 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             Thread.sleep(5000);
 
             channel.disconnect();
-            a = output.toString();
-            Log.i("SSHREADER", "OUTPUT TOSTRINGA?!: " + output.toString());
             return output.toString();
         }
         catch (JSchException ex){
@@ -83,15 +79,10 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
             Log.i("SSHREADER", errorMessage);
         }
         finally {
-            Log.i("SSHREADER", "Finally: " + a);
             if (session != null) {
                 session.disconnect();
                 Log.i("SSHREADER", "session isConnected in finally clause " + session.isConnected());
             }
-            else {
-                Log.i("SSHREADER", "session == null, wtf");
-            }
-            Log.i("SSHREADER", "session isConnected: " + session.isConnected());
 
         }
         return null;
@@ -100,9 +91,7 @@ public class SSHReader extends AsyncTask<String, Void, String>  {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        //Not working?!
-        Log.i("SSHREADER", "onPostExecute: " + s);
-        Log.i("SSHREADER", "onPostExecute session isConnected status:" + session.isConnected());
+
         response.onComplete(s);
 
     }

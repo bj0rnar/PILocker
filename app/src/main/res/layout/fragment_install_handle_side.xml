@@ -121,15 +121,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/installation_side_backBtn"
-            style="@style/InstallationButton"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:elevation="10sp"
-            android:text="BACK" />
-
-        <Button
             android:id="@+id/installation_side_nextBtn"
             style="@style/InstallationButton"
             android:layout_width="120sp"

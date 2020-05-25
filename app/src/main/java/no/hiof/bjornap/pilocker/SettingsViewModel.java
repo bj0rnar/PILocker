@@ -5,6 +5,11 @@ import androidx.lifecycle.ViewModel;
 
 public class SettingsViewModel extends ViewModel {
 
+    /**
+     * ViewModel for displaying how long the Raspberry PI has been running
+     * and which email account is currently registered in the settings fragment
+     */
+
     private MutableLiveData<String> uptime = new MutableLiveData<>();
     private MutableLiveData<String> email = new MutableLiveData<>();
 

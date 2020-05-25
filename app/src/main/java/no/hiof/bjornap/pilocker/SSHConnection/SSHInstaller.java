@@ -17,6 +17,13 @@ import java.nio.charset.StandardCharsets;
 
 public class SSHInstaller extends AsyncTask<String, Void, String> {
 
+    /**
+     * Password based async class
+     * SFTP uploader and executing installer script.
+     * Used for uploading and installing RSA public key on Raspberry PI
+     * Only returns output as an indication of failed connection
+     */
+
     public AsyncResponseInterface response = null;
 
     @Override

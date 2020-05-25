@@ -17,10 +17,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class InstallNamingFragment extends Fragment {
+
+    /**
+     * Fragment for naming the door.
+     */
 
     private Button nextBtn;
     private NavController navController;

@@ -20,7 +20,11 @@ import android.widget.Button;
 
 public class ConnectFragment extends Fragment {
 
-    private Button connectBtn;
+    /**
+     * Starting fragment, originally planned as a splash screen in case slower encryption methods were used
+     * It's kept for checking keys, in the edge case that the end user has a really slow device.
+     */
+
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -31,7 +35,6 @@ public class ConnectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connect, container, false);
     }
 
@@ -42,6 +45,7 @@ public class ConnectFragment extends Fragment {
         final NavController navController = Navigation.findNavController(view);
 
 
+        //If RPI IP and public key is stored, assume that the installation has been completed and send user to Unlock screen.
 
         if (EncryptedSharedPref.readString(EncryptedSharedPref.KEY_IP, null) != null &&
                 EncryptedSharedPref.readString(EncryptedSharedPref.RSAPUB, null) != null) {

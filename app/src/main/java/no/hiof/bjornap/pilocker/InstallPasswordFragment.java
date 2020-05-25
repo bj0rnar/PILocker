@@ -26,6 +26,10 @@ import android.widget.Toast;
 
 public class InstallPasswordFragment extends Fragment {
 
+    /**
+     * Fragment for setting SSH Password
+     */
+
     private Boolean firstTime;
     private TextView password_textView;
     private EditText password_editText;
@@ -60,6 +64,7 @@ public class InstallPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Initialize
         password_editText = view.findViewById(R.id.installation_password_editText);
         password_textView = view.findViewById(R.id.installation_password_textView);
         password_editText_repeat = view.findViewById(R.id.installation_password_editText_repeat);
@@ -71,6 +76,7 @@ public class InstallPasswordFragment extends Fragment {
         if (getArguments() != null) {
             firstTime = getArguments().getBoolean("firstTime");
 
+            //Modify text based on first time installation or not
             if (firstTime) {
                 password_textView.setText(R.string.installation_password_create_new_password);
                 password_editText.setHint(R.string.installation_password_firsttime_edittext_hint);
@@ -82,6 +88,7 @@ public class InstallPasswordFragment extends Fragment {
 
         }
 
+        //Eye button next to password for viewing the password in clear text.
         viewPassword_imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -104,9 +111,10 @@ public class InstallPasswordFragment extends Fragment {
             public void onClick(View view) {
 
                 if (!password_editText.getText().toString().equals("")) {
-
+                    //Custom input validation class
                     Pair<Boolean, String> validator = InputValidator.isServiceModePasswordGood(password_editText.getText().toString(), password_editText_repeat.getText().toString());
 
+                    //validator.first is always a boolean, validator.second is String message.
                     if (validator.first) {
                         String nPassword = password_editText.getText().toString();
 

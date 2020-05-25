@@ -18,17 +18,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class InstallHandleSide extends Fragment {
+    /**
+     * Fragment for selecting which side the doorlock is installed on.
+     */
 
     //Door selection
     private ConstraintLayout rightDoorLayout;
     private ConstraintLayout leftDoorLayout;
 
     private Button nextBtn;
-    private Button backBtn;
     private NavController navController;
     private String doorName;
     private String selectedDoor;
@@ -107,13 +107,6 @@ public class InstallHandleSide extends Fragment {
             }
         });
 
-        backBtn = view.findViewById(R.id.installation_side_backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("lOL");
-            }
-        });
 
     }
 }

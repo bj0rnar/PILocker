@@ -28,10 +28,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class InstallLoggingSetup extends Fragment implements AsyncResponseInterface{
+
+    /**
+     * Fragment for installing logging.
+     * Communicates with SSHExecutur through the AsyncResponseInterface
+     */
 
     private AsyncResponseInterface thisInterface = this;
 

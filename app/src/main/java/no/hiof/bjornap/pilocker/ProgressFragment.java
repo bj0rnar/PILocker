@@ -31,28 +31,24 @@ import static no.hiof.bjornap.pilocker.Utility.RSAGenerator.generateRSAPairs;
  */
 public class ProgressFragment extends Fragment implements AsyncResponseInterface {
 
-    private String ethernetIP;
+    /**
+     * RSA Installation class. Uses SSHExecutur through AsyncResponseInterface for SSH action
+     * Generates RSA keys with RSAGenerator class
+     */
+
 
     public ProgressFragment() {
         // Required empty public constructor
     }
 
-    //public SSHInstaller sshInstaller;
 
     public AsyncResponseInterface thisInterface = this;
 
-    private String defaultuser = "bjornar";
-    private String defaultpass = "toor";
 
     private String actualUser = "ubuntu";
-    private String actualPass = "gruppe6";
-    private String wlanIP = "10.0.60.1";
-    private String cmd = "./getIp.sh";
 
     private NavController navController;
-    private String doorName = "";
-    private String side = "";
-    private String ip = "";
+
 
     private String pub;
     private String priv;
@@ -60,7 +56,6 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     private ProgressBar progressBar;
     private Button retryButton;
 
-    private SharedPreferences pref;
 
     private String prefHost;
     private String prefSide;
@@ -116,6 +111,7 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
 
     }
 
+    //Initialize SSH action and hide + disable retry button
     private void installKeys() {
         progressBar.setVisibility(View.VISIBLE);
         retryButton.setVisibility(View.INVISIBLE);
@@ -129,7 +125,8 @@ public class ProgressFragment extends Fragment implements AsyncResponseInterface
     @Override
     public void onComplete(String result) {
 
-
+        //If result is null the installation failed, display retry button and let the user try again. This might happen
+        //if the user is not connected to the same network as the RPI, which is why this fix exists.
         if (result != null) {
 
             EncryptedSharedPref.writeString(EncryptedSharedPref.RSAPUB, pub);
